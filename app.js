@@ -4,7 +4,9 @@ const MongoClient = require("mongodb").MongoClient;
 
 const cars = require("./routes/cars");
 
-MongoClient.connect("mongodb+srv://m001-student:m001-mongodb-basics@sandbox.1ybr6.mongodb.net/bootcamp_project2?retryWrites=true&w=majority", function(err, client) {
+const mongoPassword = process.env.MONG_PASS;
+
+MongoClient.connect(`mongodb+srv://m001-student:${mongoPassword}@sandbox.1ybr6.mongodb.net/bootcamp_project2?retryWrites=true&w=majority`, function(err, client) {
     if ( err != null ) {
         res.send(err);
         return;
@@ -19,5 +21,5 @@ app.use(express.json());
 
 app.use("/api/cars/", cars);
 
-
-app.listen(3000);
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on port ${port}...`));
