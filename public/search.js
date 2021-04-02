@@ -1,11 +1,17 @@
-// Add list of options to select fetching data from API
-function addOptionsToSelectFromDBQuery(APIRoute, targetParent) {
+// Add list of options to select element fetching data from API
+function addOptionsToSelectFromDBQuery(APIRoute, targetParent, isCity=false) {
     
     fetch(APIRoute)
     .then(response => response.json())
     .then(data => {
 
-        elementList = "";
+        let elementList;
+        if ( isCity ) {
+            elementList = `<option value="null">All cities</option>`;
+        } else {
+            elementList = "";
+        }
+
 
         for ( let element of data.results.sort() ) {
             elementList +=
@@ -22,14 +28,16 @@ function addOptionsToSelectFromDBQuery(APIRoute, targetParent) {
 }
 
 
+// Event function to update city selector according to country selected
 function updateCitySelection() {
     const countrySelectorValue = countrySelector.value.charAt(0).toUpperCase() + countrySelector.value.substring(1);
 
     // City selector changes according to country selector
-    addOptionsToSelectFromDBQuery(`/API/locations/cities/${countrySelectorValue}`, citySelector);
+    addOptionsToSelectFromDBQuery(`/API/locations/cities/${countrySelectorValue}`, citySelector, true);
 }
 
 
+// Overall function to populate both country and city selectors
 function createCountryCitySelector() {
     
     // Populate country selection first
@@ -37,7 +45,7 @@ function createCountryCitySelector() {
     .then(response => response.json())
     .then(data => {
 
-        elementList = "";
+        let elementList = "";
 
         for ( let element of data.results.sort() ) {
             elementList +=
@@ -57,7 +65,7 @@ function createCountryCitySelector() {
         .then(response => response.json())
         .then(data => {
 
-            elementList = "";
+            let elementList = `<option value="null">All cities</option>`;
 
             for ( let element of data.results.sort() ) {
                 elementList +=
@@ -83,10 +91,24 @@ function createCountryCitySelector() {
 };
 
 
+function showFilteredResults() {
+    searchResultsDiv.innerHTML = ``;
+
+    console.log(countrySelector.value, citySelector.value)
+
+}
+
 // Country selector is created first, city selector shows the cities available for the selected country
-const countrySelector = document.querySelector("#country-selection-humans");
-const citySelector = document.querySelector("#city-selection-humans");
+let countrySelector = document.querySelector("#country-selection-humans");
+let citySelector = document.querySelector("#city-selection-humans");
 createCountryCitySelector();
+
+// Press Search button to show results according to filters
+let searchResultsDiv = document.querySelector("#search-results");
+let startSearchButton = document.querySelector("#start-human-search");
+startSearchButton.addEventListener("click", showFilteredResults);
+
+
 
 
 
