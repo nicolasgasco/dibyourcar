@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a new story</title>
+</head>
+<body>
+    <h1>Tell the story of a new human:</h1>
+
+    <section>
+
+            <h2>Fill out the form below to submit a new story</h2>
+            <p>New stories will be verified for veridicity by an admin. Please give real contact info.</p>
+    </section>
+
+    <section>
+        <h3>Interviee info:</h3>
+        <form id="new-story-form">
+            <p>Personal data:</p>
+            <label for="name">Name (required):</label>
+            <input type="text" name="name" id="new-story-name" required>
+
+            <label for="surname">Surname:</label>
+            <input type="text" name="surname" id="new-story-surname">
+
+            <label for="age">Age:</label>
+            <input type="number" name="age" id="new-story-age" min="10" max="100">
+
+            <label for="gender">Gender:</label>
+            <input type="text" name="gender" id="new-story-gender">
+
+            <p>From:</p>
+            <label for="city-from">City:</label>
+            <input type="text" name="city-from" id="new-story-city-from">
+
+            <label for="country-from">Country (required):</label>
+            <input type="text" name="country-from" id="new-story-country-from" required>
+
+            <p>Living in:</p>
+            <label for="city">City (required):</label>
+            <input type="text" name="city" id="new-story-city" required>
+
+            <label for="country">Country (required):</label>
+            <input type="text" name="country" id="new-story-country" required>
+
+            <label for="spot">Usual spot:</label>
+            <input type="text" name="spot" id="new-story-spot">
+
+            <p>Interview:</p>
+            <label for="story">Story (required):</label>
+            <textarea name="story" id="new-story-body" rows="4" cols="50" required></textarea>
+
+            <label for="advice">Advice (required):</label>
+            <textarea name="advice" id="new-story-advice" rows="4" cols="50" required></textarea>
+
+            <label for="dream">Dream (required):</label>
+            <textarea name="dream" id="new-story-dream" rows="4" cols="50" required></textarea>
+
+            <p>Image:</p>
+            <label for="image">Image:</label>
+            <input type="text" name="image" id="new-story-image">
+
+            <p>Contact:</p>
+            <label for="telephone">Telephone (+12345678):</label>
+            <input type="tel" name="telephone" id="new-story-telephone">
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="new-story-email">
+
+            <p>Does the interviewee agreed to sharing their contact information?</p>
+            <div>
+                <input type="radio" id="share-yes" name="share-consent" value="true">
+                <label for="share-consent">Yes</label>
+                <input type="radio" id="share-no" name="share-consent" value="false" checked>
+                <label for="share-consent">No</label>
+            </div>
+
+            <button type="submit" id="submit-new-story">Submit form</button>
+        </form>
+    </section>
+
+
+    
+    <script src="add.js"></script>
+</body>
+</html>
