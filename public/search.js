@@ -16,7 +16,7 @@ function addOptionsToSelectFromDBQuery(APIRoute, targetParent, isCity=false) {
         for ( let element of data.results.sort() ) {
             elementList +=
             `
-            <option value=${element.toLowerCase()}>${element.charAt(0).toUpperCase() + element.substring(1)}</option>
+            <option value=${element.toLowerCase()}>${capitalizeFirstLetterEveryWord(element)}</option>
             `
         };
 
@@ -34,6 +34,14 @@ function updateCitySelection() {
 
     // City selector changes according to country selector
     addOptionsToSelectFromDBQuery(`/API/locations/cities/${countrySelectorValue}`, citySelector, true);
+}
+
+
+function capitalizeFirstLetterEveryWord(myString) {
+    myString = myString.split(" ").map( el => el.charAt(0).toUpperCase() + el.substring(1).toLowerCase()).join(" ");
+    myString= myString.split("-").map( el => el.charAt(0).toUpperCase() + el.substring(1)).join("-")
+
+    return myString.trim();
 }
 
 
@@ -70,7 +78,7 @@ function createCountryCitySelector() {
             for ( let element of data.results.sort() ) {
                 elementList +=
                 `
-                <option value=${element.toLowerCase()}>${element.charAt(0).toUpperCase() + element.substring(1)}</option>
+                <option value=${element.toLowerCase()}>${capitalizeFirstLetterEveryWord(element)}</option>
                 `
             };
 
@@ -94,9 +102,11 @@ function createCountryCitySelector() {
 function showFilteredResults() {
     searchResultsDiv.innerHTML = ``;
 
-    fetch(`/api/humans/${countrySelector.value}/${citySelector.value}`)
+    fetch(`/api/humans/${capitalizeFirstLetterEveryWord(countrySelector.value)}/${capitalizeFirstLetterEveryWord(citySelector.value)}`)
     .then(response => response.json())
     .then( allHumans => {
+
+        console.log(allHumans)
 
         finalResult = ``;
 
