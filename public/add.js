@@ -1,14 +1,25 @@
 function capitalizeFirstLetterEveryWord(myString) {
-    myString = myString.split(" ").map( el => el.charAt(0).toUpperCase() + el.substring(1).toLowerCase() );
+    myString = myString.split(" ").map( el => el.charAt(0).toUpperCase() + el.substring(1).toLowerCase()).join(" ");
+    myString= myString.split("-").map( el => el.charAt(0).toUpperCase() + el.substring(1)).join("-")
 
-    return myString.join(" ").trim();
+    return myString.trim();
 }
+
 
 function capitalizeFirstCharLeaveRestSame(myString) {
     myString = myString.trim();
     let result = myString.charAt(0).toUpperCase() + myString.substring(1);
     return result;
 }
+
+
+function createObjectFromString(arrayToParse) {
+    console.log(arrayToParse)
+    let stringToParse = `{${arrayToParse.join(", ")}}`;
+    let result = JSON.parse(stringToParse);
+    return result;
+}
+
 
 function sendNewStoryToDB(event) {
     event.preventDefault();
@@ -24,8 +35,6 @@ function sendNewStoryToDB(event) {
     for ( let inputField of newStoryForm.children ) {
         if ( inputField.tagName !== "LABEL" && inputField.tagName !== "P" ) {
 
-            console.log(inputField.name)
-
             // Data validation
             let validatedData;
             if ( inputField.value ) {
@@ -33,8 +42,13 @@ function sendNewStoryToDB(event) {
 
                 if ( inputField.name === "gender" ) {
                     validatedData = inputField.value.toLowerCase();
+
+                } else if ( inputField.name === "image" ) {
+                    validatedData = inputField.value.toLowerCase();
+
                 } else if ( inputField.name === "spot" || inputField.type === "textarea" ) {
                     validatedData = capitalizeFirstCharLeaveRestSame(inputField.value);
+
                 } else if ( inputField.type === "text" ) {
                     validatedData =  capitalizeFirstLetterEveryWord(inputField.value); 
                 }
@@ -45,32 +59,32 @@ function sendNewStoryToDB(event) {
 
                 switch ( inputField.name ) {
                     case "city-from":
-                        fromArr.push({ "city": value });
+                        fromArr.push( `"city": "${value}"` );
                         break;
     
                     case "country-from":
-                        fromArr.push({ "country": value });
+                        fromArr.push( `"country": "${value}"` );
                         break;
     
                     case "city":
-                        currentArr.push({ "city": value });
+                        currentArr.push( `"city": "${value}"` );
                         break;
     
                     case "country":
-                        currentArr.push({ "country": value });
+                        currentArr.push( `"country": "${value}"` );
                         break;
     
                     case "story":
-                        interview.push({ "story": value });
+                        interview.push( `"story": "${value}"` );
                         break;
     
                     case "advice":
-                        interview.push({ "advice": value });
+                        interview.push( `"advice": "${value}"` );
                         break;
                     
                     
                     case "dream":
-                        interview.push({ "dream": value });
+                            interview.push( `"dream": "${value}"` );
                         break;
     
                     case "spot":
@@ -78,11 +92,11 @@ function sendNewStoryToDB(event) {
                         break;
     
                     case "telephone":
-                        contact.push({ "telephone_number": value });
+                        contact.push( `"telephone_number": "${value}"` );
                         break;
                     
                     case "email":
-                        contact.push({ "email": value });
+                        contact.push( `"email": "${value}"` );
                         break;
     
                     default:
@@ -97,27 +111,29 @@ function sendNewStoryToDB(event) {
     }
 
     const shareConsent = document.querySelector(`input[name="share-consent"]:checked`).value;
-    contact.push( { "share_contact": Boolean(shareConsent) } );
+    contact.push( `"share_contact": ${Boolean(shareConsent)}` );
 
 
     newStory["submitDate"] = new Date();
 
     if ( fromArr.length > 0 ) {
-        newStory["from"] = fromArr;
+        console.log(createObjectFromString(fromArr))
+        newStory["from"] = createObjectFromString(fromArr);
     } 
 
     if ( currentArr.length > 0 ) {
-        newStory["currently_in"] = currentArr;
+        newStory["currently_in"] = createObjectFromString(currentArr);
     } 
 
     if ( interview.length > 0 ) {
-        newStory["interview"] = interview;
+        newStory["interview"] = createObjectFromString(interview);
     } 
 
-    newStory["contact"] = contact;
-    ;
+    // contact = `{${contact.join(", ")}}`;
+    // contact = JSON.parse(contact);
+    newStory["contact"] = createObjectFromString(contact);
 
-    console.log(newStory)
+
     
     fetch("api/humans", {
     method: 'POST',
@@ -129,10 +145,7 @@ function sendNewStoryToDB(event) {
     .then(response => response.json())
     .then( info => {
 
-        console.log(info)
-
-
-            
+        console.log(info);
     })
     .catch((error) => {
         console.error("Error:", error);
