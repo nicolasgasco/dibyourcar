@@ -52,14 +52,14 @@ router.get("/:country/:city?", ( req, res ) => {
 });
 
 
-// Insert new human
+// Insert new story
 router.post("/", ( req, res ) => {
 
     let db = req.app.locals.db;
 
-    const newHuman = req.body;
+    const newStory = req.body;
 
-    db.collection("humans").insertOne( newHuman, (err, result ) => {
+    db.collection("humans").insertOne( newStory, (err, result ) => {
         if ( err !== null ) {
             res.send(err);
         }
