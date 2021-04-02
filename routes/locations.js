@@ -45,7 +45,7 @@ router.get("/cities/:country", ( req, res ) => {
     let db = req.app.locals.db;
 
     let country = req.params.country;
-    country = country.charAt(0).toUpperCase() + country.substring(1);
+    country = country.charAt(0).toUpperCase() + country.substring(1).toLowerCase();
 
     db.collection("humans").distinct("currently_in.city", {"currently_in.country": country}, (err, allCities ) => {
         if ( err !== null ) {
