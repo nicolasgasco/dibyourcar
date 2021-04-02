@@ -114,7 +114,7 @@ function showFilteredResults() {
             ${portraitImage}
             <h3>${element.name} ${element.surname}</h3>
             <p>${element.age}, ${element.gender}</p>
-            <p>From ${element.from.country}, lives in ${element.currently_in.city} (${element.currently_in.country})</p>
+            <p>From ${element.from.city} (${element.from.country}), lives in ${element.currently_in.city} (${element.currently_in.country})</p>
             <p>${element.interview.story}</p>
             <q>${element.interview.advice}</q>
             <q>${element.interview.dream}</q>
@@ -137,7 +137,11 @@ createCountryCitySelector();
 // Press Search button to show results according to filters
 let searchResultsDiv = document.querySelector("#search-results");
 let startSearchButton = document.querySelector("#start-human-search");
-startSearchButton.addEventListener("click", showFilteredResults);
+
+showFilteredResults();
+countrySelector.addEventListener("change", showFilteredResults);
+citySelector.addEventListener("change", showFilteredResults);
+// startSearchButton.addEventListener("click", showFilteredResults);
 
 
 
