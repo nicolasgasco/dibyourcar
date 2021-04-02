@@ -2,31 +2,32 @@ const express = require("express");
 const router = express.Router();
 
 
+// Get all results
 router.get("/", ( req, res ) => {
 
     let db = req.app.locals.db;
 
-    db.collection("cars").find().toArray( (err, allCars ) => {
+    db.collection("humans").find().toArray( (err, allHumans ) => {
         if ( err !== null ) {
             res.send(err);
         }
         
-        if ( allCars.length === 0 ) {
+        if ( allHumans.length === 0 ) {
             res.send( { msg: "Database is empty" } );
         }
 
-        res.send( { results: allCars } )
+        res.send( { results: allHumans } )
     });
 });
 
-
+// Insert new human
 router.post("/", ( req, res ) => {
 
     let db = req.app.locals.db;
 
-    const newCar = req.body;
+    const newHuman = req.body;
 
-    db.collection("cars").insertOne( newCar, (err, result ) => {
+    db.collection("humans").insertOne( newHuman, (err, result ) => {
         if ( err !== null ) {
             res.send(err);
         }
