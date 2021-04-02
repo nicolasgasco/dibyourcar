@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-// Get all results
+// Get all humans
 router.get("/", ( req, res ) => {
 
     let db = req.app.locals.db;
@@ -35,7 +35,5 @@ router.post("/", ( req, res ) => {
         res.send( { results: result.ops } )
     });
 });
-
-
 
 module.exports = router;
