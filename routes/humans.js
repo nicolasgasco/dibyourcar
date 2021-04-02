@@ -25,12 +25,9 @@ router.get("/:country/:city?", ( req, res ) => {
 
     let db = req.app.locals.db;
 
-    let country = req.params.country;
-    country = country.charAt(0).toUpperCase() + country.substring(1).toLowerCase();
-    
+    let country = req.params.country; 
 
     let city = req.params.city;
-    ( city ) ? city = city.charAt(0).toUpperCase() + city.substring(1).toLowerCase() : city = null; 
     
     let searchFilterCountry = { "currently_in.country" : country};
     let searchFilterCity;
