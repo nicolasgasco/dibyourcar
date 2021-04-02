@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-// Get all results for countries
+// Get all unique results for countries
 router.get("/countries", ( req, res ) => {
 
     let db = req.app.locals.db;
@@ -21,7 +21,7 @@ router.get("/countries", ( req, res ) => {
 });
 
 
-// Get all results for cities
+// Get all unique results for cities
 router.get("/cities", ( req, res ) => {
 
     let db = req.app.locals.db;
@@ -39,6 +39,25 @@ router.get("/cities", ( req, res ) => {
     });
 });
 
+// Get all unique results for cities filtering per country
+router.get("/cities/:country", ( req, res ) => {
 
+    let db = req.app.locals.db;
+
+    let country = req.params.country;
+    country = country.charAt(0).toUpperCase() + country.substring(1);
+
+    db.collection("humans").distinct("currently_in.city", {"currently_in.country": country}, (err, allCities ) => {
+        if ( err !== null ) {
+            res.send(err);
+        }
+        
+        if ( allCities.length === 0 ) {
+            res.send( { msg: "Database is empty" } );
+        }
+
+        res.send( { results: allCities } )
+    });
+});
 
 module.exports = router;
