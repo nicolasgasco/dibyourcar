@@ -41,7 +41,7 @@ function updateCitySelection() {
 function createCountryCitySelector() {
     
     // Populate country selection first
-    fetch("API/locations/countries")
+    fetch("api/locations/countries")
     .then(response => response.json())
     .then(data => {
 
@@ -61,7 +61,7 @@ function createCountryCitySelector() {
         firstCountryInList = firstCountryInList.charAt(0).toUpperCase() + firstCountryInList.substring(1);
 
 
-        fetch(`/API/locations/cities/${firstCountryInList}`)
+        fetch(`/api/locations/cities/${firstCountryInList}`)
         .then(response => response.json())
         .then(data => {
 
@@ -94,7 +94,38 @@ function createCountryCitySelector() {
 function showFilteredResults() {
     searchResultsDiv.innerHTML = ``;
 
-    console.log(countrySelector.value, citySelector.value)
+    fetch(`/api/humans/${countrySelector.value}/${citySelector.value}`)
+    .then(response => response.json())
+    .then( allHumans => {
+
+        finalResult = ``;
+
+        for ( let element of allHumans.results ) {
+            
+            let portraitImage;
+            if ( !element.img ) {
+                portraitImage = `<img src="./img/no_image.png" alt="No image available">`
+            } else {
+                portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}">`
+            }
+            
+            finalResult +=
+            `
+            ${portraitImage}
+            <h3>${element.name} ${element.surname}</h3>
+            <p>${element.age}, ${element.gender}</p>
+            <p>From ${element.from.country}, lives in ${element.currently_in.city} (${element.currently_in.country})</p>
+            <p>${element.interview.story}</p>
+            <q>${element.interview.advice}</q>
+            <q>${element.interview.dream}</q>
+            `
+        };
+
+        searchResultsDiv.innerHTML = finalResult;
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
 
 }
 
