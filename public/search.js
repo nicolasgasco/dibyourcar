@@ -1,30 +1,34 @@
 // Add list of options to select element fetching data from API
 function addOptionsToSelectFromDBQuery(APIRoute, targetParent, isCity=false) {
-    
-    fetch(APIRoute)
-    .then(response => response.json())
-    .then(data => {
+    if ( APIRoute === "/API/locations/cities/All") {
+        // pass;
+    } else {
 
-        let elementList;
-        if ( isCity ) {
-            elementList = `<option value="null">All cities</option>`;
-        } else {
-            elementList = "";
-        }
+        fetch(APIRoute)
+        .then(response => response.json())
+        .then(data => {
+
+            let elementList;
+            if ( isCity ) {
+                elementList = `<option value="null">All cities</option>`;
+            } else {
+                elementList = "";
+            }
 
 
-        for ( let element of data.results.sort() ) {
-            elementList +=
-            `
-            <option value=${element.toLowerCase()}>${capitalizeFirstLetterEveryWord(element)}</option>
-            `
-        };
+            for ( let element of data.results.sort() ) {
+                elementList +=
+                `
+                <option value=${element.toLowerCase()}>${capitalizeFirstLetterEveryWord(element)}</option>
+                `
+            };
 
-        targetParent.innerHTML = elementList;
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+            targetParent.innerHTML = elementList;
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    }
 }
 
 
@@ -53,20 +57,36 @@ function createCountryCitySelector() {
     .then(response => response.json())
     .then(data => {
 
-        let elementList = "";
+        let elementList = `<option value="all" selected>All countries</option>`;
 
-        for ( let element of data.results.sort() ) {
-            elementList +=
-            `
-            <option value=${element.toLowerCase()}>${element.charAt(0).toUpperCase() + element.substring(1)}</option>
-            `
+        data.results = data.results.sort()
+
+        // Need this to initialize page first time
+        let firstCountry;
+        for ( let i = 0; i < data.results.length; i++ ) {
+
+            // THIS IS NOT USED AT THE MOMENT BUT LEFT IN CASE USEFUL IN FUTURE
+            // First one is selected in order to have default value when page is charged
+            if ( i === 0 ) {
+                firstCountry = data.results[i].toLowerCase();
+                elementList +=
+                `
+                <option value=${data.results[i].toLowerCase()}>${capitalizeFirstLetterEveryWord(data.results[i])}</option>
+                `
+            } else {
+                elementList +=
+                `
+                <option value=${data.results[i].toLowerCase()}>${capitalizeFirstLetterEveryWord(data.results[i])}</option>
+                `
+            }
         };
 
         countrySelector.innerHTML = elementList;
 
         // Then populate city selection
-        let firstCountryInList = countrySelector.children[0].value;
-        firstCountryInList = firstCountryInList.charAt(0).toUpperCase() + firstCountryInList.substring(1);
+
+        // First option is actually "All cities"
+        let firstCountryInList = capitalizeFirstLetterEveryWord(countrySelector.children[1].value);
 
 
         fetch(`/api/locations/cities/${firstCountryInList}`)
@@ -88,6 +108,7 @@ function createCountryCitySelector() {
 
             // City selector changes according to country selector
             countrySelector.addEventListener("change", updateCitySelection);
+            showFilteredResults();
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -98,15 +119,32 @@ function createCountryCitySelector() {
     });
 };
 
-
-function showFilteredResults() {
+function showFilteredResults(event) {
     searchResultsDiv.innerHTML = ``;
 
-    fetch(`/api/humans/${capitalizeFirstLetterEveryWord(countrySelector.value)}/${capitalizeFirstLetterEveryWord(citySelector.value)}`)
+    let countryToSearch = countrySelector.value;
+
+    if ( !countryToSearch ) {
+        countryToSearch = firstCountry;
+    }
+
+    let urlApi;
+    // Triggered when page is loaded without actual event
+    if ( !event ) {
+        urlApi = `/api/humans/${capitalizeFirstLetterEveryWord(countryToSearch)}`;
+
+    // Triggered when country selector is used
+    } else if ( event.currentTarget.name === "country-selection" ) {
+        urlApi = `/api/humans/${capitalizeFirstLetterEveryWord(countryToSearch)}`;
+
+    // Triggered when city selector is used
+    } else if ( event.currentTarget.name === "city-selection" ) {
+        urlApi = `/api/humans/${capitalizeFirstLetterEveryWord(countryToSearch)}/${capitalizeFirstLetterEveryWord(citySelector.value)}`
+    }
+    
+    fetch(urlApi)
     .then(response => response.json())
     .then( allHumans => {
-
-        console.log(allHumans)
 
         finalResult = ``;
 
@@ -142,13 +180,15 @@ function showFilteredResults() {
 // Country selector is created first, city selector shows the cities available for the selected country
 let countrySelector = document.querySelector("#country-selection-humans");
 let citySelector = document.querySelector("#city-selection-humans");
+
+// Creates the selector and shows the default values
 createCountryCitySelector();
 
 // Press Search button to show results according to filters
 let searchResultsDiv = document.querySelector("#search-results");
 let startSearchButton = document.querySelector("#start-human-search");
 
-showFilteredResults();
+
 countrySelector.addEventListener("change", showFilteredResults);
 citySelector.addEventListener("change", showFilteredResults);
 // startSearchButton.addEventListener("click", showFilteredResults);
