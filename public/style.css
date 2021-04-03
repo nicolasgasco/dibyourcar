@@ -1,12 +1,12 @@
 /* GENERAL RULES */
 a, a:hover, a:visited {
-    color: black;
+    color: inherit;
 }
 
 * {
     box-sizing: border-box;
 
-    outline: 2px red solid;
+    /* outline: 2px red solid; */
 }
 
 body {
@@ -22,8 +22,12 @@ button, button:visited, button:hover {
     color: black;
 }
 
-.inline-block {
-    display: inline-block;
+.centered-text {
+    text-align: center;
+}
+
+.inline {
+    display: inline;
 }
 
 .flex-right-centered {
@@ -38,30 +42,50 @@ button, button:visited, button:hover {
     justify-content: center;
 }
 
-li {
+.inline-block {
     display: inline-block;
 }
 
-.margin-1 {
-    margin: 0.2rem 1rem;
+.left-text {
+    text-align: left;
+}
+
+li {
+    display: inline-block;
 }
 
 .no-margin {
     margin: 0;
 }
 
-.padding-1 {
-    padding: 0.2rem 1rem;
+.no-padding {
+    padding: 0;
 }
 
 ul {
     list-style-type: none;
+    padding: 0;
 }
 
 /* LAYOUT */
 
 #bottom-header-navigation {
     height: 10vh;
+}
+
+#home-paragraph-container {
+    margin: 2rem auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5vw;
+}
+
+#home-paragraph-container > div {
+    padding: 1rem;
+
 }
 
 #login-link {
@@ -82,8 +106,22 @@ ul {
     margin-top: 2rem;
 }
 
+.nav-item {
+    padding: 0.5rem 1rem;
+}
+
+.paragraph-container {
+    max-width: 80%;
+}
+
+
 #picture-header {
     height: 90vh;
+}
+
+.home-paragraph-button {
+    margin-top: 1rem;
+    padding: 0.7rem 1rem;
 }
 
 #whole-header {
@@ -100,12 +138,25 @@ ul {
     background-color: black;
 }
 
+.black-bg-transparent {
+    background-color: rgba(0, 0, 0, 0.835);
+}
+
+.black-text {
+    color: black;
+}
+
 #bottom-header-navigation {
     background-color: white;
 }
 
+#read-stories-button:hover, #read-stories-button:active {
+    background-color: black;
+    color: white;
+}
+
 #login-link:hover {
-    background-color: rgb(92, 92, 92);
+    background-color: rgba(128, 128, 128, 0.411);
 }
 
 #main-title-container {
@@ -126,10 +177,6 @@ a, a:hover, a:active {
     text-decoration: none;
 }
 
-.black-text {
-    color: black;
-}
-
 .bold {
     font-weight: bold;
 }
@@ -141,6 +188,10 @@ a, a:hover, a:active {
 
 .lowercase {
     text-transform: lowercase;
+}
+
+.s-text {
+    font-size: small;
 }
 
 .uppercase {
@@ -155,12 +206,29 @@ a, a:hover, a:active {
     font-size: xx-large;
 }
 
-/* PICTURES */
+/* DECORATIONS */
+
+hr {
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    background: #999;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    
+}
+
+.left-border {
+    border-left: 1px solid black;
+}
+
+.right-border {
+    border-right: 1px solid black;
+}
 
 #whole-header {
+    background-color: black;
     background-image: url("./img/the-humantra-Hsjdsq6yohk-unsplash_high_contrast.jpg");
     background-repeat: no-repeat;
-    background-color: darkgrey;
     background-position: center;
     background-size: cover;
 }
