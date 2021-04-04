@@ -10,7 +10,7 @@ function addOptionsToSelectFromDBQuery(APIRoute, targetParent, isCity=false) {
 
             let elementList;
             if ( isCity ) {
-                elementList = `<option value="null">All cities</option>`;
+                elementList = `<option value="null" class="s-text">All cities</option>`;
             } else {
                 elementList = "";
             }
@@ -19,7 +19,7 @@ function addOptionsToSelectFromDBQuery(APIRoute, targetParent, isCity=false) {
             for ( let element of data.results.sort() ) {
                 elementList +=
                 `
-                <option value=${element.toLowerCase()}>${capitalizeFirstLetterEveryWord(element)}</option>
+                <option value=${element.toLowerCase()} class="s-text">${capitalizeFirstLetterEveryWord(element)}</option>
                 `
             };
 
@@ -57,7 +57,7 @@ function createCountryCitySelector() {
     .then(response => response.json())
     .then(data => {
 
-        let elementList = `<option value="all" selected>All countries</option>`;
+        let elementList = `<option value="all" class="s-text" selected>All countries</option>`;
 
         data.results = data.results.sort()
 
@@ -71,12 +71,12 @@ function createCountryCitySelector() {
                 firstCountry = data.results[i].toLowerCase();
                 elementList +=
                 `
-                <option value=${data.results[i].toLowerCase()}>${capitalizeFirstLetterEveryWord(data.results[i])}</option>
+                <option value=${data.results[i].toLowerCase()} class="s-text">${capitalizeFirstLetterEveryWord(data.results[i])}</option>
                 `
             } else {
                 elementList +=
                 `
-                <option value=${data.results[i].toLowerCase()}>${capitalizeFirstLetterEveryWord(data.results[i])}</option>
+                <option value=${data.results[i].toLowerCase()} class="s-text">${capitalizeFirstLetterEveryWord(data.results[i])}</option>
                 `
             }
         };
@@ -93,12 +93,12 @@ function createCountryCitySelector() {
         .then(response => response.json())
         .then(data => {
 
-            let elementList = `<option value="null">All cities</option>`;
+            let elementList = `<option value="null" class="s-text">All cities</option>`;
 
             for ( let element of data.results.sort() ) {
                 elementList +=
                 `
-                <option value=${element.toLowerCase()}>${capitalizeFirstLetterEveryWord(element)}</option>
+                <option value=${element.toLowerCase()} class="s-text">${capitalizeFirstLetterEveryWord(element)}</option>
                 `
             };
 
@@ -162,12 +162,12 @@ function showFilteredResults(event) {
             `
             <div class="single-result">
                 ${portraitImage}
-                <h3>${element.name} ${element.surname}</h3>
-                <p>${element.age}, ${element.gender}</p>
-                <p>From ${element.from.city} (${element.from.country}), lives in ${element.currently_in.city} (${element.currently_in.country})</p>
-                <p>${element.interview.story}</p>
-                <q>${element.interview.advice}</q>
-                <q>${element.interview.dream}</q>
+                <h3>${element.name} ${element.surname} (${element.age}, ${element.gender})</h3>
+                <p><b>From:</b> ${element.from.city} (${element.from.country})</p>
+                <p><b>Currently in:</b> ${element.currently_in.city} (${element.currently_in.country})<p>
+                <p><b>Story:</b> ${element.interview.story}</p>
+                <p><b>Advice:</b> ${element.interview.advice}</p>
+                <p><b>Dream:</b> ${element.interview.dream}</p>
             </div>
             `
         };

@@ -15,28 +15,31 @@
 <body>
     <section class="black-bg">
         <nav class="white-text flex-right-centered">
-            <a href="#" id="login-link" class="inline-block">Login</a>
+            <a href="./index.html" id="home-link" class="inline-block accented-link">Back to Home</a>
+            <a href="#" id="login-link" class="inline-block accented-link">Login</a>
         </nav>
     </section>
 
     <section id="search-main-header" class="black-bg white-text">
         <div id="search-intro-container">
-        <h1 class="no-margin">Browse their stories</h1>
-        <p>Use the selectors below to filter their stories based on the country and/or the city they're currently living in.</p>
+            <h1 class="no-margin xl-text">Browse their stories</h1>
+            <p>Use the selectors below to filter their stories based on the country and/or the city they're currently living in.</p>
         </div>
+    </section>
 
-        <div id="search-country-city">
-            <h3>Search filters:</h3>
+    <section>
+        <div id="search-country-city" class="margin-4">
+            <h3 class="no-margin">Search filters:</h3>
             <div id="selector-container">
                 <div id="country-selection-container" class="single-selector">
                     <label for="country-selection" class="s-text">Country:</label>
-                    <select name="country-selection" id="country-selection-humans">
+                    <select name="country-selection" id="country-selection-humans" class="s-text">
                     </select>
                 </div>
 
                 <div id="city-selection-container" class="single-selector">
                     <label for="city-selection" class="s-text">City:</label>
-                    <select name="city-selection" id="city-selection-humans">
+                    <select name="city-selection" id="city-selection-humans" class="s-text">
                     </select>
                 </div>
             </div>
@@ -44,9 +47,9 @@
         </div>
     </section>
 
-    <section id="search-results-container">
-        <h2 class="xl-text">Search results:</h2>
-        <div id="search-results">
+    <section>
+        <h2 id="results-header" class="xl-text no-margin">Search results:</h2>
+        <div id="search-results" class="boxed-results">
 
         </div>
     </section>
