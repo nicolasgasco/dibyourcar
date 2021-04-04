@@ -65,6 +65,10 @@ li {
     display: inline-block;
 }
 
+.margin-4 {
+    margin: 4%;
+}
+
 .no-margin {
     margin: 0;
 }
@@ -80,13 +84,29 @@ ul {
 
 /* LAYOUT */
 
+.accented-link {
+    padding: 0.2rem 1rem;
+    margin-right: 1rem;
+
+}
+
 #bottom-header-navigation {
     height: 10vh;
 }
 
-.home-paragraph-button {
+.hidden-container {
+    padding: 2rem;
+}
+
+#home-link {
+    margin-right: auto;
+    margin-left: 1rem;
+
+}
+
+.home-paragraph-button, .log-button {
     margin-top: 1rem;
-    padding: 0.7rem 1rem;
+    padding: 0.5rem 0.7rem;
 }
 
 #home-paragraph-container {
@@ -105,12 +125,15 @@ ul {
 
 }
 
-
-#login-link {
-    padding: 0.2rem 1rem;
-    margin-right: 1rem;
-
+#log-in-container, #sign-up-container {
+    max-width: 100%;
+    min-width: 50%;
+    right: 0%;
+    display: none;
+    position: absolute;
 }
+
+
 
 #main-title {
     padding: 0.5rem 1rem;
@@ -146,10 +169,16 @@ ul {
     height: 40vh;
     object-position: top;
     object-fit: cover;
+    border-left: 0.7rem black solid;
 
     -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);
 
+}
+
+#results-header {
+    margin-left: 4%;
+    margin-top: 2.5rem;
 }
 
 #search-intro-container {
@@ -157,7 +186,7 @@ ul {
 }
 
 #search-main-header {
-    padding: 2rem;
+    padding: 4%;
 }
 
 #search-results {
@@ -165,9 +194,10 @@ ul {
     justify-content: center;
     align-content: baseline;
     flex-wrap: wrap;
+    gap: 4%;
 }
 
-#search-results-container {
+.boxed-results {
     border: 2px black solid;
     box-shadow: 8px -8px rgb(236, 236, 236);
 
@@ -186,10 +216,11 @@ ul {
     width: 100%;
     max-width: 600px;
     padding: 1rem 0;
+    margin: 1rem 0;
 }
 
 .single-selector {
-    margin: 0.5rem;
+    margin-right: 1rem;
 }
 
 
@@ -202,13 +233,16 @@ ul {
 }
 
 /* COLORS */
+.accented-link:hover {
+    background-color: rgba(128, 128, 128, 0.411);
+}
 
 .black-bg {
     background-color: black;
 }
 
 .black-bg-transparent {
-    background-color: rgba(0, 0, 0, 0.835);
+    background-color: rgba(0, 0, 0, 0.705);
 }
 
 .black-text {
@@ -219,35 +253,66 @@ ul {
     background-color: white;
 }
 
+.dark-grey-bg {
+    background-color: rgb(20, 20, 20);
+}
+
 footer a:hover {
     color: lightgray;
 }
 
-#login-link:hover {
-    background-color: rgba(128, 128, 128, 0.411);
+#log-in-container {
+    padding: 1rem;
+}
+
+.log-button {
+    background-color: white;
+    color: black !important;
+}
+
+.log-button:hover, .log-button:active  {
+    background-color: black;
+    color: white !important;
+    outline: 3px white solid;
+}
+
+
+
+#login-in-form {
 }
 
 #main-title-container {
     border-bottom: 7px white solid;
 }
 
-#read-stories-button:hover, #read-stories-button:active {
+#picture-header input[type="text"], #picture-header input[type="password"], #picture-header input[type="email"] {
     background-color: black;
     color: white;
+    border: 0;
+    border-bottom: 3px grey solid;
 
 }
 
-select {
-    color: white;
+#read-stories-button:hover, #read-stories-button:active {
     background-color: black;
+    color: white;
+}
+
+select {
+    color: black;
+    background-color: white;
     border: none;
     outline: 0;
     border-bottom: 4px solid grey;
 }
 
 select:hover, select:active {
-    border-bottom: 5px solid grey;
-    margin-bottom: -1px;
+    /* border-bottom: 5px solid grey;
+    margin-bottom: -1px; */
+}
+
+select:focus {
+    outline: 1px black solid;
 }
 
 option:active, option:focus {
@@ -256,10 +321,11 @@ option:active, option:focus {
 }
 
 option {
-    background-color: rgb(56, 56, 56);
+    background-color: rgb(184, 184, 184);
     border: none;
     outline: none;
 }
+
 .white-text {
     color: white;
 }
@@ -297,6 +363,10 @@ footer * {
 
 .s-text {
     font-size: small;
+}
+
+.underlined {
+    text-decoration: underline;
 }
 
 .uppercase {
@@ -450,6 +520,10 @@ nav.shift ul li a {
         font-size: 20px;
     }
 
+    .boxed-results {
+        box-shadow: 20px -30px rgb(236, 236, 236);
+    }
+
     footer * {
         font-size: medium;
     }
@@ -476,5 +550,13 @@ nav.shift ul li a {
 
     .xxl-text {
         font-size: medium;
+    }
+}
+
+@media (min-width: 2000px) {
+
+    body {
+        max-width: 1920px;
+        margin: 0 auto;
     }
 }
