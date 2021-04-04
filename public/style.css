@@ -27,14 +27,6 @@ button, button:visited, button:hover {
     text-align: center;
 }
 
-img {
-    max-width: 100%;
-}
-
-.inline {
-    display: inline;
-}
-
 .flex-right-centered {
     display: flex;
     align-items: center;
@@ -51,6 +43,14 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+img {
+    max-width: 100%;
+}
+
+.inline {
+    display: inline;
 }
 
 .inline-block {
@@ -105,6 +105,7 @@ ul {
 
 }
 
+
 #login-link {
     padding: 0.2rem 1rem;
     margin-right: 1rem;
@@ -151,6 +152,14 @@ ul {
 
 }
 
+#search-intro-container {
+    max-width: 30rem;
+}
+
+#search-main-header {
+    padding: 2rem;
+}
+
 #search-results {
     display: flex;
     justify-content: center;
@@ -167,11 +176,22 @@ ul {
     padding: 0.7rem;
 }
 
+#selector-container {
+    display: flex;
+    justify-content: flex-start;
+    align-content: baseline;
+}
+
 .single-result {
     width: 100%;
     max-width: 600px;
     padding: 1rem 0;
 }
+
+.single-selector {
+    margin: 0.5rem;
+}
+
 
 #whole-header {
     min-height: 100vh;
@@ -217,6 +237,29 @@ footer a:hover {
 
 }
 
+select {
+    color: white;
+    background-color: black;
+    border: none;
+    outline: 0;
+    border-bottom: 4px solid grey;
+}
+
+select:hover, select:active {
+    border-bottom: 5px solid grey;
+    margin-bottom: -1px;
+}
+
+option:active, option:focus {
+    border: none;
+    outline: 0;
+}
+
+option {
+    background-color: rgb(56, 56, 56);
+    border: none;
+    outline: none;
+}
 .white-text {
     color: white;
 }
@@ -408,6 +451,10 @@ nav.shift ul li a {
     }
 
     footer * {
+        font-size: medium;
+    }
+
+    .s-text {
         font-size: medium;
     }
 

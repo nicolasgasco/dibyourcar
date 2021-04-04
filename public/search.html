@@ -13,24 +13,33 @@
     <title>See humans</title>
 </head>
 <body>
-    <section class="black-bg white-text">
-        <h1>See the humans</h1>
-        <h2>Select a country</h2>
+    <section class="black-bg">
+        <nav class="white-text flex-right-centered">
+            <a href="#" id="login-link" class="inline-block">Login</a>
+        </nav>
+    </section>
+
+    <section id="search-main-header" class="black-bg white-text">
+        <div id="search-intro-container">
+        <h1 class="no-margin">Browse their stories</h1>
+        <p>Use the selectors below to filter their stories based on the country and/or the city they're currently living in.</p>
+        </div>
 
         <div id="search-country-city">
-            <div id="country-selection-container">
-                <label for="country-selection">Country:</label>
-                <select name="country-selection" id="country-selection-humans">
-                </select>
-            </div>
+            <h3>Search filters:</h3>
+            <div id="selector-container">
+                <div id="country-selection-container" class="single-selector">
+                    <label for="country-selection" class="s-text">Country:</label>
+                    <select name="country-selection" id="country-selection-humans">
+                    </select>
+                </div>
 
-            <div id="city-selection-container">
-                <label for="city-selection">City:</label>
-                <select name="city-selection" id="city-selection-humans">
-                </select>
+                <div id="city-selection-container" class="single-selector">
+                    <label for="city-selection" class="s-text">City:</label>
+                    <select name="city-selection" id="city-selection-humans">
+                    </select>
+                </div>
             </div>
-
-            <!-- <button id="start-human-search">Search</button> -->
 
         </div>
     </section>
