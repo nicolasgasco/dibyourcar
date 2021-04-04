@@ -152,20 +152,23 @@ function showFilteredResults(event) {
             
             let portraitImage;
             if ( !element.img ) {
-                portraitImage = `<img src="./img/no_image.png" alt="No image available">`
+                portraitImage = `<img src="./img/no_image.png" alt="No image available" class="result-image">`
             } else {
-                portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}">`
+                portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}" class="result-image">`
             }
             
+            console.log(portraitImage)
             finalResult +=
             `
-            ${portraitImage}
-            <h3>${element.name} ${element.surname}</h3>
-            <p>${element.age}, ${element.gender}</p>
-            <p>From ${element.from.city} (${element.from.country}), lives in ${element.currently_in.city} (${element.currently_in.country})</p>
-            <p>${element.interview.story}</p>
-            <q>${element.interview.advice}</q>
-            <q>${element.interview.dream}</q>
+            <div class="single-result">
+                ${portraitImage}
+                <h3>${element.name} ${element.surname}</h3>
+                <p>${element.age}, ${element.gender}</p>
+                <p>From ${element.from.city} (${element.from.country}), lives in ${element.currently_in.city} (${element.currently_in.country})</p>
+                <p>${element.interview.story}</p>
+                <q>${element.interview.advice}</q>
+                <q>${element.interview.dream}</q>
+            </div>
             `
         };
 
