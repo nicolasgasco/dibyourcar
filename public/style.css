@@ -42,6 +42,12 @@ button, button:visited, button:hover {
     justify-content: center;
 }
 
+.flex-spacebetween-centered {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .inline-block {
     display: inline-block;
 }
@@ -85,6 +91,7 @@ ul {
 
 #home-paragraph-container > div {
     padding: 1rem;
+    max-width: 30rem;
 
 }
 
@@ -100,7 +107,7 @@ ul {
 
 #main-title-container {
     width: fit-content;
-    max-width: 70%;
+    max-width: 50%;
 
     margin-left: 1rem;
     margin-top: 2rem;
@@ -108,6 +115,10 @@ ul {
 
 .nav-item {
     padding: 0.5rem 1rem;
+}
+
+.padding-05 {
+    padding: 0.5rem;
 }
 
 .paragraph-container {
@@ -150,9 +161,8 @@ ul {
     background-color: white;
 }
 
-#read-stories-button:hover, #read-stories-button:active {
-    background-color: black;
-    color: white;
+footer a:hover {
+    color: lightgray;
 }
 
 #login-link:hover {
@@ -161,6 +171,12 @@ ul {
 
 #main-title-container {
     border-bottom: 7px white solid;
+}
+
+#read-stories-button:hover, #read-stories-button:active {
+    background-color: black;
+    color: white;
+
 }
 
 .white-text {
@@ -181,6 +197,10 @@ a, a:hover, a:active {
     font-weight: bold;
 }
 
+footer * {
+    font-size: xx-small;
+}
+
 .lato-sans {
     font-family: "Roboto", sans-serif;
     letter-spacing: 2px;
@@ -188,6 +208,10 @@ a, a:hover, a:active {
 
 .lowercase {
     text-transform: lowercase;
+}
+
+.l-text {
+    font-size: large;
 }
 
 .s-text {
@@ -208,6 +232,14 @@ a, a:hover, a:active {
 
 /* DECORATIONS */
 
+button:hover, button:active {
+    /* background-color: white;
+     */
+    outline: 4px black solid;
+    background-color: white;
+
+}
+
 hr {
     border: 0;
     border-bottom: 1px dashed #ccc;
@@ -219,6 +251,10 @@ hr {
 
 .left-border {
     border-left: 1px solid black;
+}
+
+#main-title-container:hover {
+    box-shadow: 60px 40px rgba(158, 158, 158, 0.616);
 }
 
 .right-border {
@@ -319,3 +355,37 @@ nav.shift ul li a {
       border-radius: 0;
     }
   }
+
+/*  MEDIA QUERIES */
+
+/* Fonts were a bit tiny on bigger screens */
+@media (min-width: 650px) {
+
+    * {
+        font-size: 20px;
+    }
+
+    footer * {
+        font-size: medium;
+    }
+
+    .xl-text {
+        font-size: 2rem;
+    }
+
+    .xxl-text {
+        font-size: 3rem;
+    }
+}
+
+/* Text overflows in very small screens */
+@media (max-width: 300px) {
+
+    .xl-text {
+        font-size: small;
+    }
+
+    .xxl-text {
+        font-size: medium;
+    }
+}
