@@ -11,6 +11,7 @@ a, a:hover, a:visited {
 
 body {
     margin: 0;
+    padding: 0;
 
     width: 100%;
     min-height: 100vh;
@@ -24,6 +25,10 @@ button, button:visited, button:hover {
 
 .centered-text {
     text-align: center;
+}
+
+img {
+    max-width: 100%;
 }
 
 .inline {
@@ -79,6 +84,11 @@ ul {
     height: 10vh;
 }
 
+.home-paragraph-button {
+    margin-top: 1rem;
+    padding: 0.7rem 1rem;
+}
+
 #home-paragraph-container {
     margin: 2rem auto;
 
@@ -130,9 +140,37 @@ ul {
     height: 90vh;
 }
 
-.home-paragraph-button {
-    margin-top: 1rem;
-    padding: 0.7rem 1rem;
+.result-image {
+    width: 100%;
+    height: 40vh;
+    object-position: top;
+    object-fit: cover;
+
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+
+}
+
+#search-results {
+    display: flex;
+    justify-content: center;
+    align-content: baseline;
+    flex-wrap: wrap;
+}
+
+#search-results-container {
+    border: 2px black solid;
+    box-shadow: 8px -8px rgb(236, 236, 236);
+
+    width: 92%;
+    margin: 4%;
+    padding: 0.7rem;
+}
+
+.single-result {
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem 0;
 }
 
 #whole-header {
@@ -259,6 +297,10 @@ hr {
 
 .right-border {
     border-right: 1px solid black;
+}
+
+.single-result {
+    border-bottom: 1px black dashed;
 }
 
 #whole-header {
