@@ -17,33 +17,56 @@
         <div id="picture-header">
             <div id="upmost-header" class="black-bg-transparent white-text flex-right-centered">
                 <nav>
-                    <a href="#" id="login-link" class="inline-block">Login</a>
+                    <a href="#" id="login-link" class="inline-block accented-link">Login</a>
                 </nav>
             </div>
 
-            <div id="log-in-container" class="black-bg-transparent white-text">
-                <div id="log-in-form">
-                    <label for="email" class="s-text inline-block">E-mail: <input type="text" name="email" class="s-text"></label>
+            <div id="log-in-container" class="black-bg-transparent white-text hidden-container">
+                <h2 class="no-margin xl-text">Log in to your account</h2>
+                <form id="log-in-form">
+                    <label for="email" class="s-text inline-block">E-mail: <input type="email" name="email" class="s-text" required></label>
 
-                    <label for="password" class="s-text inline-block">Password: <input type="password" name="password" class="s-text"></label>
+                    <label for="password" class="s-text inline-block">Password: <input type="password" name="password" class="s-text" required></label>
 
-                    <button type="submit"class="white-text s-text">Log in</button>
-                </div>
+                    <button type="submit"class="white-text s-text log-button bold">Enter</button>
+                </form>
 
                 <div>
-                    <p>Are you new? <a href="" class="underlined">Sign up</a> instead.</p>
+                    <p>Are you new? <a href="#" id="signup-link" class="underlined">Sign up</a> instead.</p>
                 </div>
+            </div>
+
+            <div id="sign-up-container" class="black-bg-transparent white-text hidden-container">
+                <h2 class="no-margin xl-text">Create a new account</h2>
+                <form id="sign-up-form">
+                    <label for="name" class="s-text inline-block">Name: <input type="text" name="name" class="s-text" required></label>
+
+                    <label for="surname" class="s-text inline-block">Surname: <input type="text" name="surname" class="s-text"></label>
+                    <br>
+                    <br>
+                    <label for="email" class="s-text inline-block">E-mail: <input type="text" name="email" class="s-text" required></label>
+                    <br>
+                    <br>
+                    <label for="password" class="s-text inline-block">Password: <input type="password" name="password" class="s-text" required></label>
+
+                    <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" class="s-text" required></label>
+                    <br>
+                    <br>
+                    <label for="confirm-agreement" class="s-text"><input type="checkbox" name="confirm-agreement" value="agreement" required> By accepting this, you acknowledge our Service Agreement.</label>
+                    <br>
+                    <button type="submit"class="s-text log-button black-text bold">Sign up</button>
+                </form>
             </div>
         
             <div id="main-title-container" class="black-bg">
-                <h1 id="main-title" class="uppercase xxl-text white-text lato-sans">Humans <span id="of-the" class="lowercase xl-text">of&nbsp;the</span> streets</h1>
+                <h1 id="main-title" class="uppercase xxl-text white-text lato-sans">Humans <span id="of-the" class="lowercase xl-text"><br>of&nbsp;the<br></span> streets</h1>
             </div>
         </div>
     
         <nav id="bottom-header-navigation" class="shift flex-centered-centered">
             <ul class="s-text flex-centered-centered">
                 <li id="see-stories" class="nav-item bold black-text inline centered-text right-border"><a href="#first-paragraph-container">Read their stories</a></li>
-                <li class="nav-item bold black-text inline centered-text left-border"><a href="#second-paragraph-container">Start helping</a></li>
+                <li class="nav-item bold black-text inline centered-text left-border"><a href="#" id="start-helping-link">Start helping</a></li>
             </ul>
         </nav>
 
@@ -65,7 +88,7 @@
             <p class="left-text">Use the button below to become one of our verified collaborators.</p>
             <p class="left-text">You will be able to submit a new person's story, provided it follows our guideline.</p>
             <p class="left-text"><bold>Join a local community of people devoted to help those who fell throught the cracks of our broken society.</p>
-            <button class="home-paragraph-button black-bg white-text bold"><a href="search.html">Start helping now</a></button>
+            <button class="home-paragraph-button black-bg white-text bold"><a id="start-help-link" href="#">Start helping now</a></button>
         </div>
 
     </section>
