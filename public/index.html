@@ -13,7 +13,7 @@
     <title>Humans of the Streets</title>
 </head>
 <body>
-    <section id="whole-header">
+    <header id="whole-header">
         <div id="picture-header">
             <div class="black-bg-transparent white-text flex-right-centered upmost-header">
                 <a href="#" id="login-link" class="inline-block accented-link">Login</a>
@@ -22,11 +22,11 @@
             <div id="log-in-container" class="black-bg-transparent white-text hidden-container">
                 <h2 class="no-margin xl-text">Log in to your account</h2>
                 <form id="log-in-form">
-                    <label for="email" class="s-text inline-block">E-mail: <input type="email" name="email" class="s-text" required></label>
+                    <label for="email-login" class="s-text inline-block">E-mail: <input type="email" name="email" id="email-login" class="s-text" required></label>
 
-                    <label for="password" class="s-text inline-block">Password: <input type="password" name="password" class="s-text" required></label>
+                    <label for="password-login" class="s-text inline-block">Password: <input type="password" name="password" id="password-login" class="s-text" required></label>
 
-                    <button type="submit"class="white-text s-text log-button bold">Enter</button>
+                    <button type="submit" class="white-text s-text log-button bold">Enter</button>
                 </form>
 
                 <div>
@@ -37,20 +37,20 @@
             <div id="sign-up-container" class="black-bg-transparent white-text hidden-container">
                 <h2 class="no-margin xl-text">Create a new account</h2>
                 <form id="sign-up-form">
-                    <label for="name" class="s-text inline-block">Name: <input type="text" name="name" class="s-text" required></label>
+                    <label for="name" class="s-text inline-block">Name: <input type="text" name="name" id="name" class="s-text" required></label>
 
-                    <label for="surname" class="s-text inline-block">Surname: <input type="text" name="surname" class="s-text"></label>
+                    <label for="surname" class="s-text inline-block">Surname: <input type="text" name="surname" id="surname" class="s-text"></label>
                     <br>
                     <br>
-                    <label for="email" class="s-text inline-block">E-mail: <input type="text" name="email" class="s-text" required></label>
+                    <label for="email" class="s-text inline-block">E-mail: <input type="text" name="email" id="email" class="s-text" required></label>
                     <br>
                     <br>
-                    <label for="password" class="s-text inline-block">Password: <input type="password" name="password" class="s-text" required></label>
+                    <label for="password" class="s-text inline-block">Password: <input type="password" name="password" id="password" class="s-text" required></label>
 
-                    <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" class="s-text" required></label>
+                    <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" id="confirm-password" class="s-text" required></label>
                     <br>
                     <br>
-                    <label for="confirm-agreement" class="s-text"><input type="checkbox" name="confirm-agreement" value="agreement" required> By accepting this, you acknowledge our Service Agreement.</label>
+                    <label for="confirm-agreement" class="s-text"><input type="checkbox" name="confirm-agreement" id="confirm-agreement" value="agreement" required> By accepting this, you acknowledge our <a href="#" class="underlined s-text">Service Agreement</a>.</label>
                     <br>
                     <button type="submit" class="s-text log-button black-text bold">Sign up</button>
                 </form>
@@ -63,12 +63,12 @@
     
         <nav id="bottom-header-navigation" class="shift flex-centered-centered">
             <ul class="s-text flex-centered-centered">
-                <li id="see-stories" class="nav-item bold black-text inline centered-text right-border"><a href="#first-paragraph-container">Read their stories</a></li>
+                <li id="see-stories" class="nav-item bold black-text inline centered-text right-border"><a href="search.html">Read their stories</a></li>
                 <li class="nav-item bold black-text inline centered-text left-border"><a href="#" id="start-helping-link">Start helping</a></li>
             </ul>
         </nav>
 
-    </section>
+    </header>
 
     <section id="home-paragraph-container">
         <div id="first-paragraph-container" class="paragraph-container centered-text">
@@ -76,8 +76,8 @@
             <hr class="center-square">
             <p class="left-text">Sometimes we pretend we don't see them. Sometimes we don't actually see them.</p>
             <p class="left-text">Our streets are flooded by people who lost all they had. We are their only hope</p>
-            <p class="left-text"><b>Humans of the Streets</b>' mission is giving them a voice in the hope that their life can take a turn for the better.</p>
-            <a href="search.html"><button class="home-paragraph-button black-bg white-text bold">Start reading their stories</button></a>
+            <p class="left-text"><strong>Humans of the Streets</strong>' mission is giving them a voice in the hope that their life can take a turn for the better.</p>
+            <a href="search.html" class="home-paragraph-button black-bg white-text bold" style="color:white">Read their stories</a>
         </div>
 
         <div id="second-paragraph-container" class="paragraph-container centered-text">
@@ -85,8 +85,8 @@
             <hr class="center-square">
             <p class="left-text">Use the button below to become one of our verified collaborators.</p>
             <p class="left-text">You will be able to submit a new person's story, provided it follows our guideline.</p>
-            <p class="left-text"><bold>Join a local community of people devoted to help those who fell throught the cracks of our broken society.</p>
-            <a id="start-help-link" href="#"><button class="home-paragraph-button black-bg white-text bold">Start helping now</button></a>
+            <p class="left-text">Join a local community of people devoted to help those who fell throught the cracks of our broken society.</p>
+            <a href="#" id="start-help-link" class="home-paragraph-button black-bg white-text bold" style="color:white">Start helping now</a>
         </div>
 
     </section>
