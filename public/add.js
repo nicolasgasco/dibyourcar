@@ -14,7 +14,6 @@ function capitalizeFirstCharLeaveRestSame(myString) {
 
 
 function createObjectFromString(arrayToParse) {
-    console.log(arrayToParse)
     let stringToParse = `{${arrayToParse.join(", ")}}`;
     let result = JSON.parse(stringToParse);
     return result;
@@ -22,7 +21,7 @@ function createObjectFromString(arrayToParse) {
 
 
 function sendNewStoryToDB(event) {
-    event.preventDefault();
+    // event.preventDefault();
 
     let newStory = {    };
 
@@ -43,7 +42,7 @@ function sendNewStoryToDB(event) {
                 if ( inputField.name === "gender" ) {
                     validatedData = inputField.value.toLowerCase();
 
-                } else if ( inputField.name === "image" ) {
+                } else if ( inputField.name === "img" ) {
                     validatedData = inputField.value.toLowerCase();
 
                 } else if ( inputField.name === "spot" || inputField.type === "textarea" ) {
@@ -133,7 +132,7 @@ function sendNewStoryToDB(event) {
     // contact = JSON.parse(contact);
     newStory["contact"] = createObjectFromString(contact);
 
-
+    console.log(newStory)
     
     fetch("api/humans", {
     method: 'POST',
@@ -145,19 +144,31 @@ function sendNewStoryToDB(event) {
     .then(response => response.json())
     .then( info => {
 
-        console.log(info);
+        const intervieweeInfoTitle = document.querySelector("#interviewee-info-title");
+        const newStoryFormContainer = document.querySelector("#new-story-form-container");
+        intervieweeInfoTitle.innerText = `New story submitted`;
+
+        newStoryFormContainer.innerHTML =
+        `
+        <p>Your story was successfully submitted. It will be reviewed by an admin before publication.</p>
+        <div class="add-button-container">
+            <a href="./index.html"><button class="home-paragraph-button black-bg white-text bold">Back to home</button></a>
+            <a href="./add.html"><button class="home-paragraph-button black-bg white-text bold">New story</button></a>
+        </div>
+        `
+
+
+
+
+
+
+
+
     })
     .catch((error) => {
         console.error("Error:", error);
     });
 }
-
-
-
-
-
-
-
 
 
 const newStoryForm = document.querySelector("#new-story-form");
