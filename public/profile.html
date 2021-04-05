@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Roboto:wght@900&display=swap&family=Martel:wght@800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    
+    <title>Profile</title>
+</head>
+<body>
+    <div class="all-except-footer">
+        <header class="black-bg upmost-header">
+            <nav class="white-text flex-right-centered">
+                <a href="./index.html" id="home-link" class="inline-block accented-link">Back to Home</a>
+                <a href="#" id="login-link" class="inline-block accented-link">Login</a>
+            </nav>
+        </header>
+
+        <section class="black-bg white-text padding-4">
+            <div>
+                <h1 class="no-margin xl-text">Your profile</h1>
+                <p>Edit your personal data or your submissions.</p>
+            </div>
+        </section>
+
+        <section class="margin-4">
+            <h2 class="xl-text">Personal data:</h2>
+            <div id="your-profile-container" class="simple-box">
+                <form id="profile-data-box" class="formatted-form">
+                    <label for="name" class="s-text inline-block">Name: <input type="text" name="name" class="s-text" placeholder="Your name" autocomplete="given-name" readonly></label>
+
+                    <label for="surname" class="s-text inline-block">Surname: <input type="text" name="surname" class="s-text" placeholder="Your surname" autocomplete="family-name" readonly></label>
+                    <br>
+                    <br>
+                    <label for="email" class="s-text inline-block">E-mail: <input type="text" name="email" class="s-text" placeholder="Your e-mail" autocomplete="email" readonly></label>
+                    <br>
+                    <br>
+                    <label for="password" class="s-text inline-block">Password: <input type="password" name="password" class="s-text" placeholder="Your password" autocomplete="current-password" readonly></label>
+
+                    <!-- <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" class="s-text"></label> -->
+                    <br>
+                    <br>
+                    <div class="add-button-container">
+                        <button type="button" id="edit-data-button" class="home-paragraph-button black-bg white-text bold">Edit data</button>
+                        <button type="button" id="edit-password-button" class="home-paragraph-button black-bg white-text bold">Edit password<button>
+                    </div>
+                    
+                </form>
+
+            </div>
+        </section>
+
+        <section class="margin-4">
+            <h2 class="xl-text">Your submissions:</h2>
+            <div id="your-submissions" class="boxed-results">
+
+            </div>
+        </section>
+    </div>
+
+    <footer class="black-bg flex-spacebetween-centered">
+        <small class="white-text padding-05">Photo by <a href="https://unsplash.com/@thehumantra?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">The Humantra</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Unsplash</a></small>
+
+        <small class="white-text padding-05">Made by Nicolas Gasco.</small>
+    </footer>
+
+
+    <script src="profile.js"></script>
+</body>
+</html>
