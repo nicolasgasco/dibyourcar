@@ -1,14 +1,18 @@
 
 function showLoginContainer() {
 
+    if ( signupContainer.style.display === "block" ) {
+        signupContainer.style.display = "none";
+    } else {
+        loginLink.removeEventListener("click", showLoginContainer);
 
-    loginLink.removeEventListener("click", showLoginContainer);
+        loginContainer.style.display = "block";
+        signupContainer.style.display = "none";
 
-    loginContainer.style.display = "block";
-    signupContainer.style.display = "none";
+        loginLink.addEventListener("click", hideLoginContainer);
+    }
 
-
-    loginLink.addEventListener("click", hideLoginContainer);
+    
 }
 
 
