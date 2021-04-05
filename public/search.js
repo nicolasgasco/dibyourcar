@@ -152,12 +152,11 @@ function showFilteredResults(event) {
             
             let portraitImage;
             if ( !element.img ) {
-                portraitImage = `<img src="./img/no_image.png" alt="No image available" class="result-image">`
+                portraitImage = `<img src="./img/no_image.jpg" alt="No image available" class="result-image">`
             } else {
                 portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}" class="result-image">`
             }
             
-            console.log(portraitImage)
             finalResult +=
             `
             <div class="single-result">
