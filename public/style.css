@@ -45,6 +45,13 @@ button, button:visited, button:hover {
     justify-content: space-between;
 }
 
+.all-except-footer {
+    min-height: 95vh;
+}
+footer {
+    min-height: 5vh;
+}
+
 img {
     max-width: 100%;
 }
@@ -82,11 +89,28 @@ ul {
     padding: 0;
 }
 
+.widht-100 {
+    width: 100%;
+}
+
 /* LAYOUT */
 
 .accented-link {
     padding: 0.5% 1.5%;
 
+}
+
+.add-button-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.add-button-container button {
+    min-width: 8rem
 }
 
 #bottom-header-navigation {
@@ -148,6 +172,10 @@ ul {
     padding: 0.5rem 1rem;
 }
 
+#new-story-image {
+    width: 100%;
+}
+
 .padding-05 {
     padding: 0.5rem;
 }
@@ -159,6 +187,11 @@ ul {
 
 #picture-header {
     height: 90vh;
+}
+
+#profile-data-box button {
+    margin-right: 0.5rem;
+    min-width: 9rem;
 }
 
 .result-image {
@@ -275,8 +308,6 @@ footer a:hover {
     outline: 3px white solid;
 }
 
-
-
 #login-in-form {
 }
 
@@ -292,9 +323,15 @@ footer a:hover {
 
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="email"], input[type="tel"], textarea  {
+.formatted-form input[type="text"], .formatted-form input[type="password"], .formatted-form input[type="email"], .formatted-form input[type="number"], .formatted-form input[type="email"], .formatted-form input[type="tel"], .formatted-form textarea, .formatted-form select  {
     border: 0;
-    border-bottom: 3px grey solid;
+    background-color: rgb(243, 243, 243);
+
+    border-bottom: 3px black solid;
+}
+
+.formatted-form textarea {
+    width: 100%;
 }
 
 #read-stories-button:hover, #read-stories-button:active {
@@ -304,7 +341,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="num
 
 select {
     color: black;
-    background-color: white;
+    background-color: rgb(241, 241, 241);
     border: none;
     outline: 0;
     border-bottom: 4px solid grey;
@@ -388,8 +425,7 @@ footer * {
 /* DECORATIONS */
 
 button:hover, button:active {
-    /* background-color: white;
-     */
+
     outline: 4px black solid;
     background-color: white;
 
@@ -412,8 +448,8 @@ hr {
     box-shadow: 60px 40px rgba(158, 158, 158, 0.616);
 }
 
-#new-story-form {
-    border-left: 5px black solid;
+.form-left-border {
+    border-left: 0.2rem black solid;
     padding-left: 6%;
 }
 
@@ -421,8 +457,14 @@ hr {
     border-right: 1px solid black;
 }
 
+.simple-box {
+    border: 4px black solid;
+    padding: 4%;
+}
+
 .single-result {
     border-bottom: 1px black dashed;
+
 }
 
 #whole-header {
@@ -527,6 +569,10 @@ nav.shift ul li a {
 
     * {
         font-size: 20px;
+    }
+
+    .add-button-container {
+        justify-content: flex-start;
     }
 
     .boxed-results {
