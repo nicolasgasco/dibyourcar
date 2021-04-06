@@ -58,6 +58,92 @@ editDataButton.addEventListener("click", editDataInProfile);
 const editPasswordButton = document.querySelector("#edit-password-button");
 editPasswordButton.addEventListener("click", editPasswordInProfile);
 
+function showSubmittedPosts() {
+    fetch("/api/currentuser/")
+    .then( res => res.json() )
+    .then( res => {
+        id = res.results._id;
+        
+        fetch(`api/humans/id/${id}`)
+        .then( res => res.json() )
+        .then( res => {
+            const postArray = res.results;
+
+            console.log(postArray)
+            finalResult = ``;
+
+            for ( let element of postArray ) {
+
+                let portraitImage;
+
+                if ( !element.img ) {
+                    portraitImage = `<img src="./img/no_image.jpg" alt="No image available" class="result-image">`
+                } else {
+                    portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}" class="result-image">`
+                }
+                
+                finalResult +=
+                    `
+                    <div class="single-result">
+                        <small style="display:none">${element._id}</small>
+                        ${portraitImage}
+                        <h3>${element.name} ${element.surname} (${element.age}, ${element.gender})</h3>
+                        <p><b>From:</b> ${element.from.city} (${element.from.country})</p>
+                        <p><b>Currently in:</b> ${element.currently_in.city} (${element.currently_in.country})<p>
+                        <p><b>Story:</b> ${element.interview.story}</p>
+                        <p><b>Advice:</b> ${element.interview.advice}</p>
+                        <p><b>Dream:</b> ${element.interview.dream}</p>
+                        <div class="add-button-container">
+                            <button type="submit" class="home-paragraph-button black-bg white-text bold">Edit story<button>
+                            <button type="submit" onclick="deleteStory(event)" class="home-paragraph-button black-bg white-text bold">Delete story<button>
+                        </div>
+                    </div>
+
+                    `
+            }
+
+            yourSubmissions.innerHTML = finalResult;
+
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+}
+
+function deleteStory(event) {
+    window.confirm("Do you really want to remove this entry?");
+
+    const id = event.currentTarget.parentElement.parentElement.firstElementChild.innerText;
+    const singleResultContainer = event.currentTarget.parentElement.parentElement;
+
+    if ( window.confirm ) {
+
+        fetch(`api/humans/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then( res => res.json() )
+        .then( res => {
+            singleResultContainer.remove();
+            window.alert("Story deleted!");
+        })
+        .catch( (error) => {
+            console.error("Error:", error);
+        });
+    }
+}
+
+// Show submitted stories in profile when page is loaded
+showSubmittedPosts();
+
+
+
 
 
 
