@@ -20,6 +20,20 @@ function createObjectFromString(arrayToParse) {
 }
 
 
+function getIdCurrentUser() {
+    fetch("/api/currentuser/")
+    .then( res => res.json() )
+    .then( res => {
+
+        return res.results._id;
+
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+}
+
+
 function sendNewStoryToDB(event) {
     // event.preventDefault();
 
@@ -87,7 +101,7 @@ function sendNewStoryToDB(event) {
                         break;
     
                     case "spot":
-                        newStory["where_to_find"] = value;
+                        newStory["where_to_find"] = { "spot": value };
                         break;
     
                     case "telephone":
@@ -132,7 +146,7 @@ function sendNewStoryToDB(event) {
     // contact = JSON.parse(contact);
     newStory["contact"] = createObjectFromString(contact);
 
-    console.log(newStory)
+    updateStory["submittedBy"] = getIdCurrentUser();
     
     fetch("api/humans", {
     method: 'POST',
