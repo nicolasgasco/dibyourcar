@@ -308,9 +308,6 @@ footer a:hover {
     outline: 3px white solid;
 }
 
-#login-in-form {
-}
-
 #main-title-container {
     border-bottom: 7px white solid;
 }
@@ -347,10 +344,10 @@ select {
     border-bottom: 4px solid grey;
 }
 
-select:hover, select:active {
+/* select:hover, select:active {
     /* border-bottom: 5px solid grey;
     margin-bottom: -1px; */
-}
+} */
 
 select:focus {
     outline: 1px black solid;
@@ -481,17 +478,17 @@ nav ul li a:after,
 nav ul li a:before {
   transition: all .5s;
 }
-nav ul li a:hover {
+/* nav ul li a:hover {
   /* color: #555; */
-}
+} */
 
 nav.shift ul li a {
     position:relative;
     z-index: 1;
   }
-  nav.shift ul li a:hover {
+  /* nav.shift ul li a:hover {
     /* color: #91640F; */
-  }
+  } */
   nav.shift ul li a:after {
     display: block;
     position: absolute;
