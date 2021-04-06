@@ -21,6 +21,27 @@ router.get("/", ( req, res ) => {
     });
 });
 
+
+// Find one specific story
+router.get("/find/:id", ( req, res ) => {
+
+    let db = req.app.locals.db;
+
+    let id = new ObjectID(req.params.id); 
+
+    db.collection("humans").findOne( {"_id": id}, (err, post ) => {
+        if ( err !== null ) {
+            res.send(err);
+        }
+        
+        if ( !post ) {
+            res.send( { msg: "Post doesn't exist" } );
+        }
+
+        res.send( { results: post } )
+    });
+});
+
 // Get all humans per country
 router.get("/:country", ( req, res ) => {
 
@@ -49,14 +70,12 @@ router.get("/:country", ( req, res ) => {
 });
 
 // Get all humans submitted by same user
-router.get("/id/:id", ( req, res ) => {
+router.get("/user/:id", ( req, res ) => {
 
     let db = req.app.locals.db;
 
     // Id of submitter for filtering
-    let id = new ObjectID(req.params.id);
-
-    console.log(id)
+    let id = req.params.id;
 
     db.collection("humans").find( {"submittedBy" : id} ).toArray( (err, allHumans ) => {
         if ( err !== null ) {
@@ -65,6 +84,7 @@ router.get("/id/:id", ( req, res ) => {
         
         if ( allHumans.length === 0 ) {
             res.send( { msg: "Database is empty" } );
+            return;
         }
 
         res.send( { results: allHumans } )
@@ -72,6 +92,7 @@ router.get("/id/:id", ( req, res ) => {
 });
 
 
+// Hacer esto con queries country=country&city=city req.query
 // Get all humans per city
 router.get("/:country/:city", ( req, res ) => {
 
@@ -102,6 +123,7 @@ router.get("/:country/:city", ( req, res ) => {
     });
 });
 
+
 // Insert new story
 router.post("/", ( req, res ) => {
 
@@ -118,6 +140,7 @@ router.post("/", ( req, res ) => {
     });
 });
 
+// Delete one specific story
 router.delete("/:id", ( req, res ) => {
 
     let db = req.app.locals.db;
@@ -130,6 +153,24 @@ router.delete("/:id", ( req, res ) => {
         }
         
         res.send( { deletedCount: result.deletedCount } )
+    });
+});
+
+
+router.put("/:id", ( req, res ) => {
+
+    let db = req.app.locals.db;
+
+    const id = new ObjectID(req.params.id);
+
+    const newObject = req.body;
+
+    db.collection("humans").replaceOne( {"_id": id}, newObject, (err, result ) => {
+        if ( err !== null ) {
+            res.send(err);
+        }
+        
+        res.send( { results: result } )
     });
 });
 
