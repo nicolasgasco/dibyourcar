@@ -1,3 +1,4 @@
+const { ObjectID } = require("bson");
 const express = require("express");
 const router = express.Router();
 
@@ -47,6 +48,30 @@ router.get("/:country", ( req, res ) => {
     });
 });
 
+// Get all humans submitted by same user
+router.get("/id/:id", ( req, res ) => {
+
+    let db = req.app.locals.db;
+
+    // Id of submitter for filtering
+    let id = new ObjectID(req.params.id);
+
+    console.log(id)
+
+    db.collection("humans").find( {"submittedBy" : id} ).toArray( (err, allHumans ) => {
+        if ( err !== null ) {
+            res.send(err);
+        }
+        
+        if ( allHumans.length === 0 ) {
+            res.send( { msg: "Database is empty" } );
+        }
+
+        res.send( { results: allHumans } )
+    });
+});
+
+
 // Get all humans per city
 router.get("/:country/:city", ( req, res ) => {
 
@@ -90,6 +115,21 @@ router.post("/", ( req, res ) => {
         }
         
         res.send( { results: result.ops } )
+    });
+});
+
+router.delete("/:id", ( req, res ) => {
+
+    let db = req.app.locals.db;
+
+    const id = new ObjectID(req.params.id);
+
+    db.collection("humans").deleteOne( {"_id": id}, (err, result ) => {
+        if ( err !== null ) {
+            res.send(err);
+        }
+        
+        res.send( { deletedCount: result.deletedCount } )
     });
 });
 
