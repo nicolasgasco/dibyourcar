@@ -7,10 +7,12 @@ const locations = require("./routes/locations");
 const current_user = require("./routes/current_user");
 const users = require("./routes/users");
 
+// For environment variables
+require("dotenv").config();
 
 // Database initialization
 const MongoClient = require("mongodb").MongoClient;
-MongoClient.connect(`mongodb+srv://m001-student:${process.env.MONG_PASS}@sandbox.1ybr6.mongodb.net/bootcamp_project2?retryWrites=true&w=majority`, function(err, client) {
+MongoClient.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@sandbox.1ybr6.mongodb.net/bootcamp_project2?retryWrites=true&w=majority`, function(err, client) {
     
     if ( err != null ) {
         res.send(err);
