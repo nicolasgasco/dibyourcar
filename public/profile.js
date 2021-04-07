@@ -1,20 +1,67 @@
-// Show message if user has no submitted stories to show
-let yourSubmissions = document.querySelector("#your-submissions");
-
 // Container with personal info
 const yourProfileContainer = document.querySelector("#your-profile-container");
+// Smaller container with actual data
+const unchangedDataContainer = document.querySelector("#unchanged-data-container");
+
+
+// Container with hidden form for changing data
+const changeDataForm = document.getElementById("profile-data-box");
 
 // Edit data button for personal info container
 const editDataButton = document.querySelector("#edit-data-button");
-editDataButton.addEventListener("click", editDataInProfile);
+
+// Cancel button when you're editing data
+const cancelEditData = document.getElementById("cancel-data-edit");
+
+// Button to confirm data edit changes
+const confirmNewData = document.querySelector("#confirm-new-data");
+
+
+// Container with hidden form for changing password
+const changePasswordForm = document.getElementById("profile-password-box");
 
 // Edit password button for personal info container
 const editPasswordButton = document.querySelector("#edit-password-button");
-editPasswordButton.addEventListener("click", editPasswordInProfile);
 
-// Show submitted stories in profile when page is loaded
+// Cancel button for password change in personal info container
+const cancelPasswordEditButton = document.querySelector("#cancel-password-button");
+
+// Confirm password button for password change in personal info container 
+const confirmNewPasswordButton = document.querySelector("#confirm-password-button");
+
+
+// Container with stories submitted
+let yourSubmissions = document.querySelector("#your-submissions");
+
+// Container with data shown as stored in database, content added later in time
+let singleResultShowData;
+
+// Container with form for editing data in database, content added later in time
+let singleResultEditData;
+
+
+
+
+// Initialize all the button events at first
+initializeButtonEvents();
+// Show all the submitted post or default message
 showSubmittedPosts();
 
+
+function initializeButtonEvents() {
+    // Buttons for editing data
+    editDataButton.addEventListener("click", editDataInProfile);
+    cancelEditData.addEventListener("click", exitEditPersonalData);
+    confirmNewData.addEventListener("click", saveNewPersonalData);
+
+    // Buttons for editing password
+    editPasswordButton.addEventListener("click", editPasswordInProfile);
+    cancelPasswordEditButton.addEventListener("click", exitEditPassword);
+    confirmNewPasswordButton.addEventListener("click", saveNewPassword);
+}
+
+
+// Show message when no story was submitted
 function showDefaultMessageYourSubmissions() {
     yourSubmissions.innerHTML =
         `
@@ -24,6 +71,7 @@ function showDefaultMessageYourSubmissions() {
         </div>
         `
 }
+
 
 // Three utility functions used later
 function capitalizeFirstLetterEveryWord(myString) {
@@ -48,56 +96,112 @@ function createObjectFromString(arrayToParse) {
 }
 
 
-function editDataInProfile() {
+// Activated when Edit data button is pressed
+function editDataInProfile(event) {
+    event.preventDefault();
 
-    // Write new form for changing password
-    yourProfileContainer.innerHTML = 
-    `
-    <form id="profile-data-box" class="formatted-form">
-        <h3 class="l-text">Edit your data:</h3>
-        <label for="confirm-new-name" class="s-text inline-block">Name: <input type="text" name="name" id="confirm-new-name" class="s-text" placeholder="Your name"></label>
+    changeDataForm.classList.toggle("hidden");
+    unchangedDataContainer.classList.toggle("hidden");
+}
 
-        <label for="confirm-new-surname" class="s-text inline-block">Surname: <input type="text" name="surname" id="confirm-new-surname" class="s-text" placeholder="Your surname"></label>
-        <br>
-        <br>
-        <label for="confirm-new-email" class="s-text inline-block">E-mail: <input type="text" id="confirm-new-email" name="email" class="s-text" placeholder="Your e-mail"></label>
-        <br>
-        <br>
-        <div class="add-button-container">
-            <button type="submit" id="confirm-new-data" class="home-paragraph-button black-bg white-text bold">Confirm data</button>
-            <button type="submit" id="cancel-data-edit" class="home-paragraph-button black-bg white-text bold">Cancel</button>
-        </div>
+// Activated when Cancel button is pressed during data editing 
+function exitEditPersonalData(event) {
+    event.preventDefault();
 
-        
-    </form>
-    `
+    changeDataForm.classList.toggle("hidden");
+    unchangedDataContainer.classList.toggle("hidden");
+}
 
-    // Event for Cancel button, everything goes back to normal
-    const cancelEditData = document.getElementById("cancel-data-edit");
-    cancelEditData.addEventListener("click", showNormalPersonalData);
+// Activated when Confirm data button is pressed during data editing
+function saveNewPersonalData(event) {
+    event.preventDefault();
+
+    const dataContainer = event.currentTarget.parentElement.parentElement;
+    const newDataInputs = dataContainer.children;
+
+    let userObject = {};
+    for ( let newInput of newDataInputs ) {
+        if ( newInput.tagName === "LABEL" ) {
+            let value = newInput.firstElementChild.value;
+            let name = newInput.firstElementChild.name;
+
+            switch ( name ) {
+                case "name":
+                    userObject["name"] = value;
+                    break;
+                case "surname":
+                    userObject["surname"] = value;
+                    break;
+                case "email":
+                    userObject["email"] = value;
+                    break;
+            }
+        }
+    } 
+
+    dataContainer.checkValidity();
+    if ( dataContainer.reportValidity() ) {
+        // Save info and update
+    };
 }
 
 
-function editPasswordInProfile() {
+// Activated when Edit password button is pressed
+function editPasswordInProfile(event) {
+    event.preventDefault();
 
-    // Switch content to Change data form
-    yourProfileContainer.innerHTML = 
-    `
-    <form id="profile-data-box" class="formatted-form">
-        <label for="password-edit" class="s-text inline-block">Current password: <input type="password" id="password-edit" name="password" class="s-text" autocomplete="current-password"></label>
-
-        <br>
-        <br>
-        <label for="new-password" class="s-text inline-block">New password: <input type="password" id="new-password" name="new-password" class="s-text" autocomplete="new-password"></label>
-        <label for="confirm-new-password" class="s-text inline-block">Confirm new password: <input type="password" id="confirm-new-password" name="new-password" class="s-text" autocomplete="new-password"></label>
-        <br>
-        <br>
-        <div class="add-button-container">
-            <button type="submit" id="confirm-password-button" class="home-paragraph-button black-bg white-text bold">Confirm password</button>
-        </div>        
-    </form>
-    `
+    changePasswordForm.classList.toggle("hidden");
+    unchangedDataContainer.classList.toggle("hidden");
 }
+
+// Activated when Cancel button is pressed during password change
+function exitEditPassword(event) {
+    event.preventDefault();
+
+    changePasswordForm.classList.toggle("hidden");
+    unchangedDataContainer.classList.toggle("hidden");
+}
+
+function saveNewPassword(event) {
+    event.preventDefault();
+
+    const dataContainer = event.currentTarget.parentElement.parentElement;
+
+
+    const newDataInputs = dataContainer.children;
+
+    let passwordObject = {};
+    for ( let newInput of newDataInputs ) {
+        if ( newInput.tagName === "LABEL" ) {
+            let value = newInput.firstElementChild.value;
+            let name = newInput.firstElementChild.name;
+
+
+            switch ( name ) {
+                case "password":
+                    passwordObject["password"] = value;
+                    break;
+                case "new-password":
+                    passwordObject["new-password"] = value;
+                    break;
+                case "confirm-new-password":
+                    passwordObject["confirm-new-password"] = value;
+                    break;
+            }
+        }
+    }
+
+    dataContainer.checkValidity();
+    if ( dataContainer.reportValidity() ) {
+        // Check if current password is correct
+
+        // Check if two password are equal
+
+        // Save new password in database
+    };
+
+}
+
 
 
 // Show posts submitted by user
@@ -118,7 +222,7 @@ function showSubmittedPosts() {
             const postArray = res.results;
 
             finalResult = ``;
-            console.log(postArray)
+
             if ( postArray ) {
                 for ( let element of postArray ) {
 
@@ -133,17 +237,127 @@ function showSubmittedPosts() {
                     finalResult +=
                         `
                         <div id="single-result-${element._id}" class="single-result">
+                            
                             <small style="display:none">${element._id}</small>
                             ${portraitImage}
+                        
                             <h3>${element.name} ${element.surname} (${element.age}, ${element.gender})</h3>
-                            <p><b>From:</b> ${element.from.city} (${element.from.country})</p>
-                            <p><b>Currently in:</b> ${element.currently_in.city} (${element.currently_in.country})<p>
-                            <p><b>Story:</b> ${element.interview.story}</p>
-                            <p><b>Advice:</b> ${element.interview.advice}</p>
-                            <p><b>Dream:</b> ${element.interview.dream}</p>
-                            <div class="add-button-container">
-                                <button type="submit" onclick="editStory(event)" class="home-paragraph-button black-bg white-text bold">Edit story</button>
-                                <button type="submit" onclick="deleteStory(event)" class="home-paragraph-button black-bg white-text bold">Delete story</button>
+                            <div id="single-result-show-data">
+                                <p><b>From:</b> ${element.from.city} (${element.from.country})</p>
+                                <p><b>Currently in:</b> ${element.currently_in.city} (${element.currently_in.country})<p>
+                                <p><b>Story:</b> ${element.interview.story}</p>
+                                <p><b>Advice:</b> ${element.interview.advice}</p>
+                                <p><b>Dream:</b> ${element.interview.dream}</p>
+                                <div class="add-button-container">
+                                    <button type="submit" onclick="editStory(event)" class="home-paragraph-button black-bg white-text bold">Edit story</button>
+                                    <button type="submit" onclick="deleteStory(event)" class="home-paragraph-button black-bg white-text bold">Delete story</button>
+                                </div>
+                            </div>
+
+                            <div id="single-result-edit-data" class="hidden">
+                                <form id="edit-story-form-${element._id}" class="formatted-form">
+                                    <p><b>Personal data:</b></p>
+                                    <label for="new-story-name">Name (required):</label>
+                                    <input type="text" name="name" id="new-story-name" autocomplete="given-name" value="${element.name}" required>
+                                    <br>
+                                    <label for="new-story-surname">Surname (required):</label>
+                                    <input type="text" name="surname" id="new-story-surname" autocomplete="family-name" value="${element.surname}" required>
+                        
+                                    <br>
+                                    <br>
+                        
+                                    <label for="new-story-age">Age:</label>
+                                    <input type="number" name="age" id="new-story-age" min="10" max="100" value="${element.age}">
+                                    
+                                    <label for="gender-select">Gender:</label>
+                                    <select name="gender" id="gender-select" autocomplete="sex">
+                                        <option value="female">Female</option>
+                                        <option value="male">Male</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                        
+                                    <br>
+                                    
+                                    <p><b>Contact:</b></p>
+                                    <label for="new-story-email">Email:</label>
+                                    <input type="email" name="email" id="new-story-email" autocomplete="email" value="${element.contact.email}">
+                                    
+                                    <br>
+                                    <br>
+                        
+                                    <label for="new-story-telephone">Telephone (+12345678):</label>
+                                    <input type="tel" name="telephone" id="new-story-telephone" autocomplete="tel" value="${element.contact.telephone_number}">
+                        
+                                    <p><b>From:</b></p>
+                                    <label for="new-story-city-from">City:</label>
+                                    <input type="text" name="city-from" id="new-story-city-from" autocomplete="address-level2" value="${element.from.city}">
+                                    
+                        
+                                    <label for="new-story-country-from">Country (required):</label>
+                                    <input type="text" name="country-from" id="new-story-country-from" required autocomplete="country-name" value="${element.from.country}">
+                                    
+                        
+                                    <p><b>Living in:</b></p>
+                                    <label for="new-story-country">City (required):</label>
+                                    <input type="text" name="city" id="new-story-country" autocomplete="address-level2" required value="${element.currently_in.city}">
+                                    
+                                    <br>
+                        
+                                    <label for="new-story-country">Country (required):</label>
+                                    <input type="text" name="country" id="new-story-country" autocomplete="country-name" required value="${element.currently_in.country}">
+                                    
+                                    <br>
+                        
+                                    <label for="new-story-spot">Where usually found: </label>
+                                    <textarea name="spot" id="new-story-spot" rows="1" required>${element.where_to_find.spot}</textarea>
+                        
+                                    
+                                    <br>
+                                    <br>
+                        
+                                    <p><b>Interview:</b></p>
+                                    <label for="new-story-body">Story (required):</label>
+                                    <br>
+                                    <textarea name="story" id="new-story-body" rows="4" required>${element.interview.story}</textarea>
+                                    
+                                    <br>
+                        
+                                    <label for="new-story-advice">Advice (required):</label>
+                                    <br>
+                                    <textarea name="advice" id="new-story-advice" rows="2" required>${element.interview.advice}</textarea>
+                        
+                                    <br>
+                        
+                                    <label for="new-story-dream">Dream (required):</label>
+                                    <br>
+                                    <textarea name="dream" id="new-story-dream" rows="2" required>${element.interview.dream}</textarea>
+                        
+                                    <br>
+                                    <br>
+                                    
+                                    <p><b>Image:</b></p>
+                                    <label for="new-story-image">Image:</label>
+                                    <input type="text" name="img" id="new-story-image" autocomplete="photo" value="${element.img}">
+                                    
+                                    <br>
+                                    <br>
+                        
+                                    <p><b>Consent:</b></p>
+                                    <p>Does the interviewee agreed to sharing their contact information?</p>
+                                    <div class="inline-block">
+                                        <input type="radio" id="share-yes" name="share-consent" value="true">
+                                        <label for="share-yes">Yes</label>
+                                        <input type="radio" id="share-no" name="share-consent" value="false" checked>
+                                        <label for="share-no">No</label>
+                                    </div>
+                        
+                                    <br>
+                        
+                                    <div class="add-button-container">
+                                        <button type="submit" class="home-paragraph-button black-bg white-text bold" onclick="saveEdits(event)">Save edits</button>
+                                        <button type="submit" onclick="cancelEditStory(event)" class="home-paragraph-button black-bg white-text bold">Cancel</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
     
@@ -151,6 +365,9 @@ function showSubmittedPosts() {
                 }
     
                 yourSubmissions.innerHTML = finalResult;
+                
+                singleResultShowData = document.querySelector("#single-result-show-data");
+                singleResultEditData = document.querySelector("#single-result-edit-data");
             
             } else {
                 showDefaultMessageYourSubmissions();
@@ -168,12 +385,13 @@ function showSubmittedPosts() {
 }
 
 function deleteStory(event) {
-    window.confirm("Do you really want to remove this entry?");
+    let userChoice = window.confirm("Do you really want to remove this entry?");
 
-    const id = event.currentTarget.parentElement.parentElement.firstElementChild.innerText;
-    const singleResultContainer = event.currentTarget.parentElement.parentElement;
-
-    if ( window.confirm ) {
+    const id = event.currentTarget.parentElement.parentElement.parentElement.firstElementChild.innerText;
+    
+    const singleResultContainer = event.currentTarget.parentElement.parentElement.parentElement;
+    
+    if ( userChoice === true ) {
 
         fetch(`api/humans/${id}`, {
             method: "DELETE",
@@ -184,7 +402,11 @@ function deleteStory(event) {
         .then( res => res.json() )
         .then( res => {
             singleResultContainer.remove();
-            window.alert("Story deleted!");
+
+            setTimeout( function() {
+                window.alert("Story deleted!");
+            }, 300);
+            
         })
         .catch( (error) => {
             console.error("Error:", error);
@@ -192,152 +414,23 @@ function deleteStory(event) {
     }
 }
 
+function switchDisplayShowEditData() {
+    singleResultShowData.classList.toggle("hidden");
+    singleResultEditData.classList.toggle("hidden");
+}
+
 function editStory(event) {
-
-    const id = event.currentTarget.parentElement.parentElement.firstElementChild.innerText;
-
-    fetch(`api/humans/find/${id}`)
-    .then( res => res.json() )
-    .then( res => {
-        element = res.results;
-
-        let portraitImage;
-
-        if ( !element.img ) {
-            portraitImage = `<img src="./img/no_image.jpg" alt="No image available" class="result-image">`
-        } else {
-            portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}" class="result-image">`
-        }
-
-        result = `
-        <small style="display:none">${element._id}</small>
-        ${portraitImage}
-        <h3>${element.name} ${element.surname} (${element.age}, ${element.gender})</h3>
-        <form id="edit-story-form-${element._id}" class="formatted-form">
-            <p><b>Personal data:</b></p>
-            <label for="new-story-name">Name (required):</label>
-            <input type="text" name="name" id="new-story-name" autocomplete="given-name" value="${element.name}" required>
-            <br>
-            <label for="new-story-surname">Surname (required):</label>
-            <input type="text" name="surname" id="new-story-surname" autocomplete="family-name" value="${element.surname}" required>
-
-            <br>
-            <br>
-
-            <label for="new-story-age">Age:</label>
-            <input type="number" name="age" id="new-story-age" min="10" max="100" value="${element.age}">
-            
-            <label for="gender-select">Gender:</label>
-            <select name="gender" id="gender-select" autocomplete="sex">
-                <option value="female">Female</option>
-                <option value="male">Male</option>
-                <option value="other">Other</option>
-            </select>
-
-            <br>
-            
-            <p><b>Contact:</b></p>
-            <label for="new-story-email">Email:</label>
-            <input type="email" name="email" id="new-story-email" autocomplete="email" value="${element.contact.email}">
-            
-            <br>
-            <br>
-
-            <label for="new-story-telephone">Telephone (+12345678):</label>
-            <input type="tel" name="telephone" id="new-story-telephone" autocomplete="tel" value="${element.contact.telephone_number}">
-
-            <p><b>From:</b></p>
-            <label for="new-story-city-from">City:</label>
-            <input type="text" name="city-from" id="new-story-city-from" autocomplete="address-level2" value="${element.from.city}">
-            
-
-            <label for="new-story-country-from">Country (required):</label>
-            <input type="text" name="country-from" id="new-story-country-from" required autocomplete="country-name" value="${element.from.country}">
-            
-
-            <p><b>Living in:</b></p>
-            <label for="new-story-country">City (required):</label>
-            <input type="text" name="city" id="new-story-country" autocomplete="address-level2" required value="${element.currently_in.city}">
-            
-            <br>
-
-            <label for="new-story-country">Country (required):</label>
-            <input type="text" name="country" id="new-story-country" autocomplete="country-name" required value="${element.currently_in.country}">
-            
-            <br>
-
-            <label for="new-story-spot">Where usually found: </label>
-            <textarea name="spot" id="new-story-spot" rows="1" required>${element.where_to_find.spot}</textarea>
-
-            
-            <br>
-            <br>
-
-            <p><b>Interview:</b></p>
-            <label for="new-story-body">Story (required):</label>
-            <br>
-            <textarea name="story" id="new-story-body" rows="4" required>${element.interview.story}</textarea>
-            
-            <br>
-
-            <label for="new-story-advice">Advice (required):</label>
-            <br>
-            <textarea name="advice" id="new-story-advice" rows="2" required>${element.interview.advice}</textarea>
-
-            <br>
-
-            <label for="new-story-dream">Dream (required):</label>
-            <br>
-            <textarea name="dream" id="new-story-dream" rows="2" required>${element.interview.dream}</textarea>
-
-            <br>
-            <br>
-            
-            <p><b>Image:</b></p>
-            <label for="new-story-image">Image:</label>
-            <input type="text" name="img" id="new-story-image" autocomplete="photo" value="${element.img}">
-            
-            <br>
-            <br>
-
-            <p><b>Consent:</b></p>
-            <p>Does the interviewee agreed to sharing their contact information?</p>
-            <div class="inline-block">
-                <input type="radio" id="share-yes" name="share-consent" value="true">
-                <label for="share-yes">Yes</label>
-                <input type="radio" id="share-no" name="share-consent" value="false" checked>
-                <label for="share-no">No</label>
-            </div>
-
-            <br>
-
-            <div class="add-button-container">
-                <button type="submit" class="home-paragraph-button black-bg white-text bold" onclick="saveEdits(event)">Save edits</button>
-                <button type="submit" onclick="cancelEdits(event)" class="home-paragraph-button black-bg white-text bold">Cancel</button>
-            </div>
-        </form>
-
-        `
-        const singleResultEdit = event.target.parentElement.parentElement;
-        singleResultEdit.innerHTML = result.replaceAll("undefined", "");
-
-    })
-    .catch( (error) => {
-        console.error("Error:", error);
-    });
-
-    
-}
-
-function cancelEdits(event) {
-    
     event.preventDefault();
-    showSubmittedPosts()
-    const id = event.currentTarget.parentElement.parentElement.id.split("-").splice(-1);
-    setTimeout( function() {
-        document.getElementById(`image-${id}`).scrollIntoView({behavior: 'smooth'});
-    }, 300)
+
+    switchDisplayShowEditData()
 }
+
+function cancelEditStory(event) {
+    event.preventDefault();
+
+    switchDisplayShowEditData()
+}
+
 
 // Since asynchronous, doesn't work for all the cases
 async function getIdCurrentUser() {
@@ -360,19 +453,19 @@ async function saveEdits(event) {
     let interview = [];
     let contact = [];
 
-    id = editStoryForm.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+    // Database id of story
+    id = editStoryForm.parentElement.parentElement.firstElementChild.innerText;
 
     for ( let inputField of editStoryForm.children ) {
 
+        // Filter only meaningful tags
         if ( inputField.tagName === "INPUT" || inputField.tagName === "TEXTAREA" || inputField.tagName === "SELECT" ) {
             
-            // Data validation
+            // Giving data the right formatting
             let validatedData;
             if ( inputField.value ) {
                 
-                console.log(inputField.name)
                 if ( inputField.name === "gender" ) {
-                    console.log("ciao")
                     validatedData = inputField.value.toLowerCase();
 
                 } else if ( inputField.name === "img" ) {
@@ -385,10 +478,10 @@ async function saveEdits(event) {
                     validatedData =  capitalizeFirstLetterEveryWord(inputField.value); 
                 }
 
+                // Either good as it is or needs some manipulation
                 let value = validatedData || inputField.value;
 
-
-
+                // Creating object with manipulated data
                 switch ( inputField.name ) {
                     case "city-from":
                         fromArr.push( `"city": "${value}"` );
@@ -418,7 +511,8 @@ async function saveEdits(event) {
                     case "dream":
                             interview.push( `"dream": "${value}"` );
                         break;
-    
+                    
+                    // Spot is a nested value
                     case "spot":
                         updatedStory["where_to_find"] = {"spot": value};
                         break;
@@ -435,19 +529,19 @@ async function saveEdits(event) {
                         updatedStory[inputField.name] = value;
                         break;
                 }
-                
             }
-
-
         }
     }
 
+    // Radio buttons, true or false
     const shareConsent = document.querySelector(`input[name="share-consent"]:checked`).value;
     contact.push( `"share_contact": ${Boolean(shareConsent)}` );
 
-
+    // Date of modification
     updatedStory["submitDate"] = new Date();
 
+
+    // Raw strings are converted into objects, sometimes nested
     if ( fromArr.length > 0 ) {
         updatedStory["from"] = createObjectFromString(fromArr);
     } 
@@ -461,55 +555,179 @@ async function saveEdits(event) {
     } 
 
     updatedStory["contact"] = createObjectFromString(contact);
+    
     // Add to logic to add submittedBy user
+    // MAYBE I'LL NEED TO CHANGE THIS
     const currentUserId = await getIdCurrentUser();
     updatedStory["submittedBy"] = currentUserId;
 
-    console.log(updatedStory)
+    // Checks validity of form, if OK, sends to database
+    editStoryForm.checkValidity();
+    if ( editStoryForm.reportValidity() ) {
+        fetch(`api/humans/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify( updatedStory ),
+        })
+        .then( res => res.json() )
+        .then( res => {
+            switchDisplayShowEditData()
 
-    fetch(`api/humans/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify( updatedStory ),
-    })
-    .then( res => res.json() )
-    .then( res => {
-        window.alert("Story modified!");
-        console.log(res.results.ops[0]);
-        showSubmittedPosts();
-    })
-    .catch( (error) => {
-        console.error("Error:", error);
-    });
+            setTimeout( function() {
+                window.alert("Story modified!");
+            }, 300)
+
+            
+        })
+        .catch( (error) => {
+            console.error("Error:", error);
+        });
+    };
+
+
 }
 
 
+// function editStory(event) {
+
+//     const id = event.currentTarget.parentElement.parentElement.firstElementChild.innerText;
+
+//     fetch(`api/humans/find/${id}`)
+//     .then( res => res.json() )
+//     .then( res => {
+//         element = res.results;
+
+//         let portraitImage;
+
+//         if ( !element.img ) {
+//             portraitImage = `<img src="./img/no_image.jpg" alt="No image available" class="result-image">`
+//         } else {
+//             portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}" class="result-image">`
+//         }
+
+//         result = `
+//         <small style="display:none">${element._id}</small>
+//         ${portraitImage}
+//         <h3>${element.name} ${element.surname} (${element.age}, ${element.gender})</h3>
+//         <form id="edit-story-form-${element._id}" class="formatted-form">
+//             <p><b>Personal data:</b></p>
+//             <label for="new-story-name">Name (required):</label>
+//             <input type="text" name="name" id="new-story-name" autocomplete="given-name" value="${element.name}" required>
+//             <br>
+//             <label for="new-story-surname">Surname (required):</label>
+//             <input type="text" name="surname" id="new-story-surname" autocomplete="family-name" value="${element.surname}" required>
+
+//             <br>
+//             <br>
+
+//             <label for="new-story-age">Age:</label>
+//             <input type="number" name="age" id="new-story-age" min="10" max="100" value="${element.age}">
+            
+//             <label for="gender-select">Gender:</label>
+//             <select name="gender" id="gender-select" autocomplete="sex">
+//                 <option value="female">Female</option>
+//                 <option value="male">Male</option>
+//                 <option value="other">Other</option>
+//             </select>
+
+//             <br>
+            
+//             <p><b>Contact:</b></p>
+//             <label for="new-story-email">Email:</label>
+//             <input type="email" name="email" id="new-story-email" autocomplete="email" value="${element.contact.email}">
+            
+//             <br>
+//             <br>
+
+//             <label for="new-story-telephone">Telephone (+12345678):</label>
+//             <input type="tel" name="telephone" id="new-story-telephone" autocomplete="tel" value="${element.contact.telephone_number}">
+
+//             <p><b>From:</b></p>
+//             <label for="new-story-city-from">City:</label>
+//             <input type="text" name="city-from" id="new-story-city-from" autocomplete="address-level2" value="${element.from.city}">
+            
+
+//             <label for="new-story-country-from">Country (required):</label>
+//             <input type="text" name="country-from" id="new-story-country-from" required autocomplete="country-name" value="${element.from.country}">
+            
+
+//             <p><b>Living in:</b></p>
+//             <label for="new-story-country">City (required):</label>
+//             <input type="text" name="city" id="new-story-country" autocomplete="address-level2" required value="${element.currently_in.city}">
+            
+//             <br>
+
+//             <label for="new-story-country">Country (required):</label>
+//             <input type="text" name="country" id="new-story-country" autocomplete="country-name" required value="${element.currently_in.country}">
+            
+//             <br>
+
+//             <label for="new-story-spot">Where usually found: </label>
+//             <textarea name="spot" id="new-story-spot" rows="1" required>${element.where_to_find.spot}</textarea>
+
+            
+//             <br>
+//             <br>
+
+//             <p><b>Interview:</b></p>
+//             <label for="new-story-body">Story (required):</label>
+//             <br>
+//             <textarea name="story" id="new-story-body" rows="4" required>${element.interview.story}</textarea>
+            
+//             <br>
+
+//             <label for="new-story-advice">Advice (required):</label>
+//             <br>
+//             <textarea name="advice" id="new-story-advice" rows="2" required>${element.interview.advice}</textarea>
+
+//             <br>
+
+//             <label for="new-story-dream">Dream (required):</label>
+//             <br>
+//             <textarea name="dream" id="new-story-dream" rows="2" required>${element.interview.dream}</textarea>
+
+//             <br>
+//             <br>
+            
+//             <p><b>Image:</b></p>
+//             <label for="new-story-image">Image:</label>
+//             <input type="text" name="img" id="new-story-image" autocomplete="photo" value="${element.img}">
+            
+//             <br>
+//             <br>
+
+//             <p><b>Consent:</b></p>
+//             <p>Does the interviewee agreed to sharing their contact information?</p>
+//             <div class="inline-block">
+//                 <input type="radio" id="share-yes" name="share-consent" value="true">
+//                 <label for="share-yes">Yes</label>
+//                 <input type="radio" id="share-no" name="share-consent" value="false" checked>
+//                 <label for="share-no">No</label>
+//             </div>
+
+//             <br>
+
+//             <div class="add-button-container">
+//                 <button type="submit" class="home-paragraph-button black-bg white-text bold" onclick="saveEdits(event)">Save edits</button>
+//                 <button type="submit" onclick="cancelEditStory(event)" class="home-paragraph-button black-bg white-text bold">Cancel</button>
+//             </div>
+//         </form>
+
+//         `
+//         const singleResultEdit = event.target.parentElement.parentElement;
+//         singleResultEdit.innerHTML = result.replaceAll("undefined", "");
+
+//     })
+//     .catch( (error) => {
+//         console.error("Error:", error);
+//     });
+
+    
+// }
 
 
-function showNormalPersonalData() {
-    yourProfileContainer.innerHTML =
-    `
-    <form id="profile-data-box" class="formatted-form">
-        <label for="name-profile" class="s-text inline-block">Name: <input type="text" id="name-profile" name="name" class="s-text" placeholder="Your name" autocomplete="given-name" readonly></label>
 
-        <label for="surname-profile" class="s-text inline-block">Surname: <input type="text" id="surname-profile" name="surname" class="s-text" placeholder="Your surname" autocomplete="family-name" readonly></label>
-        <br>
-        <br>
-        <label for="email-profile" class="s-text inline-block">E-mail: <input type="text" id="email-profile" name="email" class="s-text" placeholder="Your e-mail" autocomplete="email" readonly></label>
-        <br>
-        <br>
-        <label for="password-profile" class="s-text inline-block">Password: <input type="password" id="password-profile" name="password" class="s-text" placeholder="Your password" autocomplete="current-password" readonly></label>
 
-        <!-- <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" class="s-text"></label> -->
-        <br>
-        <br>
-        <div class="add-button-container">
-            <button type="button" id="edit-data-button" class="home-paragraph-button black-bg white-text bold">Edit data</button>
-            <button type="button" id="edit-password-button" class="home-paragraph-button black-bg white-text bold">Edit password</button>
-        </div>
-        
-    </form>
-    `
-}
+
