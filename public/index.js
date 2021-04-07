@@ -49,3 +49,12 @@ firstStartHelpLink.addEventListener("click", showSignupContainer);
 
 const secondStartHelpLink = document.querySelector("#start-helping-link");
 secondStartHelpLink.addEventListener("click", showSignupContainer);
+
+// function saveUserIdToLocalStorage(event) {
+//     const loginForm = document.querySelector("#log-in-form");
+//     email = 
+//     console.log(loginForm.children)
+//     event.preventDefault();
+    
+//     fetch(`/api/users/${email}`)
+// }
