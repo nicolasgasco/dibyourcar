@@ -22,11 +22,11 @@
             <div id="log-in-container" class="black-bg-transparent white-text hidden-container">
                 <h2 class="no-margin xl-text">Log in to your account</h2>
                 <form id="log-in-form">
-                    <label for="email-login" class="s-text inline-block">E-mail: <input type="email" name="email" id="email-login" class="s-text" required></label>
+                    <label for="email-login" class="s-text inline-block">E-mail: <input type="email" name="email" id="email-login" class="s-text" autocomplete="email" value="example@mail.com" required></label>
 
-                    <label for="password-login" class="s-text inline-block">Password: <input type="password" name="password" id="password-login" class="s-text" required></label>
+                    <label for="password-login" class="s-text inline-block">Password: <input type="password" name="password" id="password-login" class="s-text" autocomplete="current-password" value="password" required></label>
 
-                    <button type="submit" class="white-text s-text log-button bold">Enter</button>
+                    <button type="submit" type="log-in-button" onclick="saveUserIdToLocalStorage(event)" class="white-text s-text log-button bold">Enter</button>
                 </form>
 
                 <div>
