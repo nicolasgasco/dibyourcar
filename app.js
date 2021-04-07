@@ -5,6 +5,7 @@ const app = express();
 const humans = require("./routes/humans");
 const locations = require("./routes/locations");
 const current_user = require("./routes/current_user");
+const users = require("./routes/users");
 
 
 // Database initialization
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use("/api/humans/", humans);
 app.use("/api/locations/", locations);
 app.use("/api/currentuser/", current_user);
+app.use("/api/users/", users);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
