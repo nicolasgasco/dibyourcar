@@ -52,6 +52,9 @@ footer {
     min-height: 5vh;
 }
 
+.hidden {
+    display: none;
+}
 img {
     max-width: 100%;
 }
