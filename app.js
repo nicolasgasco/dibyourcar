@@ -139,7 +139,7 @@ app.post(
 );
 
 app.get("/success", (req, res) => {
-    res.send({ msg: "Login successful", user: req.user, session: true });
+    res.send({ loginDataCorrect: true, msg: "Login successful", user: req.user, session: true });
 });
 
 app.get("/fail", (req, res) => {
