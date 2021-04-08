@@ -243,16 +243,19 @@ function showSubmittedPosts() {
                         
                             <h3>${element.name} ${element.surname} (${element.age}, ${element.gender})</h3>
                             <div id="single-result-show-data">
-                                <p><b>From:</b> ${element.from.city} (${element.from.country})</p>
-                                <p><b>Currently in:</b> ${element.currently_in.city} (${element.currently_in.country})<p>
-                                <p><b>Story:</b> ${element.interview.story}</p>
-                                <p><b>Advice:</b> ${element.interview.advice}</p>
-                                <p><b>Dream:</b> ${element.interview.dream}</p>
+                                <div>
+                                    <p><b>From:</b> ${element.from.city} (${element.from.country})</p>
+                                    <p><b>Currently in:</b> ${element.currently_in.city} (${element.currently_in.country})<p>
+                                    <p class="min-height"><b>Story:</b> ${element.interview.story}</p>
+                                    <p class="min-height"><b>Advice:</b> ${element.interview.advice}</p>
+                                    <p class="min-height"><b>Dream:</b> ${element.interview.dream}</p>
+                                </div>
                                 <div class="add-button-container">
                                     <button type="submit" onclick="editStory(event)" class="home-paragraph-button black-bg white-text bold">Edit story</button>
                                     <button type="submit" onclick="deleteStory(event)" class="home-paragraph-button black-bg white-text bold">Delete story</button>
                                 </div>
                             </div>
+                            
 
                             <div id="single-result-edit-data" class="hidden">
                                 <form id="edit-story-form-${element._id}" class="formatted-form">
