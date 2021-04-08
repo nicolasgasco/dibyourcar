@@ -49,6 +49,7 @@ router.get("/email/:email", ( req, res ) => {
         
         if ( !user ) {
             res.send( { msg: "Database is empty" } );
+            return;
         }
 
         res.send( { results: user } )
