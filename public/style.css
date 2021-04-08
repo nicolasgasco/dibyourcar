@@ -9,6 +9,10 @@ a, a:hover, a:visited {
     /* outline: 2px red solid; */
 }
 
+.block {
+    display: block;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -276,7 +280,7 @@ ul {
 }
 
 .upmost-header {
-    min-height: auto;
+    min-height: 2rem;
     padding: 0 2.5%;
 }
 
