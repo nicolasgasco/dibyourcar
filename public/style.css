@@ -55,6 +55,7 @@ footer {
 .hidden {
     display: none;
 }
+
 img {
     max-width: 100%;
 }
@@ -79,6 +80,11 @@ li {
     margin: 4%;
 }
 
+.margin-0 {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
 .no-margin {
     margin: 0;
 }
@@ -96,11 +102,14 @@ ul {
     width: 100%;
 }
 
+.red-outline {
+    outline: 2px red solid;
+}
+
 /* LAYOUT */
 
 .accented-link {
     padding: 0.5% 1.5%;
-
 }
 
 .add-button-container {
@@ -149,11 +158,10 @@ ul {
 
 }
 
-#log-in-container, #sign-up-container {
+#log-in-container, #sign-up-container, #user-container {
     max-width: 100%;
     min-width: 50%;
     right: 0%;
-    display: none;
     position: absolute;
 }
 
@@ -223,7 +231,7 @@ ul {
     padding: 4%;
 }
 
-#search-results {
+.grid-results {
     display: flex;
     justify-content: center;
     align-content: baseline;
@@ -231,11 +239,16 @@ ul {
     gap: 4%;
 }
 
+.width-92 {
+    width: 92%;
+    margin: 0 auto;
+}
+
 .boxed-results {
     border: 2px black solid;
-    box-shadow: 8px -8px rgb(236, 236, 236);
+    box-shadow: 15px -15px rgb(236, 236, 236);
 
-    width: 92%;
+
     margin: 4%;
     padding: 0.7rem;
 }
@@ -431,6 +444,12 @@ button:hover, button:active {
 
 }
 
+/* This one overwrites the first one for header buttons */
+.accented-link:hover, .accented-link:active {
+    outline: none;
+    color: white;
+}
+
 hr {
     border: 0;
     border-bottom: 1px dashed #ccc;
@@ -465,6 +484,21 @@ hr {
 .single-result {
     border-bottom: 1px black dashed;
 
+}
+
+#user-icon-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0.2rem;
+    background-image: url(./img/user.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#user-icon-button:hover, #user-icon-button:active {
+    background-color: none;
+    transform: scale(1.05);
 }
 
 #whole-header {
@@ -581,6 +615,10 @@ nav.shift ul li a {
 
     footer * {
         font-size: medium;
+    }
+    
+    .min-height {
+        min-height: 4.5rem;
     }
 
     .s-text {
