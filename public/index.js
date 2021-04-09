@@ -93,9 +93,19 @@ function loginSuccessful(event) {
     loginLink.classList.toggle("hidden");
 
     // Need these like this because you get here from different places, toggle isn't always what you need
-    loginContainer.style.display = "none";
-    signupContainer.style.display = "none";
+    // ThIS NEEDS TO BE CHECKED
+    if ( !loginContainer.classList.contains("hidden") ) {
+        loginContainer.classList.toggle("hidden");
+    }
 
+    if ( !signupContainer.classList.contains("hidden") ) {
+        signupContainer.classList.toggle("hidden");
+    }
+
+    if ( !userContainer.classList.contains("hidden") ) {
+        console.log("ciao")
+        userContainer.classList.toggle("hidden");
+    }
 
     // Show button with profile icon
     userIconLink.style.display = "block";
@@ -375,7 +385,7 @@ function tryToSignup(event) {
 
 
 function logoutUser() {
-    console.log("ciao")
+
     fetch("/api/logout/", {
         method: "PUT",
         headers: {
@@ -384,7 +394,7 @@ function logoutUser() {
     })
     .then( res => res.json() )
     .then( result => {
-        console.log(result)
+
         if ( result.loggedOut ) {
 
             // Clean locale storage and reload page
@@ -444,7 +454,7 @@ secondStartHelpLink.addEventListener("click", showHideSignupContainer);
 
 // Logout button
 const logoutButton = document.querySelector("#logout-button");
-logoutButton.addEventListener("click", logoutUser)
+logoutButton.addEventListener("click", logoutUser);
 
 // When loading page, check if user is already logged in
 checkUserAlreadyLoggedIn();
