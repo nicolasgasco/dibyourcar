@@ -26,21 +26,20 @@ router.get("/id/:id", ( req, res ) => {
         }
         
         if ( !user ) {
-            res.send( { msg: "Database is empty" } );
+            res.send( { "userExists": false, msg: "Database is empty" } );
         }
 
-        res.send( { results: user } )
+        res.send( { "userExists": true, results: user } )
     });
 });
 
 
 // Get user with given email
-router.get("/email/:email", ( req, res ) => {
+router.post("/email/", ( req, res ) => {
 
     let db = req.app.locals.db;
 
-    email = req.params.email;
-
+    email = req.body.email;
 
     db.collection("users").findOne( { "email": email },  (err, user ) => {
         if ( err !== null ) {
@@ -48,11 +47,11 @@ router.get("/email/:email", ( req, res ) => {
         }
         
         if ( !user ) {
-            res.send( { msg: "Database is empty" } );
+            res.send( { "userFound": false, msg: "Database is empty" } );
             return;
         }
 
-        res.send( { results: user } )
+        res.send( { "userFound": true, results: user } )
     });
 });
 
@@ -77,6 +76,25 @@ router.put("/password", cypherPasswords, ( req, res ) => {
         }
 
         res.send( { nModified: info.result.nModified } )
+    });
+});
+
+// Modify personal data (name, surname, email)
+router.put("/update/data", ( req, res ) => {
+
+    let db = req.app.locals.db;
+    
+    const oldmail = req.body.oldmail;
+    const email = req.body.email;
+    const name = req.body.name;
+    const surname = req.body.surname;
+
+    db.collection("users").updateOne( {"email": oldmail}, { $set: { email, name, surname } }, (err, result ) => {
+        if ( err !== null ) {
+            res.send(err);
+        }
+        
+        res.send( { results: result } )
     });
 });
 
