@@ -52,6 +52,7 @@ button, button:visited, button:hover {
 .all-except-footer {
     min-height: 95vh;
 }
+
 footer {
     min-height: 5vh;
 }
@@ -298,7 +299,7 @@ ul {
 }
 
 .black-text {
-    color: black;
+    color: black !important;
 }
 
 #bottom-header-navigation {
@@ -332,12 +333,11 @@ footer a:hover {
     border-bottom: 7px white solid;
 }
 
-#picture-header input[type="text"], #picture-header input[type="password"], #picture-header input[type="email"] {
+#picture-header input[type="text"], .all-except-footer input[type="text"], #picture-header input[type="password"], .all-except-footer input[type="password"], #picture-header input[type="email"], .all-except-footer input[type="email"] {
     background-color: black;
     color: white;
     border: 0;
     border-bottom: 3px grey solid;
-
 }
 
 .formatted-form input[type="text"], .formatted-form input[type="password"], .formatted-form input[type="email"], .formatted-form input[type="number"], .formatted-form input[type="email"], .formatted-form input[type="tel"], .formatted-form textarea, .formatted-form select  {
@@ -448,10 +448,16 @@ button:hover, button:active {
 
 }
 
-/* This one overwrites the first one for header buttons */
+/* DONT MOVE This one overwrites the first one for header buttons */
 .accented-link:hover, .accented-link:active {
     outline: none;
     color: white;
+}
+
+.decorated-points::before {
+    content: "‣";
+    text-decoration: none;
+    display: inline-block;
 }
 
 hr {
@@ -490,6 +496,20 @@ hr {
 
 }
 
+.ticked-element::after {
+    content: " ✔";
+    color: green;
+}
+
+.underline-hover:hover {
+    text-decoration: underline;
+}
+
+/* .underline-hover:hover::before {
+    content: "‣ ";
+    text-decoration: none;
+} */
+
 #user-icon-button {
     width: 1.5rem;
     height: 1.5rem;
@@ -498,6 +518,17 @@ hr {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+#home-link {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0.2rem;
+    background-image: url(./img/home.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: auto;
 }
 
 #user-icon-button:hover, #user-icon-button:active {
