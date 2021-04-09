@@ -51,6 +51,18 @@
                     <label for="password" class="s-text inline-block">Password: <input type="password" name="password" id="password" class="s-text" autocomplete="current-password" required></label>
 
                     <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" id="confirm-password" class="s-text" required></label>
+                    <p id="password-no-match-text" class="hidden" style="color: red; font-weight: bold;">The two passwords don't match!</p>
+                    <div id="password-no-criteria" class="hidden" style="color: red; font-weight: bold;">
+                        <p>
+                            Password must respect following criteria:
+                            <ul>
+                                <li id="alphanumeric" class="block decorated-points">Must be alphanumeric</li>
+                                <li id="length" class="block decorated-points">Must be at least 8 characters long</li>
+                                <li id="capital" class="block decorated-points">Must contain at least 1 capital letter</li>
+                                <li id="special" class="block decorated-points">Must contain at least 1 special character (@, $, !, &, etc)</li>
+                            </ul>
+                        </p>
+                    </div>
                     <br>
                     <br>
                     <label for="confirm-agreement" class="s-text"><input type="checkbox" name="confirm-agreement" id="confirm-agreement" value="agreement" required> By accepting this, you acknowledge our <a href="#" class="underlined s-text">Service Agreement</a>.</label>
@@ -63,8 +75,8 @@
             <div id="user-container" class="black-bg-transparent white-text hidden-container hidden">
                 <h2 class="no-margin xl-text">User name</h2>
                 <ul>
-                    <li class="block"><a href="./profile.html">Go to your profile</a></li>
-                    <li class="block"><a href="./add.html">Add a new story</a></li>
+                    <li class="block decorated-points underline-hover"><a href="./profile.html">Go to your profile</a></li>
+                    <li class="block decorated-points underline-hover"><a href="./add.html">Add a new story</a></li>
                 </ul>
                 <br>
                 <button type="button" id="logout-button" class="s-text log-button black-text bold">Log out</button>

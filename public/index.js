@@ -55,8 +55,8 @@ function tryToLogin(event) {
             if ( data.loginDataCorrect ) {
                 window.alert("Welcome back!")
 
-                // Use session storage to know which user is connected
-                sessionStorage.setItem('user', userObject.email);
+                // Use local storage to know which user is connected
+                localStorage.setItem('user', userObject.email);
 
                 // Change page to show a logged user
                 loginSuccessful();
@@ -108,11 +108,18 @@ function loginSuccessful(event) {
 // Show dropdown menu for when you're logged
 function showDropdownUserProfile(event) {
     event.preventDefault();
+    
+    emailObject = {};
+    emailObject["email"] = localStorage.getItem("user");
 
-    const email = sessionStorage.getItem("user");
-
-    // Fetch complete name of user from database
-    fetch(`/api/users/email/${email}`)
+    // Fetch data of current user
+    fetch(`api/users/email/`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify( emailObject ),
+    })
     .then( res => res.json() )
     .then( user => {
 
@@ -138,10 +145,122 @@ function showHideSignupContainer() {
     if ( !loginContainer.classList.contains("hidden") ) {
 
         loginContainer.classList.toggle("hidden");
-    } else {
-
-        signupContainer.classList.toggle("hidden");
     }
+    
+    signupContainer.classList.toggle("hidden");
+}
+
+function showPasswordDontMatchMessage() {
+    const passwordDontMatchMessage = document.querySelector("#password-no-match-text");
+    passwordDontMatchMessage.classList.toggle("hidden");
+
+    const passwordInput = document.querySelector("#password");
+    passwordInput.classList.toggle("red-outline");
+
+    const confirmPassword = document.querySelector("#confirm-password");
+    confirmPassword.classList.toggle("red-outline");
+
+    setTimeout( function() {
+        confirmPassword.classList.toggle("red-outline");
+        passwordInput.classList.toggle("red-outline");
+
+        passwordDontMatchMessage.classList.toggle("hidden");
+
+        passwordInput.value = ``;
+        confirmPassword.value = ``;
+    }, 2500);
+}
+
+
+// Utility functions for password validation
+function isLengthOk(string, lengthChar) {
+
+    if ( string.length > lengthChar ) {
+        return true;
+    }
+    return false;
+}
+
+function isAlphanumeric(string) {
+    let containsLetter = new RegExp("[a-zA-Z]");
+    let containsNumber = new RegExp("[0-9]");
+    if ( containsLetter.test(string) && containsNumber.test(string) ) {
+        return true;
+    }
+    return false;
+}
+
+function containsCapitalLetter(string) {
+    let containsNumber = new RegExp("[A-Z]");
+    return containsNumber.test(string); 
+}
+
+function containsSpecialCharacter(string) {
+    let containsSpecialCharacter = new RegExp(String.raw`[!"#$%&'()*+,-./:;<=>?@[\]^_\`{|}~]`);
+    return containsSpecialCharacter.test(string);
+}
+
+
+// Validate password and add tick to rule if password is OK
+function isPasswordValid(password) {
+    const length = isLengthOk(password, 8);
+    if ( length ) {
+        document.getElementById("length").classList.add("ticked-element");
+    }
+
+    const alphanumeric = isAlphanumeric(password);
+    if ( alphanumeric ) {
+        document.getElementById("alphanumeric").classList.add("ticked-element");
+    }
+
+    const capitalLetter = containsCapitalLetter(password);
+    if ( capitalLetter ) {
+        document.getElementById("capital").classList.add("ticked-element");
+    }
+
+    const specialCharacter = containsSpecialCharacter(password);
+    if ( specialCharacter ) {
+        document.getElementById("special").classList.add("ticked-element");
+    }
+
+
+    if ( length && alphanumeric && capitalLetter && specialCharacter ) {
+        return true;
+    }
+    return false;
+}
+
+
+// Change styling to show that password is not valid
+function showPasswordNotValid() {
+    const passwordNoCriteriaMessage = document.querySelector("#password-no-criteria");
+    passwordNoCriteriaMessage.classList.remove("hidden");
+
+    const passwordInput = document.querySelector("#password");
+    passwordInput.classList.add("red-outline");
+
+    const confirmPassword = document.querySelector("#confirm-password");
+    confirmPassword.classList.add("red-outline");
+    
+    function removePasswordNoCriteriaMessage() {
+        confirmPassword.classList.remove("red-outline");
+        passwordInput.classList.remove("red-outline");
+
+        passwordNoCriteriaMessage.classList.add("hidden");
+
+        passwordInput.value = ``;
+        confirmPassword.value = ``;
+
+        document.getElementById("length").classList.remove("ticked-element");
+        document.getElementById("alphanumeric").classList.remove("ticked-element");
+        document.getElementById("capital").classList.remove("ticked-element");
+        document.getElementById("special").classList.remove("ticked-element");
+        
+        // Remove event, otherwise form gets deleted everything user blurs
+        passwordInput.removeEventListener("focus", removePasswordNoCriteriaMessage);
+    }
+
+    passwordInput.addEventListener("focus", removePasswordNoCriteriaMessage);
 }
 
 
@@ -154,6 +273,10 @@ function tryToSignup(event) {
     if ( signupForm.reportValidity() ) {
 
         let userObject = {};
+
+        // Need this to check if passwords are identical
+        let password;
+        let confirmPassword;
 
         // Relevant inputs are nested inside labels
         for ( let inputField of signupForm.children ) {
@@ -173,58 +296,83 @@ function tryToSignup(event) {
                     case "email":
                         userObject["email"] = value;
                         break;
+
+                    case "password":
+                        password = value;
+                        break;
+
                     case "confirm-password":
-                        userObject["password"] = value;
+                        confirmPassword = value;
                         break;
                 }
+        
             }
         }
 
+        const passwordInput = document.querySelector("#password");
+        
+        // Check if password is valid, but only if field is not empty   
+        if ( !isPasswordValid(password) ) {
+            showPasswordNotValid();
+            return;
+        }
+
+        // Check if password are equals
+        if ( password === confirmPassword ) {
+            userObject["password"] = password;
+        } else {
+            showPasswordDontMatchMessage();
+            return;
+        }
+
+        // Write user to database
         fetch("/api/signin/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify( userObject ),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify( userObject ),
         })
         .then(response => response.json())
         .then(data => {
 
-            // Successful signup
-            if ( data.success ) {
+        // Successful signup
+        if ( data.success ) {
 
-                window.alert(`Sign up successful!`)
-                sessionStorage.setItem('user', userObject.email);
+            window.alert(`Sign up successful!`)
+            localStorage.setItem('user', userObject.email);
 
-                // Do the same as for logged user
-                loginSuccessful();
+            // Do the same as for logged user
+            loginSuccessful();
 
-            }
+        }
 
-            // Wrong data
-            if ( !data.new_user ) {
+        // Wrong data
+        if ( !data.new_user ) {
 
-                // Add red outline to e-mail field
-                const emailField = document.querySelector("#email");
+            // Add red outline to e-mail field
+            const emailField = document.querySelector("#email");
+            emailField.classList.toggle("red-outline");
+            
+            // Show message
+            const userAlreadyExistsText = document.querySelector("#user-already-exists-text");
+            userAlreadyExistsText.classList.toggle("hidden");
+
+            // Make everything disappear after a while
+            setTimeout( function() {
+
                 emailField.classList.toggle("red-outline");
-                
-                // Show message
-                const userAlreadyExistsText = document.querySelector("#user-already-exists-text");
                 userAlreadyExistsText.classList.toggle("hidden");
-
-                // Make everything disappear after a while
-                setTimeout( function() {
-
-                    emailField.classList.toggle("red-outline");
-                    userAlreadyExistsText.classList.toggle("hidden");
-                }, 2500);
-            }
+            }, 2500);
+        }
         })
         .catch((error) => {
             console.error('Error:', error);
-        });
+        });        
     }
 }
+
+
 
 function logoutUser() {
     console.log("ciao")
@@ -240,7 +388,7 @@ function logoutUser() {
         if ( result.loggedOut ) {
 
             // Clean locale storage and reload page
-            sessionStorage.clear();
+            localStorage.clear();
             location.reload();
             
         }
@@ -253,7 +401,7 @@ function logoutUser() {
 
 // If page is loaded when a user is already logged in
 function checkUserAlreadyLoggedIn() {
-    if ( sessionStorage.getItem("user") ) {
+    if ( localStorage.getItem("user") ) {
         loginSuccessful();
     }
 }
