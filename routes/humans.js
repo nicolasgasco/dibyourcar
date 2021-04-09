@@ -83,11 +83,11 @@ router.get("/user/:id", ( req, res ) => {
         }
         
         if ( allHumans.length === 0 ) {
-            res.send( { msg: "Database is empty" } );
+            res.send( { "foundStories": false, msg: "Database is empty" } );
             return;
         }
 
-        res.send( { results: allHumans } )
+        res.send( { "foundStories": true, results: allHumans } )
     });
 });
 
