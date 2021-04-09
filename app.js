@@ -68,9 +68,9 @@ passport.use(
             return done(null, false);
           }
           const user = users[0];
+          
           if ( bcrypt.compareSync(password, user.password ) ) {
             return done(null, user);
-            console.log(user);
           } else {
             return done(null, false);
           }
@@ -139,11 +139,11 @@ app.post(
 );
 
 app.get("/success", (req, res) => {
-    res.send({ loginDataCorrect: true, msg: "Login successful", user: req.user, session: true });
+    res.send({ loginDataCorrect: true, msg: "Login successful", session: true });
 });
 
 app.get("/fail", (req, res) => {
-res.send({ loginDataCorrect: false, msg: "Wrong user or password" });
+res.send({ loginDataCorrect: false, msg: "Wrong user or password", session: false });
 });
 
 app.put("/api/logout", (req, res) => {
