@@ -49,6 +49,8 @@ router.get("/:country", ( req, res ) => {
 
     let country = req.params.country; 
 
+    // This route exploits the fact that if this object is undefined, the search gives back all results
+    // It is a failsafe, frontend uses other more generic route when no country is provided
     let searchFilterObject;
 
     // When "All cities" is selected, search must be done per country and not city
@@ -157,6 +159,7 @@ router.delete("/:id", ( req, res ) => {
 });
 
 
+// Edit one story
 router.put("/:id", ( req, res ) => {
 
     let db = req.app.locals.db;
