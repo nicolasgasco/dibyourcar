@@ -14,13 +14,74 @@
 </head>
 <body>
     <div class="all-except-footer">
-        <header class="black-bg upmost-header">
-            <nav class="white-text flex-right-centered">
-                <a href="./index.html" id="home-link" class="inline-block accented-link">Back to Home</a>
-                <button type="menu" id="user-icon-button" class="hidden accented-link"></button>
-                <button type="menu" id="login-link" class="accented-link white-text">Login</button>
-            </nav>
+        <header class="black-bg white-text flex-right-centered upmost-header">
+            <a href="./index.html" id="home-link"><button type="button" id="#home-icon-button" class="white-text accented-link"></button></a>
+
+            <button type="button" id="user-icon-button" class="hidden accented-link"></button>
+            <button type="button" id="login-link" class="accented-link white-text">Login</button>
         </header>
+
+        <div id="log-in-container" class="black-bg-transparent white-text hidden-container hidden">
+            <h2 class="no-margin xl-text">Log in to your account</h2>
+            <form id="log-in-form">
+                <label for="email-login" class="s-text inline-block">E-mail: <input type="email" name="email" id="email-login" class="s-text" autocomplete="email" placeholder="Your email" required></label>
+
+                <label for="password-login" class="s-text inline-block">Password: <input type="password" name="password" id="password-login" class="s-text" autocomplete="current-password" placeholder="Your password" required></label>
+
+                <button type="submit" id="login-button" class="white-text s-text log-button bold">Enter</button>
+            </form>
+            <p id="wrong-email-password-text" class="hidden" style="color: red; font-weight: bold;">Wrong e-mail or password!</p>
+
+            <div>
+                <p>Are you new? <a href="#" id="signup-link" class="underlined">Sign up</a> instead.</p>
+            </div>
+        </div>
+
+        <div id="sign-up-container" class="black-bg-transparent white-text hidden-container hidden">
+            <h2 class="no-margin xl-text">Create a new account</h2>
+            <form id="sign-up-form">
+                <label for="name" class="s-text inline-block">Name: <input type="text" name="name" id="name" class="s-text" autocomplete="given-name" required></label>
+
+                <label for="surname" class="s-text inline-block">Surname: <input type="text" name="surname" id="surname" class="s-text" autocomplete="family-name"></label>
+                <br>
+                <br>
+                <label for="email" class="s-text inline-block">E-mail: <input type="text" name="email" id="email" class="s-text" autocomplete="email" required></label>
+                <br>
+                <br>
+                <label for="password" class="s-text inline-block">Password: <input type="password" name="password" id="password" class="s-text" autocomplete="current-password" required></label>
+
+                <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" id="confirm-password" class="s-text" required></label>
+                <p id="password-no-match-text" class="hidden" style="color: red; font-weight: bold;">The two passwords don't match!</p>
+                <div id="password-no-criteria" class="hidden" style="color: red; font-weight: bold;">
+                    <p>
+                        Password must respect following criteria:
+                        <ul>
+                            <li id="alphanumeric" class="block decorated-points">Must be alphanumeric</li>
+                            <li id="length" class="block decorated-points">Must be at least 8 characters long</li>
+                            <li id="capital" class="block decorated-points">Must contain at least 1 capital letter</li>
+                            <li id="special" class="block decorated-points">Must contain at least 1 special character (@, $, !, &, etc)</li>
+                        </ul>
+                    </p>
+                </div>
+                <br>
+                <br>
+                <label for="confirm-agreement" class="s-text"><input type="checkbox" name="confirm-agreement" id="confirm-agreement" value="agreement" required> By accepting this, you acknowledge our <a href="#" class="underlined s-text">Service Agreement</a>.</label>
+                <br>
+                <p id="user-already-exists-text" class="hidden" style="color: red; font-weight: bold;">There is already an account for this e-mail!</p>
+                <button type="submit" id="signup-button" class="s-text log-button black-text bold">Sign up</button>
+            </form>
+        </div>
+
+        <div id="user-container" class="black-bg-transparent white-text hidden-container hidden">
+            <h2 class="no-margin xl-text">User name</h2>
+            <ul>
+                <li class="block decorated-points underline-hover"><a href="./profile.html">Go to your profile</a></li>
+                <li class="block decorated-points underline-hover"><a href="./add.html">Add a new story</a></li>
+                <li class="block decorated-points underline-hover"><a href="./search.html">Browse stories</a></li>
+            </ul>
+            <br>
+            <button type="button" id="logout-button" class="s-text log-button black-text bold">Log out</button>
+        </div>
 
         <section class="black-bg white-text padding-4">
             <div>
@@ -35,19 +96,19 @@
         <section id="new-story-container" class="padding-4">
             <h3 id="interviewee-info-title" class="no-margin xl-text">Interviee info:</h3>
             <div id="new-story-form-container">
-                <form class="formatted-form form-left-border">
+                <form id="new-story-form" class="formatted-form form-left-border">
                     <p><b>Personal data:</b></p>
                     <label for="new-story-name">Name (required):</label>
-                    <input type="text" name="name" id="new-story-name" autocomplete="given-name" required>
+                    <input type="text" name="name" id="new-story-name" class="black-text" autocomplete="given-name" required>
                     <br>
                     <label for="new-story-surname">Surname (required):</label>
-                    <input type="text" name="surname" id="new-story-surname" autocomplete="family-name" required>
+                    <input type="text" name="surname" id="new-story-surname" class="black-text" autocomplete="family-name" required>
             
                     <br>
                     <br>
 
                     <label for="new-story-age">Age:</label>
-                    <input type="number" name="age" id="new-story-age" min="10" max="100">
+                    <input type="number" name="age" id="new-story-age" min="10" max="100" class="black-text">
                     
                     <label for="gender-select">Gender:</label>
                     <select name="gender" id="gender-select" autocomplete="sex">
@@ -60,36 +121,36 @@
                     
                     <p><b>Contact:</b></p>
                     <label for="new-story-email">Email:</label>
-                    <input type="email" name="email" id="new-story-email" autocomplete="email">
+                    <input type="email" name="email" id="new-story-email" class="black-text" autocomplete="email">
                     
                     <br>
                     <br>
 
                     <label for="new-story-telephone">Telephone (+12345678):</label>
-                    <input type="tel" name="telephone" id="new-story-telephone" autocomplete="tel">
+                    <input type="tel" name="telephone" id="new-story-telephone" class="black-text" autocomplete="tel">
 
                     <p><b>From:</b></p>
                     <label for="new-story-city-from">City:</label>
-                    <input type="text" name="city-from" id="new-story-city-from" autocomplete="address-level2">
+                    <input type="text" name="city-from" id="new-story-city-from" class="black-text" autocomplete="address-level2">
                     
 
                     <label for="new-story-country-from">Country (required):</label>
-                    <input type="text" name="country-from" id="new-story-country-from" required autocomplete="country-name">
+                    <input type="text" name="country-from" id="new-story-country-from" required class="black-text" autocomplete="country-name">
                     
 
                     <p><b>Living in:</b></p>
                     <label for="new-story-city">City (required):</label>
-                    <input type="text" name="city" id="new-story-city" autocomplete="address-level2" required>
+                    <input type="text" name="city" id="new-story-city" autocomplete="address-level2" class="black-text" required>
                     
                     <br>
 
                     <label for="new-story-country">Country (required):</label>
-                    <input type="text" name="country" id="new-story-country" autocomplete="country-name" required>
+                    <input type="text" name="country" id="new-story-country" autocomplete="country-name" class="black-text" required>
                     
                     <br>
 
                     <label for="new-story-spot">Where usually found: </label>
-                    <textarea name="spot" id="new-story-spot" rows="1" required></textarea>
+                    <textarea name="spot" id="new-story-spot" rows="1" class="black-text" required></textarea>
 
                     
                     <br>
@@ -98,26 +159,26 @@
                     <p><b>Interview:</b></p>
                     <label for="new-story-body">Story (required):</label>
                     <br>
-                    <textarea name="story" id="new-story-body" rows="4" required></textarea>
+                    <textarea name="story" id="new-story-body" rows="4" class="black-text" required></textarea>
                     
                     <br>
 
                     <label for="new-story-advice">Advice (required):</label>
                     <br>
-                    <textarea name="advice" id="new-story-advice" rows="2" required></textarea>
+                    <textarea name="advice" id="new-story-advice" rows="2" class="black-text" required></textarea>
 
                     <br>
 
                     <label for="new-story-dream">Dream (required):</label>
                     <br>
-                    <textarea name="dream" id="new-story-dream" rows="2" required></textarea>
+                    <textarea name="dream" id="new-story-dream" rows="2" class="black-text" required></textarea>
 
                     <br>
                     <br>
                     
                     <p><b>Image:</b></p>
                     <label for="new-story-image">Image:</label>
-                    <input type="text" name="img" id="new-story-image" autocomplete="photo">
+                    <input type="text" name="img" id="new-story-image" class="black-text" autocomplete="photo">
                     
                     <br>
                     <br>
