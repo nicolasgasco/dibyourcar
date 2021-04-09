@@ -13,6 +13,10 @@ a, a:hover, a:visited {
     display: block;
 }
 
+.block-mobile-only {
+    display: block;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -642,6 +646,10 @@ nav.shift ul li a {
 
     .add-button-container {
         justify-content: flex-start;
+    }
+
+    .block-mobile-only {
+        display: inline-block;
     }
 
     .boxed-results {
