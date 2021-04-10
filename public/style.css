@@ -223,8 +223,6 @@ ul {
     max-width: 80%;
 }
 
-
-
 #profile-data-box button {
     margin-right: 0.5rem;
     min-width: 9rem;
@@ -294,7 +292,6 @@ ul {
 .single-selector {
     margin-right: 1rem;
 }
-
 
 #picture-header {
     height: 85vh;
@@ -688,6 +685,21 @@ nav.shift ul li a {
 
     .min-height {
         min-height: 4.5rem;
+    }
+
+    
+    #picture-header {
+        /* height: 90vh; */
+        min-height: calc(var(--vh, 1vh) * 90);
+    }
+
+    /* #whole-header {
+        min-height: 100vh;
+    } */
+
+    #whole-header {
+        min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+        min-height: calc(var(--vh, 1vh) * 100);
     }
 
     .s-text {
