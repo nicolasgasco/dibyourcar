@@ -186,7 +186,6 @@ ul {
 
 #main-title-container {
     width: fit-content;
-    max-width: 70%;
 
     margin-left: 1rem;
     margin-top: 2rem;
@@ -642,6 +641,7 @@ nav.shift ul li a {
 /*  MEDIA QUERIES */
 
 /* Fonts were a bit tiny on bigger screens */
+
 @media (min-width: 650px) {
 
     * {
@@ -693,10 +693,27 @@ nav.shift ul li a {
     }
 }
 
+
 @media (min-width: 2000px) {
 
     body {
         max-width: 1920px;
         margin: 0 auto;
     }
+}
+
+@media (max-height: 650px) and (orientation: landscape) {
+    #main-title {
+        width: fit-content;
+        max-width: 20vw !important;
+    }
+
+    .xl-text {
+        font-size: small;
+    }
+
+    .xxl-text {
+        font-size: medium;
+    }
+    
 }
