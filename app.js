@@ -113,6 +113,7 @@ app.post("/api/signin", function (req, res) {
   const password = bcrypt.hashSync(req.body.password, 10);
   const name = req.body.name;
   const surname = req.body.surname;
+  const dateCreation = new Date();
   
 
   app.locals.db.collection("users")
@@ -124,7 +125,8 @@ app.post("/api/signin", function (req, res) {
             name,
             surname,
             email,
-            password
+            password,
+            date_creation
           },
           (err, respuesta) => {
 
