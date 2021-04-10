@@ -196,6 +196,7 @@ ul {
 
 #main-title {
     padding: 0.5rem 1rem;
+    max-width: 50vw;
 }
 
 #main-title-container {
@@ -722,7 +723,7 @@ nav.shift ul li a {
 @media (min-width: 2000px) {
 
     body {
-        max-width: 1920px;
+        max-width: 2500px;
         margin: 0 auto;
     }
 }
