@@ -241,7 +241,6 @@ ul {
 }
 
 #main-title-container {
-    max-width: 75vw;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
