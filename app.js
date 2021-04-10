@@ -13,17 +13,13 @@ require("dotenv").config();
 // Bcrypt for password encryption
 const bcrypt = require("bcrypt");
 
-// passport
-const passport = require("passport");
-const session = require("express-session");
-const LocalStrategy = require("passport-local").Strategy;
 
 // Database initialization
 const MongoClient = require("mongodb").MongoClient;
 
 MongoClient.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@sandbox.1ybr6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
   { useUnifiedTopology: true },
-  function(err, client) {
+  function(err, client, res) {
     
     if ( err != null ) {
         res.send(err);
@@ -33,13 +29,10 @@ MongoClient.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO
     console.log(`Connected to database...`);
 });
 
-// Fetch
+// Express middleware
 app.use(express.static("public"));
 app.use(express.json());
 
-// Passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 // External routes
 app.use("/api/humans/", humans);
@@ -47,14 +40,21 @@ app.use("/api/locations/", locations);
 app.use("/api/currentuser/", current_user);
 app.use("/api/users/", users);
 
-// Passport routes
-app.use(
-  session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+// Express session
+const expressSession = require("express-session")({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+});
+app.use(expressSession);
+
+// passport
+const passport = require("passport");
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+const LocalStrategy = require("passport-local").Strategy;
 
 passport.use(
   new LocalStrategy(
@@ -83,18 +83,29 @@ passport.serializeUser(function (user, done) {
   done(null, user.email);
 });
 
+
 passport.deserializeUser(function (email, done) {
-  db.collection("users")
-    .find({ email: id })
+  app.locals.db.collection("users")
+    .find({ email: email })
     .toArray(function (err, users) {
       if (users.length === 0) {
         console.log("0 users");
         done(null, null);
       }
       console.log("1 user");
-      console.log(users[0]);
       done(null, users[0]);
     });
+});
+
+app.get("/api/check", (req, res) => {
+  if ( req.session.passport ) {
+    console.log("Logged: ", req.session.passport)
+    res.send( { isLogged: true } );
+    return;
+  }
+  console.log("Logged: ", req.session.passport)
+  res.send( { isLogged: false } );
+
 });
 
 app.post("/api/signin", function (req, res) {
@@ -139,7 +150,7 @@ app.post(
 );
 
 app.get("/success", (req, res) => {
-    res.send({ loginDataCorrect: true, msg: "Login successful", session: true });
+    res.send({ loginDataCorrect: true, msg: "Login successful", user: req.user, session: true });
 });
 
 app.get("/fail", (req, res) => {
