@@ -61,6 +61,10 @@ footer {
     min-height: 5vh;
 }
 
+.green-outline {
+    outline: 2px green solid;
+}
+
 .hidden {
     display: none;
 }
@@ -255,7 +259,7 @@ ul {
 
 .boxed-results {
     border: 2px black solid;
-    box-shadow: 15px -15px rgb(236, 236, 236);
+    box-shadow: 10px -15px rgb(236, 236, 236);
 
 
     margin: 4%;
