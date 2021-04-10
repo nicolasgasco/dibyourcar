@@ -196,11 +196,13 @@ ul {
 
 #main-title {
     padding: 0.5rem 1rem;
-    max-width: 50vw;
+    max-width: 75vw;
 }
 
 #main-title-container {
+    max-width: 75vw;
     width: fit-content;
+    
 
     margin-left: 1rem;
     margin-top: 2rem;
