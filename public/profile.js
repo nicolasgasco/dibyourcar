@@ -1186,12 +1186,14 @@ function logoutUser() {
     })
     .then( res => res.json() )
     .then( result => {
+        console.log(result)
 
         if ( result.loggedOut ) {
 
             // Clean locale storage and reload page
             localStorage.clear();
-            window.location.replace("./index.html");
+            userContainer.classList.toggle("hidden");
+            location.reload();
             
         }
     })
