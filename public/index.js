@@ -349,11 +349,28 @@ function tryToSignup(event) {
         // Successful signup
         if ( data.success ) {
 
-            window.alert(`Sign up successful!`)
-            localStorage.setItem('user', userObject.email);
+            // Log the user so they can use the profile
+            fetch("/api/login/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify( { "email": userObject.email, "password" : userObject.password } ),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if ( data.loginDataCorrect ) {
+                    window.alert(`Sign up successful!`)
+                    localStorage.setItem('user', userObject.email);
+    
+                    // Do the same as for logged user
+                    loginSuccessful();
+                }
 
-            // Do the same as for logged user
-            loginSuccessful();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });      
 
         }
 
