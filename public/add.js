@@ -600,9 +600,21 @@ function logoutUser() {
 
 // If page is loaded when a user is already logged in
 function checkUserAlreadyLoggedIn() {
-    if ( localStorage.getItem("user") ) {
-        loginSuccessful();
-    }
+
+    fetch("/api/check/")
+    .then( res => res.json() )
+    .then( userData => {
+        console.log("isLogged", userData.isLogged)
+
+        if ( userData.isLogged ) {
+            loginSuccessful();
+        } else {
+            localStorage.clear();
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
 // Login link in right top corner

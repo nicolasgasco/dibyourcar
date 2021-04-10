@@ -51,8 +51,8 @@ function tryToLogin(event) {
         })
         .then(response => response.json())
         .then(data => {
-
-            if ( data.loginDataCorrect ) {
+            console.log(data.user)
+            if ( data.user ) {
                 window.alert("Welcome back!")
 
                 // Use local storage to know which user is connected
@@ -394,12 +394,13 @@ function logoutUser() {
     })
     .then( res => res.json() )
     .then( result => {
+        console.log(result)
 
         if ( result.loggedOut ) {
 
             // Clean locale storage and reload page
             localStorage.clear();
-            location.reload();
+            // location.reload();
             
         }
     })
@@ -411,9 +412,21 @@ function logoutUser() {
 
 // If page is loaded when a user is already logged in
 function checkUserAlreadyLoggedIn() {
-    if ( localStorage.getItem("user") ) {
-        loginSuccessful();
-    }
+
+    fetch("/api/check/")
+    .then( res => res.json() )
+    .then( userData => {
+        console.log("isLogged", userData.isLogged)
+
+        if ( userData.isLogged ) {
+            loginSuccessful();
+        } else {
+            localStorage.clear();
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
 // Login link in right top corner
