@@ -21,20 +21,21 @@
             <button type="button" id="login-link" class="accented-link white-text">Login</button>
         </header>
 
+        <!-- This div is not shown, but somehow necessary for the script -->
         <div id="log-in-container" class="black-bg-transparent white-text hidden-container hidden">
-            <h2 class="no-margin xl-text">Log in to your account</h2>
+            <h2 class="xl-text">Log in to your account</h2>
             <form id="log-in-form">
-                <label for="email-login" class="s-text inline-block">E-mail: <input type="email" name="email" id="email-login" class="s-text" autocomplete="email" placeholder="Your email" required></label>
+                <label for="email-login" class="s-text inline-block margin-bottom-1">E-mail: <input type="email" name="email" id="email-login" class="s-text" autocomplete="email" placeholder="Your email" required></label>
 
-                <label for="password-login" class="s-text inline-block">Password: <input type="password" name="password" id="password-login" class="s-text" autocomplete="current-password" placeholder="Your password" required></label>
+                <label for="password-login" class="s-text inline-block margin-bottom-1">Password: <input type="password" name="password" id="password-login" class="s-text" autocomplete="current-password" placeholder="Your password" required></label>
 
-                <button type="submit" id="login-button" class="white-text s-text log-button bold">Enter</button>
+                <button type="submit" id="login-button" class="white-text s-text log-button bold margin-bottom-1">Enter</button>
             </form>
             <p id="wrong-email-password-text" class="hidden" style="color: red; font-weight: bold;">Wrong e-mail or password!</p>
-            <!-- 
+            
             <div>
                 <p>Are you new? <a href="#" id="signup-link" class="underlined">Sign up</a> instead.</p>
-            </div> -->
+            </div>
         </div>
 
         <!-- User shouldn't be able to signin from Profile page since they can't see it if they're not logged -->
@@ -74,11 +75,10 @@
         </div> -->
 
         <div id="user-container" class="black-bg-transparent white-text hidden-container hidden">
-            <h2 class="no-margin xl-text">User name</h2>
+            <h2 class="xl-text">User name</h2>
             <ul>
-                <li class="block decorated-points underline-hover"><a href="./profile.html">Go to your profile</a></li>
-                <li class="block decorated-points underline-hover"><a href="./add.html">Add a new story</a></li>
-                <li class="block decorated-points underline-hover"><a href="./search.html">Browse stories</a></li>
+                <li class="block decorated-points underline-hover margin-bottom-1"><a href="./add.html">Add a new story</a></li>
+                <li class="block decorated-points underline-hover margin-bottom-1"><a href="./search.html">Browse stories</a></li>
             </ul>
             <br>
             <button type="button" id="logout-button" class="s-text log-button black-text bold">Log out</button>
