@@ -731,30 +731,15 @@ nav.shift ul li a {
     #main-title {
         width: fit-content;
         max-width: 20vw;
-    }
-
-    #bottom-header-navigation {
-        min-height: 10vh;
-        min-height: calc(var(--vh, 1vh) * 10);
-    }
-
-    #picture-header {
-        /* height: 90vh; */
-        min-height: 90vh;
-        min-height: calc(var(--vh, 1vh) * 80);
-    }
-    
-    #whole-header {
-        min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-        min-height: calc(var(--vh, 1vh) * 90);
-    }
-
-    .xl-text {
         font-size: small;
     }
 
-    .xxl-text {
+    #main-title .xxl-text {
         font-size: medium;
+    }
+
+    #main-title .xl-text {
+        font-size: small;
     }
     
 }
