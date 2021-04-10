@@ -224,9 +224,6 @@ ul {
 }
 
 
-#picture-header {
-    height: 85vh;
-}
 
 #profile-data-box button {
     margin-right: 0.5rem;
@@ -298,6 +295,10 @@ ul {
     margin-right: 1rem;
 }
 
+
+#picture-header {
+    height: 85vh;
+}
 
 #whole-header {
     min-height: 95vh;
