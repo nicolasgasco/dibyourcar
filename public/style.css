@@ -693,15 +693,6 @@ nav.shift ul li a {
         min-height: 4.5rem;
     }
 
-    
-    #picture-header {
-        height: 90vh;
-    }
-
-    #whole-header {
-        min-height: 100vh;
-    }
-
     .s-text {
         font-size: medium;
     }
