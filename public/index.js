@@ -4,11 +4,6 @@ let vh = window.innerHeight * 0.01;
 // Det the value in the --vh custom property to the root of the document
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-
-window.addEventListener("orientationchange", function() {
-        location.reload();
-});
-
 // Toggle on or off the hidden container for logging in
 function showHideLoginContainer() {
     if ( !signupContainer.classList.contains("hidden") ) {
