@@ -1,10 +1,11 @@
 /* GENERAL RULES */
-a, a:hover, a:visited {
+/* a, a:hover, a:visited {
     color: inherit;
-}
+} */
 
 * {
     box-sizing: border-box;
+    color: black;
 
     /* outline: 2px red solid; */
 }
@@ -98,6 +99,10 @@ li {
     margin-bottom: 0;
 }
 
+.margin-bottom-1 {
+    margin-bottom: 1rem;
+}
+
 .no-margin {
     margin: 0;
 }
@@ -155,6 +160,12 @@ ul {
     padding: 0.5rem 0.7rem;
 }
 
+.home-paragraph-button:hover, .home-paragraph-button:active {
+    background-color: white;
+    color: black;
+    outline: 4px black solid
+}
+
 #home-paragraph-container {
     margin: 2rem auto;
 
@@ -162,13 +173,18 @@ ul {
     flex-wrap: wrap;
     justify-content: center;
     align-items: baseline;
-    gap: 5vw;
+    gap: 4rem;
 }
 
 #home-paragraph-container > div {
     padding: 1rem;
     max-width: 30rem;
 
+}
+
+#home-paragraph-container h2 {
+    max-width: 80%;
+    margin: 0 auto;
 }
 
 #log-in-container, #sign-up-container, #user-container {
@@ -317,8 +333,9 @@ ul {
     background-color: rgb(20, 20, 20);
 }
 
-footer a:hover {
-    color: lightgray;
+.grayhover:hover {
+    color: grey;
+    text-decoration: underline;
 }
 
 #log-in-container {
@@ -327,7 +344,7 @@ footer a:hover {
 
 .log-button {
     background-color: white;
-    color: black !important;
+    color: black;
 }
 
 .log-button:hover, .log-button:active  {
@@ -359,8 +376,8 @@ footer a:hover {
 }
 
 #read-stories-button:hover, #read-stories-button:active {
-    background-color: black;
-    color: white;
+    /* background-color: black;
+    color: white; */
 }
 
 select {
@@ -392,6 +409,10 @@ option {
 }
 
 .white-text {
+    color: white;
+}
+
+.white-text * {
     color: white;
 }
 
@@ -448,7 +469,7 @@ footer * {
 
 /* DECORATIONS */
 
-button:hover, button:active {
+#read-stories-button:hover, #read-stories-button:active {
 
     outline: 4px black solid;
     background-color: white;
@@ -471,8 +492,8 @@ hr {
     border: 0;
     border-bottom: 1px dashed #ccc;
     background: #999;
-    margin-top: 3rem;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
     
 }
 
@@ -490,7 +511,7 @@ hr {
 }
 
 .right-border {
-    border-right: 1px solid black;
+    border-right: 2px solid black;
 }
 
 .simple-box {
@@ -557,17 +578,13 @@ nav ul li a:after,
 nav ul li a:before {
   transition: all .5s;
 }
-/* nav ul li a:hover {
-  /* color: #555; */
-} */
 
 nav.shift ul li a {
+
     position:relative;
     z-index: 1;
   }
-  /* nav.shift ul li a:hover {
-    /* color: #91640F; */
-  } */
+
   nav.shift ul li a:after {
     display: block;
     position: absolute;
@@ -664,6 +681,10 @@ nav.shift ul li a {
         font-size: medium;
     }
     
+    #login-link {
+        font-size: medium;
+    }
+
     .min-height {
         min-height: 4.5rem;
     }
@@ -705,7 +726,7 @@ nav.shift ul li a {
 @media (max-height: 650px) and (orientation: landscape) {
     #main-title {
         width: fit-content;
-        max-width: 20vw !important;
+        max-width: 20vw;
     }
 
     .xl-text {
