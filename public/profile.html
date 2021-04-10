@@ -14,12 +14,12 @@
 </head>
 <body>
     <div class="all-except-footer">
-        <div class="black-bg white-text flex-right-centered upmost-header">
+        <header class="black-bg white-text flex-right-centered upmost-header">
             <a href="./index.html" id="home-link"><button type="button" id="#home-icon-button" class="white-text accented-link"></button></a>
 
             <button type="button" id="user-icon-button" class="hidden accented-link"></button>
             <button type="button" id="login-link" class="accented-link white-text">Login</button>
-        </div>
+        </header>
 
         <div id="log-in-container" class="black-bg-transparent white-text hidden-container hidden">
             <h2 class="no-margin xl-text">Log in to your account</h2>
@@ -31,13 +31,14 @@
                 <button type="submit" id="login-button" class="white-text s-text log-button bold">Enter</button>
             </form>
             <p id="wrong-email-password-text" class="hidden" style="color: red; font-weight: bold;">Wrong e-mail or password!</p>
-
+            <!-- 
             <div>
                 <p>Are you new? <a href="#" id="signup-link" class="underlined">Sign up</a> instead.</p>
-            </div>
+            </div> -->
         </div>
 
-        <div id="sign-up-container" class="black-bg-transparent white-text hidden-container hidden">
+        <!-- User shouldn't be able to signin from Profile page since they can't see it if they're not logged -->
+        <!-- <div id="sign-up-container" class="black-bg-transparent white-text hidden-container hidden">
             <h2 class="no-margin xl-text">Create a new account</h2>
             <form id="sign-up-form">
                 <label for="name" class="s-text inline-block">Name: <input type="text" name="name" id="name" class="s-text" autocomplete="given-name" required></label>
@@ -70,13 +71,14 @@
                 <p id="user-already-exists-text" class="hidden" style="color: red; font-weight: bold;">There is already an account for this e-mail!</p>
                 <button type="submit" id="signup-button" class="s-text log-button black-text bold">Sign up</button>
             </form>
-        </div>
+        </div> -->
 
         <div id="user-container" class="black-bg-transparent white-text hidden-container hidden">
             <h2 class="no-margin xl-text">User name</h2>
             <ul>
                 <li class="block decorated-points underline-hover"><a href="./profile.html">Go to your profile</a></li>
                 <li class="block decorated-points underline-hover"><a href="./add.html">Add a new story</a></li>
+                <li class="block decorated-points underline-hover"><a href="./search.html">Browse stories</a></li>
             </ul>
             <br>
             <button type="button" id="logout-button" class="s-text log-button black-text bold">Log out</button>
@@ -110,7 +112,7 @@
                     <h3 class="l-text bold">Edit your data:</h3>
                     <label for="confirm-new-name" class="s-text inline-block black-text"><b>Name: </b><input type="text" name="name" id="confirm-new-name" class="s-text" value="Your name black-text" autocomplete="given-name" required></label>
             
-                    <label for="confirm-new-surname" class="s-text inline-block black-text"><b>Surname: </b><input type="text" name="surname" id="confirm-new-surname" class="s-text black-text" autocomplete="family-name" value="Your surname" autocomplete="family-name" required></label>
+                    <label for="confirm-new-surname" class="s-text inline-block black-text"><b>Surname: </b><input type="text" name="surname" id="confirm-new-surname" class="s-text black-text" value="Your surname" autocomplete="family-name" required></label>
                     <br>
                     <br>
                     <label for="confirm-new-email" class="s-text inline-block black-text"><b>E-mail: </b><input type="email" id="confirm-new-email" name="email" class="s-text black-text" value="Your e-mail" autocomplete="email" required></label>
@@ -126,10 +128,24 @@
                 <form id="profile-password-box" class="formatted-form hidden">
                     <h3 class="l-text bold">Edit your password:</h3>
                     <label for="password-edit" class="s-text inline-block"><b>Current password: </b><input type="password" id="password-edit" name="password" class="s-text black-text" autocomplete="current-password" required></label>
+                    <p id="first-password-wrong" class="hidden" style="color: red; font-weight: bold;">Password is wrong!</p>
+                    <p id="password-not-new" class="hidden" style="color: red; font-weight: bold;">Password already used!</p>
                     <br>
                     <br>
                     <label for="new-password" class="s-text inline-block black-text"><b>New password: </b><input type="password" id="new-password" name="new-password" class="s-text black-text" autocomplete="new-password" required></label>
                     <label for="confirm-new-password" class="s-text inline-block black-text"><b>Confirm new password: </b><input type="password" id="confirm-new-password" name="confirm-new-password" class="s-text black-text" autocomplete="new-password" required></label>
+                    <p id="password-not-same" class="hidden" style="color: red; font-weight: bold;">The two passwords don't match!</p>
+                    <div id="password-no-criteria" class="hidden" style="color: red; font-weight: bold;">
+                        <p>
+                            Password must respect following criteria:
+                            <ul>
+                                <li id="alphanumeric" class="block decorated-points">Must be alphanumeric</li>
+                                <li id="length" class="block decorated-points">Must be at least 8 characters long</li>
+                                <li id="capital" class="block decorated-points">Must contain at least 1 capital letter</li>
+                                <li id="special" class="block decorated-points">Must contain at least 1 special character (@, $, !, &, etc)</li>
+                            </ul>
+                        </p>
+                    </div>
                     <br>
                     <br>
                     <div class="add-button-container">
@@ -154,27 +170,6 @@
 
         <small class="white-text padding-05">Made by Nicolas Gasco.</small>
     </footer>
-
-              <!-- <form id="profile-data-box" class="formatted-form">
-                    <label for="name-profile" class="s-text inline-block">Name: <input type="text" id="name-profile" name="name" class="s-text" placeholder="Your name" autocomplete="given-name" readonly></label>
-
-                    <label for="surname-profile" class="s-text inline-block">Surname: <input type="text" id="surname-profile" name="surname" class="s-text" placeholder="Your surname" autocomplete="family-name" readonly></label>
-                    <br>
-                    <br>
-                    <label for="email-profile" class="s-text inline-block">E-mail: <input type="text" id="email-profile" name="email" class="s-text" placeholder="Your e-mail" autocomplete="email" readonly></label>
-                    <br>
-                    <br>
-                    <label for="password-profile" class="s-text inline-block">Password: <input type="password" id="password-profile" name="password" class="s-text" placeholder="Your password" autocomplete="current-password" readonly></label>
-
-                    <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" class="s-text"></label> -->
-                    <!-- <br>
-                    <br>
-                    <div class="add-button-container">
-                        <button type="button" id="edit-data-button" class="home-paragraph-button black-bg white-text bold">Edit data</button>
-                        <button type="button" id="edit-password-button" class="home-paragraph-button black-bg white-text bold">Edit password</button>
-                    </div>
-                    
-                </form> -->
     <script src="profile.js"></script>
 </body>
 </html>

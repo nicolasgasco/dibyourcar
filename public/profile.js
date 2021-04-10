@@ -7,40 +7,35 @@ const unchangedDataContainer = document.querySelector("#unchanged-data-container
 // Container with hidden form for changing data
 const changeDataForm = document.getElementById("profile-data-box");
 
-// Edit data button for personal info container
+// Buttons to edit data
 const editDataButton = document.querySelector("#edit-data-button");
-
-// Cancel button when you're editing data
 const cancelEditData = document.getElementById("cancel-data-edit");
-
-// Button to confirm data edit changes
 const confirmNewData = document.querySelector("#confirm-new-data");
 
 
 // Container with hidden form for changing password
 const changePasswordForm = document.getElementById("profile-password-box");
 
-// Edit password button for personal info container
+// Buttons to edit password
 const editPasswordButton = document.querySelector("#edit-password-button");
-
-// Cancel button for password change in personal info container
 const cancelPasswordEditButton = document.querySelector("#cancel-password-button");
-
-// Confirm password button for password change in personal info container 
 const confirmNewPasswordButton = document.querySelector("#confirm-password-button");
 
+// Inputs when chanding password
+const passwordInput = document.querySelector("#password-edit");
+const newPasswordInput = document.querySelector("#new-password");
+const confirmNewPasswordInput = document.querySelector("#confirm-new-password");
+
+// Error messages for passwords
+const passwordNotNewMessage = document.querySelector("#password-not-new");
+const firstPasswordWrongMessage = document.querySelector("#first-password-wrong");
+const passwordNotSameMessage = document.querySelector("#password-not-same");
 
 // Container with stories submitted
 let yourSubmissions = document.querySelector("#your-submissions");
 
-// Container with data shown as stored in database, content added later in time
-let singleResultShowData;
-
-// Container with form for editing data in database, content added later in time
-let singleResultEditData;
-
-
-
+// When loading page, check if user is already logged in, If not, redirect to home
+checkUserAlreadyLoggedIn();
 
 // Initialize all the button events at first
 initializeButtonEvents();
@@ -87,6 +82,7 @@ function populatePersonalData() {
 
     });
 }
+
 
 function initializeButtonEvents() {
     // Buttons for editing data
@@ -177,6 +173,7 @@ function editDataInProfile(event) {
     unchangedDataContainer.classList.toggle("hidden");
 }
 
+
 // Activated when Cancel button is pressed during data editing 
 function exitEditPersonalData(event) {
     // Not always this function is called by an event
@@ -187,6 +184,7 @@ function exitEditPersonalData(event) {
     changeDataForm.classList.toggle("hidden");
     unchangedDataContainer.classList.toggle("hidden");
 }
+
 
 // Activated when Confirm data button is pressed during data editing
 function saveNewPersonalData(event) {
@@ -220,7 +218,7 @@ function saveNewPersonalData(event) {
 
             userObject["oldmail"] = localStorage.getItem("user");
         }
-        console.log(userObject)
+
         fetch(`/api/users/update/data`, {
             method: "PUT",
             headers: {
@@ -257,70 +255,321 @@ function saveNewPersonalData(event) {
 function editPasswordInProfile(event) {
     event.preventDefault();
 
+    // Show password edit form and hide user data
     changePasswordForm.classList.toggle("hidden");
     unchangedDataContainer.classList.toggle("hidden");
     
     changePasswordForm.checkValidity();
-
-    let passwordObject = {};
     if ( changePasswordForm.reportValidity() ) {
-        console.log("ciao")
+        saveNewPassword;
     }
 }
 
+
 // Activated when Cancel button is pressed during password change
 function exitEditPassword(event) {
-    event.preventDefault();
+    if ( event ) {
+        event.preventDefault();
+    }
 
     changePasswordForm.classList.toggle("hidden");
     unchangedDataContainer.classList.toggle("hidden");
+}
+
+function firstPasswordIsWrongEdit() {
+    console.log("first password is wrong")
+
+    // Show message and add outline
+    firstPasswordWrongMessage.classList.toggle("hidden");
+    passwordInput.classList.toggle("red-outline");
+    
+
+    setTimeout( function() {
+        passwordInput.classList.toggle("red-outline");
+        firstPasswordWrongMessage.classList.toggle("hidden");
+        passwordInput.value = ``;
+    }, 2500)
+}
+
+function passwordIsNotNewMessageEdit() {
+
+    // Show error message
+    passwordNotNewMessage.classList.toggle("hidden");
+
+    // Show red outline
+    // passwordInput.classList.toggle("red-outline");
+    newPasswordInput.classList.toggle("red-outline");
+    confirmNewPasswordInput.classList.toggle("red-outline");
+
+
+    setTimeout(function() {
+        passwordNotNewMessage.classList.toggle("hidden");
+
+        // passwordInput.classList.toggle("red-outline");
+        newPasswordInput.classList.toggle("red-outline");
+        confirmNewPasswordInput.classList.toggle("red-outline");
+
+        newPasswordInput.value = ``;
+        confirmNewPasswordInput.value=``;
+    }, 2500)
+}
+
+function passwordMustBeSameEdit() {
+    passwordNotSameMessage.classList.toggle("hidden");
+
+    newPasswordInput.classList.toggle("red-outline");
+    confirmNewPasswordInput.classList.toggle("red-outline");
+
+    setTimeout(function() {
+        passwordNotSameMessage.classList.toggle("hidden");
+
+        newPasswordInput.classList.toggle("red-outline");
+        confirmNewPasswordInput.classList.toggle("red-outline");
+
+        // newPasswordInput.value = ``;
+        // confirmNewPasswordInput.value=``;
+    }, 2500)
+}
+
+function showPasswordDontMatchMessage() {
+    const passwordDontMatchMessage = document.querySelector("#password-no-match-text");
+    passwordDontMatchMessage.classList.toggle("hidden");
+
+    const passwordInput = document.querySelector("#password");
+    passwordInput.classList.toggle("red-outline");
+
+    const confirmPassword = document.querySelector("#confirm-password");
+    confirmPassword.classList.toggle("red-outline");
+
+    setTimeout( function() {
+        confirmPassword.classList.toggle("red-outline");
+        passwordInput.classList.toggle("red-outline");
+
+        passwordDontMatchMessage.classList.toggle("hidden");
+
+        passwordInput.value = ``;
+        confirmPassword.value = ``;
+    }, 2500);
+}
+
+
+// Utility functions for password validation
+function isLengthOk(string, lengthChar) {
+
+    if ( string.length > lengthChar ) {
+        return true;
+    }
+    return false;
+}
+
+function isAlphanumeric(string) {
+    let containsLetter = new RegExp("[a-zA-Z]");
+    let containsNumber = new RegExp("[0-9]");
+    if ( containsLetter.test(string) && containsNumber.test(string) ) {
+        return true;
+    }
+    return false;
+}
+
+function containsCapitalLetter(string) {
+    let containsNumber = new RegExp("[A-Z]");
+    return containsNumber.test(string); 
+}
+
+function containsSpecialCharacter(string) {
+    let containsSpecialCharacter = new RegExp(String.raw`[!"#$%&'()*+,-./:;<=>?@[\]^_\`{|}~]`);
+    return containsSpecialCharacter.test(string);
+}
+
+
+// Validate password and add tick to rule if password is OK
+function isPasswordValid(password) {
+    const length = isLengthOk(password, 8);
+    if ( length ) {
+        document.getElementById("length").classList.add("ticked-element");
+    }
+
+    const alphanumeric = isAlphanumeric(password);
+    if ( alphanumeric ) {
+        document.getElementById("alphanumeric").classList.add("ticked-element");
+    }
+
+    const capitalLetter = containsCapitalLetter(password);
+    if ( capitalLetter ) {
+        document.getElementById("capital").classList.add("ticked-element");
+    }
+
+    const specialCharacter = containsSpecialCharacter(password);
+    if ( specialCharacter ) {
+        document.getElementById("special").classList.add("ticked-element");
+    }
+
+
+    if ( length && alphanumeric && capitalLetter && specialCharacter ) {
+        return true;
+    }
+    return false;
+}
+
+
+// Change styling to show that password is not valid
+function showPasswordNotValid() {
+    const passwordNoCriteriaMessage = document.querySelector("#password-no-criteria");
+    passwordNoCriteriaMessage.classList.remove("hidden");
+
+    confirmNewPasswordInput.classList.add("red-outline");
+    newPasswordInput.classList.add("red-outline");
+    
+    function removePasswordNoCriteriaMessage() {
+        confirmNewPasswordInput.classList.remove("red-outline");
+        newPasswordInput.classList.remove("red-outline");
+
+        passwordNoCriteriaMessage.classList.add("hidden");
+
+        // passwordInput.value = ``;
+        // confirmPassword.value = ``;
+
+        document.getElementById("length").classList.remove("ticked-element");
+        document.getElementById("alphanumeric").classList.remove("ticked-element");
+        document.getElementById("capital").classList.remove("ticked-element");
+        document.getElementById("special").classList.remove("ticked-element");
+        
+        // Remove event, otherwise form gets deleted everytime user blurs
+        passwordInput.removeEventListener("focus", removePasswordNoCriteriaMessage);
+    }
+
+    newPasswordInput.addEventListener("focus", removePasswordNoCriteriaMessage);
 }
 
 
 function saveNewPassword(event) {
     event.preventDefault();
+    // When arriving here, form is filled and valid
 
-    const dataContainer = event.currentTarget.parentElement.parentElement;
+    changePasswordForm.checkValidity();
+    if ( changePasswordForm.reportValidity() ) {
 
+        // Old and new password (+ confirm password)
+        const newDataInputs = changePasswordForm.children;
 
-    const newDataInputs = dataContainer.children;
+        let passwordObject = {};
 
-    let passwordObject = {};
-    for ( let newInput of newDataInputs ) {
-        if ( newInput.tagName === "LABEL" ) {
-            let value = newInput.firstElementChild.value;
-            let name = newInput.firstElementChild.name;
+        // Need this to be available everywhere
+        let password;
+        let newPassword;
+        let confirmNewPassword;
 
+        for ( let newInput of newDataInputs ) {
+            // Relevant fields are nested inside labels for formatting reasons
+            if ( newInput.tagName === "LABEL" ) {
 
-            switch ( name ) {
-                case "password":
-                    passwordObject["password"] = value;
-                    break;
-                case "new-password":
-                    passwordObject["new-password"] = value;
-                    break;
-                case "confirm-new-password":
-                    passwordObject["confirm-new-password"] = value;
-                    break;
+                let value = newInput.children[1].value;
+                let name = newInput.children[1].name;
+
+                // Just create variables for data validation
+                switch ( name ) {
+                    case "password":
+                        password = value;
+                        break;
+                    case "new-password":
+                        newPassword = value;
+                        break;
+                    case "confirm-new-password":
+                        confirmNewPassword = value;
+                        break;
+                }
             }
         }
+
+        // Check if old password is good
+        fetch(`api/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify( { "email": localStorage.getItem("user"), "password" : password } ),
+        })
+        .then( res => res.json() )
+        .then( user => {
+            
+            // Check if old password is good
+            if ( !user.loginDataCorrect ) {
+                firstPasswordIsWrongEdit();
+                return;
+            }
+            // passwordInput.classList.toggle("green-outline")
+            passwordObject["password"] = password;
+
+            // Check if new password is actually new
+            if ( password === newPassword || password === confirmNewPassword ) {
+                passwordIsNotNewMessageEdit();
+                return;
+            }
+
+            // Check if new password respects criteria
+            if ( !isPasswordValid(newPassword)) {
+                showPasswordNotValid();
+                return;
+            }
+
+            // Check if password are equals
+            if ( newPassword !== confirmNewPassword ) {
+                passwordMustBeSameEdit();
+                return;
+            }
+
+
+            passwordObject["new-password"] = newPassword;
+
+            // Get ID of current user
+            fetch(`api/users/email/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify( {"email" : localStorage.getItem("user")} ),
+                })
+            .then( res => res.json() )
+            .then( id => {
+                const userId = id.results._id;
+
+                fetch(`api/users/password/`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify( { "_id" : userId, "password" : newPassword} ),
+                })
+                .then( res => res.json() )
+                .then( info => {
+                    if ( info.nModified > 0 ) {
+                        exitEditPassword();
+                        window.alert("Password was changed!")
+                    } else {
+                        window.alert("It wasn't possible to change the password!")
+                    }
+                })
+                
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });   
+
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });   
+
     }
-
-    dataContainer.checkValidity();
-    if ( dataContainer.reportValidity() ) {
-        // Check if current password is correct
-
-        // Check if two password are equal
-
-        // Save new password in database
-    };
 
 }
 
 
 // Show posts submitted by user
 function showSubmittedPosts() {
+
     if ( localStorage.getItem("user") === null ) {
+
         showDefaultMessageYourSubmissions();
         return;
     }
@@ -330,16 +579,16 @@ function showSubmittedPosts() {
 
     // Fetch data of current user
     fetch(`api/users/email/`, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify( emailObject ),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify( emailObject ),
     })
     .then( res => res.json() )
     .then( res => {
         
-        if ( res.userExists ) {
+        if ( res.userFound ) {
 
             const id = res.results._id;
             fetch(`api/humans/user/${id}`)
@@ -373,7 +622,7 @@ function showSubmittedPosts() {
                             ${portraitImage}
                         
                             <h3>${element.name} ${element.surname} (${element.age}, ${element.gender})</h3>
-                            <div id="single-result-show-data">
+                            <div id="single-result-show-data-${element._id}">
                                 <div>
                                     <p><b>From:</b> ${element.from.city} (${element.from.country})</p>
                                     <p><b>Currently in:</b> ${element.currently_in.city} (${element.currently_in.country})<p>
@@ -388,7 +637,7 @@ function showSubmittedPosts() {
                             </div>
                             
 
-                            <div id="single-result-edit-data" class="hidden">
+                            <div id="single-result-edit-data-${element._id}" class="hidden">
                                 <form id="edit-story-form-${element._id}" class="formatted-form">
                                     <p><b>Personal data:</b></p>
                                     <label for="new-story-name">Name (required):</label>
@@ -488,8 +737,8 @@ function showSubmittedPosts() {
                                     <br>
                         
                                     <div class="add-button-container">
-                                        <button type="submit" class="home-paragraph-button black-bg white-text bold" onclick="saveEdits(event)">Save edits</button>
-                                        <button type="submit" onclick="cancelEditStory(event)" class="home-paragraph-button black-bg white-text bold">Cancel</button>
+                                        <button type="submit" class="home-paragraph-button black-bg white-text bold" id="save-edits-${element._id}" onclick="saveEdits(event)">Save edits</button>
+                                        <button type="submit" id="cancel-edits-${element._id}" onclick="cancelEditStory(event)" class="home-paragraph-button black-bg white-text bold">Cancel</button>
                                     </div>
                                 </form>
                             </div>
@@ -499,9 +748,7 @@ function showSubmittedPosts() {
                 }
 
                 yourSubmissions.innerHTML = finalResult;
-                
-                singleResultShowData = document.querySelector("#single-result-show-data");
-                singleResultEditData = document.querySelector("#single-result-edit-data");
+            
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -512,6 +759,7 @@ function showSubmittedPosts() {
         console.error("Error:", error);
     });
 }
+
 
 function deleteStory(event) {
     let userChoice = window.confirm("Do you really want to remove this entry?");
@@ -535,6 +783,8 @@ function deleteStory(event) {
             setTimeout( function() {
                 window.alert("Story deleted!");
             }, 300);
+
+            location.reload();
             
         })
         .catch( (error) => {
@@ -543,191 +793,251 @@ function deleteStory(event) {
     }
 }
 
-function switchDisplayShowEditData() {
+
+function switchDisplayShowEditData(event, id) {
+    if ( !id ) {
+        id = event.currentTarget.parentElement.parentElement.id.split("-").slice(-1);
+    }
+
+    const singleResultShowData = document.querySelector(`#single-result-show-data-${id}`);
     singleResultShowData.classList.toggle("hidden");
+
+    const singleResultEditData = document.querySelector(`#single-result-edit-data-${id}`);
     singleResultEditData.classList.toggle("hidden");
 }
+
 
 function editStory(event) {
     event.preventDefault();
 
-    switchDisplayShowEditData()
+    switchDisplayShowEditData(event)
 }
+
 
 function cancelEditStory(event) {
     event.preventDefault();
+    const id = event.currentTarget.parentElement.parentElement.id.split("-").slice(-1);
 
-    switchDisplayShowEditData()
+    const singleResultShowData = document.querySelector(`#single-result-show-data-${id}`);
+    singleResultShowData.classList.toggle("hidden");
+
+    window.location.hash = singleResultShowData.parentElement.id;
+
+    const singleResultEditData = document.querySelector(`#single-result-edit-data-${id}`);
+    singleResultEditData.classList.toggle("hidden");
 }
 
 
 // Since asynchronous, doesn't work for all the cases
-async function getIdCurrentUser() {
-    const response = await fetch("/api/currentuser/")
-    const id = await response.json();
-    return id.results._id;
-}
+let getIdCurrentUser = new Promise((resolve, reject) => {
+    const email = localStorage.getItem("user");
+
+    fetch(`api/users/email/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify( { "email": email } ),
+    })
+    .then( res => res.json() )
+    .then( res => {
+        resolve(res.results._id);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+});
 
 
 async function saveEdits(event) {
     event.preventDefault();
 
     const editStoryForm = event.currentTarget.parentElement.parentElement;
+    editStoryForm.checkValidity();
 
-    let updatedStory = {    };
+    let id;
+    // If all data is fine
+    if ( editStoryForm.reportValidity() ) {
 
-    // Necessary to build the object
-    let fromArr = [];
-    let currentArr = [];
-    let interview = [];
-    let contact = [];
+        let updatedStory = {    };
 
-    // Database id of story
-    id = editStoryForm.parentElement.parentElement.firstElementChild.innerText;
+        // Necessary to build the object
+        let fromArr = [];
+        let currentArr = [];
+        let interview = [];
+        let contact = [];
 
-    for ( let inputField of editStoryForm.children ) {
+        // Database id of story
+        id = editStoryForm.parentElement.parentElement.firstElementChild.innerText;
 
-        // Filter only meaningful tags
-        if ( inputField.tagName === "INPUT" || inputField.tagName === "TEXTAREA" || inputField.tagName === "SELECT" ) {
-            
-            // Giving data the right formatting
-            let validatedData;
-            if ( inputField.value ) {
+        for ( let inputField of editStoryForm.children ) {
+
+            // Filter only meaningful tags
+            if ( inputField.tagName === "INPUT" || inputField.tagName === "TEXTAREA" || inputField.tagName === "SELECT" ) {
                 
-                if ( inputField.name === "gender" ) {
-                    validatedData = inputField.value.toLowerCase();
-
-                } else if ( inputField.name === "img" ) {
-                    validatedData = inputField.value.toLowerCase();
-
-                } else if ( inputField.name === "spot" || inputField.type === "textarea" ) {
-                    validatedData = capitalizeFirstCharLeaveRestSame(inputField.value);
-
-                } else if ( inputField.type === "text" ) {
-                    validatedData =  capitalizeFirstLetterEveryWord(inputField.value); 
-                }
-
-                // Either good as it is or needs some manipulation
-                let value = validatedData || inputField.value;
-
-                // Creating object with manipulated data
-                switch ( inputField.name ) {
-                    case "city-from":
-                        fromArr.push( `"city": "${value}"` );
-                        break;
-    
-                    case "country-from":
-                        fromArr.push( `"country": "${value}"` );
-                        break;
-    
-                    case "city":
-                        currentArr.push( `"city": "${value}"` );
-                        break;
-    
-                    case "country":
-                        currentArr.push( `"country": "${value}"` );
-                        break;
-    
-                    case "story":
-                        interview.push( `"story": "${value}"` );
-                        break;
-    
-                    case "advice":
-                        interview.push( `"advice": "${value}"` );
-                        break;
+                // Giving data the right formatting
+                let validatedData;
+                if ( inputField.value ) {
                     
-                    
-                    case "dream":
-                            interview.push( `"dream": "${value}"` );
-                        break;
-                    
-                    // Spot is a nested value
-                    case "spot":
-                        updatedStory["where_to_find"] = {"spot": value};
-                        break;
-    
-                    case "telephone":
-                        contact.push( `"telephone_number": "${value}"` );
-                        break;
-                    
-                    case "email":
-                        contact.push( `"email": "${value}"` );
-                        break;
-    
-                    default:
-                        updatedStory[inputField.name] = value;
-                        break;
+                    if ( inputField.name === "gender" ) {
+                        validatedData = inputField.value.toLowerCase();
+
+                    } else if ( inputField.name === "img" ) {
+                        validatedData = inputField.value.toLowerCase();
+
+                    } else if ( inputField.name === "spot" || inputField.type === "textarea" ) {
+                        validatedData = capitalizeFirstCharLeaveRestSame(inputField.value);
+
+                    } else if ( inputField.type === "text" ) {
+                        validatedData =  capitalizeFirstLetterEveryWord(inputField.value); 
+                    }
+
+                    // Either good as it is or needs some manipulation
+                    let value = validatedData || inputField.value;
+
+                    // Creating object with manipulated data
+                    switch ( inputField.name ) {
+                        case "city-from":
+                            fromArr.push( `"city": "${value}"` );
+                            break;
+        
+                        case "country-from":
+                            fromArr.push( `"country": "${value}"` );
+                            break;
+        
+                        case "city":
+                            currentArr.push( `"city": "${value}"` );
+                            break;
+        
+                        case "country":
+                            currentArr.push( `"country": "${value}"` );
+                            break;
+        
+                        case "story":
+                            interview.push( `"story": "${value}"` );
+                            break;
+        
+                        case "advice":
+                            interview.push( `"advice": "${value}"` );
+                            break;
+                        
+                        
+                        case "dream":
+                                interview.push( `"dream": "${value}"` );
+                            break;
+                        
+                        // Spot is a nested value
+                        case "spot":
+                            updatedStory["where_to_find"] = {"spot": value};
+                            break;
+        
+                        case "telephone":
+                            contact.push( `"telephone_number": "${value}"` );
+                            break;
+                        
+                        case "email":
+                            contact.push( `"email": "${value}"` );
+                            break;
+        
+                        default:
+                            updatedStory[inputField.name] = value;
+                            break;
+                    }
                 }
             }
         }
-    }
 
-    // Radio buttons, true or false
-    const shareConsent = document.querySelector(`input[name="share-consent"]:checked`).value;
-    contact.push( `"share_contact": ${Boolean(shareConsent)}` );
+        // Radio buttons, true or false
+        const shareConsent = document.querySelector(`input[name="share-consent"]:checked`).value;
+        contact.push( `"share_contact": ${Boolean(shareConsent)}` );
 
-    // Date of modification
-    updatedStory["submitDate"] = new Date();
+        // Date of modification
+        updatedStory["submitDate"] = new Date();
 
 
-    // Raw strings are converted into objects, sometimes nested
-    if ( fromArr.length > 0 ) {
-        updatedStory["from"] = createObjectFromString(fromArr);
-    } 
+        // Raw strings are converted into objects, sometimes nested
+        if ( fromArr.length > 0 ) {
+            updatedStory["from"] = createObjectFromString(fromArr);
+        } 
 
-    if ( currentArr.length > 0 ) {
-        updatedStory["currently_in"] = createObjectFromString(currentArr);
-    } 
+        if ( currentArr.length > 0 ) {
+            updatedStory["currently_in"] = createObjectFromString(currentArr);
+        } 
 
-    if ( interview.length > 0 ) {
-        updatedStory["interview"] = createObjectFromString(interview);
-    } 
+        if ( interview.length > 0 ) {
+            updatedStory["interview"] = createObjectFromString(interview);
+        } 
 
-    updatedStory["contact"] = createObjectFromString(contact);
-    
-    // Add to logic to add submittedBy user
-    // MAYBE I'LL NEED TO CHANGE THIS
-    const currentUserId = await getIdCurrentUser();
-    updatedStory["submittedBy"] = currentUserId;
+        updatedStory["contact"] = createObjectFromString(contact);
+        
+        // Add to logic to add submittedBy user
+        // MAYBE I'LL NEED TO CHANGE THIS
+        getIdCurrentUser.
+        then( currentUserId => {
+            updatedStory["submittedBy"] = currentUserId;
 
-    // Checks validity of form, if OK, sends to database
-    editStoryForm.checkValidity();
-    if ( editStoryForm.reportValidity() ) {
-        fetch(`api/humans/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify( updatedStory ),
-        })
-        .then( res => res.json() )
-        .then( res => {
-            switchDisplayShowEditData()
+            fetch(`api/humans/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify( updatedStory ),
+            })
+            .then( res => res.json() )
+            .then( res => {
+                switchDisplayShowEditData(event, id)
 
-            setTimeout( function() {
-                window.alert("Story modified!");
-            }, 300)
+                setTimeout( function() {
+                    window.alert("Story modified!");
+                }, 300)
 
-            
+                window.location.hash = `single-result-${id}`;
+
+            })
+            .catch( (error) => {
+                console.error("Error:", error);
+            });
+
         })
         .catch( (error) => {
             console.error("Error:", error);
         });
-    };
-
-
+        
+    }
 }
 
 // From here on, it's just login logics
 // Toggle on or off the hidden container for logging in
-function showHideLoginContainer() {
-    if ( !signupContainer.classList.contains("hidden") ) {
 
-        signupContainer.classList.toggle("hidden");
+// Login link in right top corner
+const loginLink = document.querySelector("#login-link");
+loginLink.addEventListener("click", showHideLoginContainer);
+
+// Login container and form
+const loginContainer = document.querySelector("#log-in-container");
+const loginForm = document.querySelector("#log-in-form");
+
+// Login button
+const loginButton = document.querySelector("#login-button");
+loginButton.addEventListener("click", tryToLogin);
+
+// User icon and data container
+const userIconLink = document.querySelector("#user-icon-button")
+const userContainer = document.querySelector("#user-container");
+
+
+// Logout button
+const logoutButton = document.querySelector("#logout-button");
+logoutButton.addEventListener("click", logoutUser)
+
+function showHideLoginContainer() {
+    // if ( !signupContainer.classList.contains("hidden") ) {
+
+    //     signupContainer.classList.toggle("hidden");
         
-    } else {
-        loginContainer.classList.toggle("hidden");
-    }
+    // } else {
+    loginContainer.classList.toggle("hidden");
+    // }
 }
 
 
@@ -762,7 +1072,7 @@ function tryToLogin(event) {
                 }
             }
         }
-        console.log(userObject)
+
         fetch("/api/login", {
             method: "POST",
             headers: {
@@ -815,7 +1125,7 @@ function loginSuccessful(event) {
 
     // Need these like this because you get here from different places, toggle isn't always what you need
     loginContainer.style.display = "none";
-    signupContainer.style.display = "none";
+    // signupContainer.style.display = "none";
 
 
     // Show button with profile icon
@@ -866,243 +1176,6 @@ function showDropdownUserProfile(event) {
     });
 }
 
-// Toggle on and off container with signup form
-function showHideSignupContainer() {
-
-    // If container is not already hidden
-    if ( !loginContainer.classList.contains("hidden") ) {
-
-        loginContainer.classList.toggle("hidden");
-    }
-    
-    signupContainer.classList.toggle("hidden");
-}
-
-function showPasswordDontMatchMessage() {
-    const passwordDontMatchMessage = document.querySelector("#password-no-match-text");
-    passwordDontMatchMessage.classList.toggle("hidden");
-
-    const passwordInput = document.querySelector("#password");
-    passwordInput.classList.toggle("red-outline");
-
-    const confirmPassword = document.querySelector("#confirm-password");
-    confirmPassword.classList.toggle("red-outline");
-
-    setTimeout( function() {
-        confirmPassword.classList.toggle("red-outline");
-        passwordInput.classList.toggle("red-outline");
-
-        passwordDontMatchMessage.classList.toggle("hidden");
-
-        passwordInput.value = ``;
-        confirmPassword.value = ``;
-    }, 2500);
-}
-
-
-// Utility functions for password validation
-function isLengthOk(string, lengthChar) {
-
-    if ( string.length > lengthChar ) {
-        return true;
-    }
-    return false;
-}
-
-function isAlphanumeric(string) {
-    let containsLetter = new RegExp("[a-zA-Z]");
-    let containsNumber = new RegExp("[0-9]");
-    if ( containsLetter.test(string) && containsNumber.test(string) ) {
-        return true;
-    }
-    return false;
-}
-
-function containsCapitalLetter(string) {
-    let containsNumber = new RegExp("[A-Z]");
-    return containsNumber.test(string); 
-}
-
-function containsSpecialCharacter(string) {
-    let containsSpecialCharacter = new RegExp(String.raw`[!"#$%&'()*+,-./:;<=>?@[\]^_\`{|}~]`);
-    return containsSpecialCharacter.test(string);
-}
-
-
-// Validate password and add tick to rule if password is OK
-function isPasswordValid(password) {
-    const length = isLengthOk(password, 8);
-    if ( length ) {
-        document.getElementById("length").classList.add("ticked-element");
-    }
-
-    const alphanumeric = isAlphanumeric(password);
-    if ( alphanumeric ) {
-        document.getElementById("alphanumeric").classList.add("ticked-element");
-    }
-
-    const capitalLetter = containsCapitalLetter(password);
-    if ( capitalLetter ) {
-        document.getElementById("capital").classList.add("ticked-element");
-    }
-
-    const specialCharacter = containsSpecialCharacter(password);
-    if ( specialCharacter ) {
-        document.getElementById("special").classList.add("ticked-element");
-    }
-
-
-    if ( length && alphanumeric && capitalLetter && specialCharacter ) {
-        return true;
-    }
-    return false;
-}
-
-
-// Change styling to show that password is not valid
-function showPasswordNotValid() {
-    const passwordNoCriteriaMessage = document.querySelector("#password-no-criteria");
-    passwordNoCriteriaMessage.classList.remove("hidden");
-
-    const passwordInput = document.querySelector("#password");
-    passwordInput.classList.add("red-outline");
-
-    const confirmPassword = document.querySelector("#confirm-password");
-    confirmPassword.classList.add("red-outline");
-    
-    function removePasswordNoCriteriaMessage() {
-        confirmPassword.classList.remove("red-outline");
-        passwordInput.classList.remove("red-outline");
-
-        passwordNoCriteriaMessage.classList.add("hidden");
-
-        passwordInput.value = ``;
-        confirmPassword.value = ``;
-
-        document.getElementById("length").classList.remove("ticked-element");
-        document.getElementById("alphanumeric").classList.remove("ticked-element");
-        document.getElementById("capital").classList.remove("ticked-element");
-        document.getElementById("special").classList.remove("ticked-element");
-        
-        // Remove event, otherwise form gets deleted everything user blurs
-        passwordInput.removeEventListener("focus", removePasswordNoCriteriaMessage);
-    }
-
-    passwordInput.addEventListener("focus", removePasswordNoCriteriaMessage);
-}
-
-
-// Start signup process
-function tryToSignup(event) {
-    event.preventDefault();
-
-    // Use form validation without submitting it
-    signupForm.checkValidity();
-    if ( signupForm.reportValidity() ) {
-
-        let userObject = {};
-
-        // Need this to check if passwords are identical
-        let password;
-        let confirmPassword;
-
-        // Relevant inputs are nested inside labels
-        for ( let inputField of signupForm.children ) {
-            if ( inputField.tagName === "LABEL" ) {
-
-                let value = inputField.firstElementChild.value;
-                const name = inputField.firstElementChild.name;
-                
-                switch ( name ) {
-                    case "name":
-                        userObject["name"] = value;
-                        break;
-                    
-                    case "surname":
-                        userObject["surname"] = value;
-                        break;
-                    case "email":
-                        userObject["email"] = value;
-                        break;
-
-                    case "password":
-                        password = value;
-                        break;
-
-                    case "confirm-password":
-                        confirmPassword = value;
-                        break;
-                }
-        
-            }
-        }
-
-        const passwordInput = document.querySelector("#password");
-        
-        // Check if password is valid, but only if field is not empty   
-        if ( !isPasswordValid(password) ) {
-            showPasswordNotValid();
-            return;
-        }
-
-        // Check if password are equals
-        if ( password === confirmPassword ) {
-            userObject["password"] = password;
-        } else {
-            showPasswordDontMatchMessage();
-            return;
-        }
-
-        // Write user to database
-        fetch("/api/signin/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify( userObject ),
-        })
-        .then(response => response.json())
-        .then(data => {
-
-        // Successful signup
-        if ( data.success ) {
-
-            window.alert(`Sign up successful!`)
-            localStorage.setItem('user', userObject.email);
-            populatePersonalData();
-
-            // Do the same as for logged user
-            loginSuccessful();
-
-        }
-
-        // Wrong data
-        if ( !data.new_user ) {
-
-            // Add red outline to e-mail field
-            const emailField = document.querySelector("#email");
-            emailField.classList.toggle("red-outline");
-            
-            // Show message
-            const userAlreadyExistsText = document.querySelector("#user-already-exists-text");
-            userAlreadyExistsText.classList.toggle("hidden");
-
-            // Make everything disappear after a while
-            setTimeout( function() {
-
-                emailField.classList.toggle("red-outline");
-                userAlreadyExistsText.classList.toggle("hidden");
-            }, 2500);
-        }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });        
-    }
-}
-
-
-
 function logoutUser() {
 
     fetch("/api/logout/", {
@@ -1130,46 +1203,161 @@ function logoutUser() {
 
 // If page is loaded when a user is already logged in
 function checkUserAlreadyLoggedIn() {
-    if ( localStorage.getItem("user") ) {
-        loginSuccessful();
-    }
+
+    fetch("/api/check/")
+    .then( res => res.json() )
+    .then( userData => {
+        console.log("isLogged", userData.isLogged)
+
+        if ( userData.isLogged ) {
+            loginSuccessful();
+        } else {
+            localStorage.clear();
+            document.location.href= "/";
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
-// Login link in right top corner
-const loginLink = document.querySelector("#login-link");
-loginLink.addEventListener("click", showHideLoginContainer);
 
-// Login container and form
-const loginContainer = document.querySelector("#log-in-container");
-const loginForm = document.querySelector("#log-in-form");
 
-// Login button
-const loginButton = document.querySelector("#login-button");
-loginButton.addEventListener("click", tryToLogin);
+// Toggle on and off container with signup form
+// function showHideSignupContainer() {
 
-// User icon and data container
-const userIconLink = document.querySelector("#user-icon-button")
-const userContainer = document.querySelector("#user-container");
+//     // If container is not already hidden
+//     if ( !loginContainer.classList.contains("hidden") ) {
+
+//         loginContainer.classList.toggle("hidden");
+//     }
+    
+//     // signupContainer.classList.toggle("hidden");
+// }
+
+
+
+// Start signup process
+// function tryToSignup(event) {
+//     event.preventDefault();
+
+//     // Use form validation without submitting it
+//     signupForm.checkValidity();
+//     if ( signupForm.reportValidity() ) {
+
+//         let userObject = {};
+
+//         // Need this to check if passwords are identical
+//         let password;
+//         let confirmPassword;
+
+//         // Relevant inputs are nested inside labels
+//         for ( let inputField of signupForm.children ) {
+//             if ( inputField.tagName === "LABEL" ) {
+
+//                 let value = inputField.firstElementChild.value;
+//                 const name = inputField.firstElementChild.name;
+                
+//                 switch ( name ) {
+//                     case "name":
+//                         userObject["name"] = value;
+//                         break;
+                    
+//                     case "surname":
+//                         userObject["surname"] = value;
+//                         break;
+//                     case "email":
+//                         userObject["email"] = value;
+//                         break;
+
+//                     case "password":
+//                         password = value;
+//                         break;
+
+//                     case "confirm-password":
+//                         confirmPassword = value;
+//                         break;
+//                 }
+        
+//             }
+//         }
+
+        
+        
+//         // Check if password is valid, but only if field is not empty   
+//         if ( !isPasswordValid(password) ) {
+//             showPasswordNotValid();
+//             return;
+//         }
+
+//         // Check if password are equals
+//         if ( password === confirmPassword ) {
+//             userObject["password"] = password;
+//         } else {
+//             showPasswordDontMatchMessage();
+//             return;
+//         }
+
+//         // Write user to database
+//         fetch("/api/signin/", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify( userObject ),
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+
+//         // Successful signup
+//         if ( data.success ) {
+
+//             window.alert(`Sign up successful!`)
+//             localStorage.setItem('user', userObject.email);
+//             populatePersonalData();
+
+//             // Do the same as for logged user
+//             loginSuccessful();
+
+//         }
+
+//         // Wrong data
+//         if ( !data.new_user ) {
+
+//             // Add red outline to e-mail field
+//             const emailField = document.querySelector("#email");
+//             emailField.classList.toggle("red-outline");
+            
+//             // Show message
+//             const userAlreadyExistsText = document.querySelector("#user-already-exists-text");
+//             userAlreadyExistsText.classList.toggle("hidden");
+
+//             // Make everything disappear after a while
+//             setTimeout( function() {
+
+//                 emailField.classList.toggle("red-outline");
+//                 userAlreadyExistsText.classList.toggle("hidden");
+//             }, 2500);
+//         }
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });        
+//     }
+// }
+
 
 // Signup container and form
-const signupContainer = document.querySelector("#sign-up-container");
-const signupForm = document.querySelector("#sign-up-form");
+// const signupContainer = document.querySelector("#sign-up-container");
+// const signupForm = document.querySelector("#sign-up-form");
 
 // Signup link
-const signupLink = document.querySelector("#signup-link");
-signupLink.addEventListener("click", showHideSignupContainer)
+// const signupLink = document.querySelector("#signup-link");
+// signupLink.addEventListener("click", showHideSignupContainer)
 
 // Signup button
-const signupButton = document.querySelector("#signup-button");
-signupButton.addEventListener("click", tryToSignup)
-
-// Logout button
-const logoutButton = document.querySelector("#logout-button");
-logoutButton.addEventListener("click", logoutUser)
-
-// When loading page, check if user is already logged in
-checkUserAlreadyLoggedIn();
-
+// const signupButton = document.querySelector("#signup-button");
+// signupButton.addEventListener("click", tryToSignup)
 
 
 
