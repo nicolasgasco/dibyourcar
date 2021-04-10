@@ -55,11 +55,12 @@ button, button:visited, button:hover {
 }
 
 .all-except-footer {
-    min-height: 95vh;
+    min-height: calc(var(--vh, 1vh) * 95);
 }
 
 footer {
-    min-height: 5vh;
+    min-height: 5vh; /* Fallback for browsers that do not support Custom Properties */
+    min-height: calc(var(--vh, 1vh) * 5);
 }
 
 .green-outline {
@@ -141,10 +142,6 @@ ul {
 
 .add-button-container button {
     min-width: 8rem
-}
-
-#bottom-header-navigation {
-    height: 10vh;
 }
 
 .hidden-container {
@@ -293,17 +290,16 @@ ul {
     margin-right: 1rem;
 }
 
-/* #picture-header {
-    height: 85vh;
+#bottom-header-navigation {
+    min-height: 10vh;
+    min-height: calc(var(--vh, 1vh) * 10);
 }
-
-#whole-header {
-    min-height: 95vh;
-} */
 
 #picture-header {
     /* height: 90vh; */
+    min-height: 90vh;
     min-height: calc(var(--vh, 1vh) * 90);
+
 }
 
 #whole-header {
@@ -312,7 +308,7 @@ ul {
 }
 
 .upmost-header {
-    min-height: 2rem;
+    min-height: 2.5rem;
     padding: 0 2.5%;
 }
 
@@ -704,11 +700,6 @@ nav.shift ul li a {
 
     #whole-header {
         min-height: 100vh;
-    }
-
-    #whole-header {
-        min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-        min-height: calc(var(--vh, 1vh) * 100);
     }
 
     .s-text {
