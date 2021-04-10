@@ -14,9 +14,10 @@ router.get("/", ( req, res ) => {
         }
         
         if ( allHumans.length === 0 ) {
+
             res.send( { msg: "Database is empty" } );
         }
-
+        console.log(req.user)
         res.send( { results: allHumans } )
     });
 });
