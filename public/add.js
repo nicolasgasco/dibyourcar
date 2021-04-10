@@ -583,11 +583,13 @@ function logoutUser() {
     })
     .then( res => res.json() )
     .then( result => {
+        console.log(result)
 
         if ( result.loggedOut ) {
 
             // Clean locale storage and reload page
             localStorage.clear();
+            userContainer.classList.toggle("hidden");
             location.reload();
             
         }
