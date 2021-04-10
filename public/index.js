@@ -258,8 +258,8 @@ function showPasswordNotValid() {
 
         passwordNoCriteriaMessage.classList.add("hidden");
 
-        passwordInput.value = ``;
-        confirmPassword.value = ``;
+        // passwordInput.value = ``;
+        // confirmPassword.value = ``;
 
         document.getElementById("length").classList.remove("ticked-element");
         document.getElementById("alphanumeric").classList.remove("ticked-element");
@@ -400,7 +400,8 @@ function logoutUser() {
 
             // Clean locale storage and reload page
             localStorage.clear();
-            // location.reload();
+            userContainer.classList.toggle("hidden");
+            location.reload();
             
         }
     })
@@ -459,11 +460,21 @@ signupButton.addEventListener("click", tryToSignup)
 
 // First call to action
 const firstStartHelpLink = document.querySelector("#start-help-link");
-firstStartHelpLink.addEventListener("click", showHideSignupContainer);
+firstStartHelpLink.addEventListener("click", startHelpAction);
+
+function startHelpAction(event) {
+    if ( localStorage.getItem("user") ) {
+        window.location.href = "/add.html"
+        
+    } else {
+        showHideSignupContainer();
+    }
+
+}
 
 // Second call to action
 const secondStartHelpLink = document.querySelector("#start-helping-link");
-secondStartHelpLink.addEventListener("click", showHideSignupContainer);
+secondStartHelpLink.addEventListener("click", startHelpAction);
 
 // Logout button
 const logoutButton = document.querySelector("#logout-button");
