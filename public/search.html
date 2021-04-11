@@ -17,7 +17,7 @@
 <body>
     <div class="all-except-footer">
         <header class="black-bg white-text flex-right-centered upmost-header">
-            <a href="./index.html" id="home-link"><button type="button" id="#home-icon-button" class="white-text accented-link"></button></a>
+            <a href="./index.html" id="home-link"><button type="button" id="home-icon-button" class="white-text accented-link"></button></a>
 
             <button type="button" id="user-icon-button" class="hidden accented-link"></button>
             <button type="button" id="login-link" class="accented-link white-text">Login</button>
@@ -55,15 +55,15 @@
                 <label for="confirm-password" class="s-text inline-block white-text margin-bottom-1">Confirm password: <input type="password" name="confirm-password" id="confirm-password" class="s-text white-text" required></label>
                 <p id="password-no-match-text" class="hidden" style="color: red; font-weight: bold;">The two passwords don't match!</p>
                 <div id="password-no-criteria" class="hidden">
-                    <p style="color: red; font-weight: bold">
-                        Password must respect following criteria:
-                        <ul style="color: red; font-weight: bold">
-                            <li id="alphanumeric" class="block decorated-points" style="color: red; font-weight: bold">Must be alphanumeric</li>
-                            <li id="length" class="block decorated-points" style="color: red; font-weight: bold">Must be at least 8 characters long</li>
-                            <li id="capital" class="block decorated-points" style="color: red; font-weight: bold">Must contain at least 1 capital letter</li>
-                            <li id="special" class="block decorated-points" style="color: red; font-weight: bold">Must contain at least 1 special character (@, $, !, &, etc)</li>
+                    <div>
+                        <p>Password must respect following criteria:</p>
+                        <ul>
+                            <li id="alphanumeric" class="block decorated-points">Must be alphanumeric</li>
+                            <li id="length" class="block decorated-points">Must be at least 8 characters long</li>
+                            <li id="capital" class="block decorated-points">Must contain at least 1 capital letter</li>
+                            <li id="special" class="block decorated-points">Must contain at least 1 special character (@, $, !, &, etc)</li>
                         </ul>
-                    </p>
+                    </div>
                 </div>
                 <br>
                 <br>
