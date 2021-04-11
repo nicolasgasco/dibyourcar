@@ -1,9 +1,9 @@
-const { ObjectID } = require("bson");
 const express = require("express");
 const router = express.Router();
+const { ObjectID } = require("bson");
 
 
-// Get all humans
+// Get all stories
 router.get("/", ( req, res ) => {
 
     let db = req.app.locals.db;
@@ -17,13 +17,13 @@ router.get("/", ( req, res ) => {
 
             res.send( { msg: "Database is empty" } );
         }
-        console.log(req.user)
+
         res.send( { results: allHumans } )
     });
 });
 
 
-// Find one specific story
+// Find one specific story using id
 router.get("/find/:id", ( req, res ) => {
 
     let db = req.app.locals.db;
@@ -42,6 +42,7 @@ router.get("/find/:id", ( req, res ) => {
         res.send( { results: post } )
     });
 });
+
 
 // Get all humans per country
 router.get("/:country", ( req, res ) => {
@@ -72,30 +73,7 @@ router.get("/:country", ( req, res ) => {
     });
 });
 
-// Get all humans submitted by same user
-router.get("/user/:id", ( req, res ) => {
 
-    let db = req.app.locals.db;
-
-    // Id of submitter for filtering
-    let id = req.params.id;
-
-    db.collection("humans").find( {"submittedBy" : id} ).toArray( (err, allHumans ) => {
-        if ( err !== null ) {
-            res.send(err);
-        }
-        
-        if ( allHumans.length === 0 ) {
-            res.send( { "foundStories": false, msg: "Database is empty" } );
-            return;
-        }
-
-        res.send( { "foundStories": true, results: allHumans } )
-    });
-});
-
-
-// Hacer esto con queries country=country&city=city req.query
 // Get all humans per city
 router.get("/:country/:city", ( req, res ) => {
 
@@ -127,6 +105,29 @@ router.get("/:country/:city", ( req, res ) => {
 });
 
 
+// Get all humans submitted by same user
+router.get("/user/:id", ( req, res ) => {
+
+    let db = req.app.locals.db;
+
+    // Id of submitter for filtering
+    let id = req.params.id;
+
+    db.collection("humans").find( {"submittedBy" : id} ).toArray( (err, allHumans ) => {
+        if ( err !== null ) {
+            res.send(err);
+        }
+        
+        if ( allHumans.length === 0 ) {
+            res.send( { "foundStories": false, msg: "Database is empty" } );
+            return;
+        }
+
+        res.send( { "foundStories": true, results: allHumans } )
+    });
+});
+
+
 // Insert new story
 router.post("/", ( req, res ) => {
 
@@ -142,6 +143,8 @@ router.post("/", ( req, res ) => {
         res.send( { results: result.ops } )
     });
 });
+
+
 
 // Delete one specific story
 router.delete("/:id", ( req, res ) => {

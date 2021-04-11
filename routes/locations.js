@@ -39,6 +39,7 @@ router.get("/cities", ( req, res ) => {
     });
 });
 
+
 // Get all unique results for cities filtering per country
 router.get("/cities/:country", ( req, res ) => {
 

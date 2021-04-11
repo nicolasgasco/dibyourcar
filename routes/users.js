@@ -1,17 +1,19 @@
-const { ObjectID } = require("bson");
 const express = require("express");
 const router = express.Router();
+const { ObjectID } = require("bson");
 
 // Bcrypt for password encryption
 const bcrypt = require("bcrypt");
 
 
+// MIddleware for cyphering passwords
 function cypherPasswords(req, res, next) {
     let user = req.body;
     user.password = bcrypt.hashSync(user.password, 10);
     req.body = user;
     next();
 }
+
 
 // Get user with given id
 router.get("/id/:id", ( req, res ) => {
@@ -55,7 +57,8 @@ router.post("/email/", ( req, res ) => {
     });
 });
 
-// Update password of user certain ID
+
+// Update password of user specific ID
 router.put("/password", cypherPasswords, ( req, res ) => {
 
     let db = req.app.locals.db;
@@ -79,6 +82,7 @@ router.put("/password", cypherPasswords, ( req, res ) => {
     });
 });
 
+
 // Modify personal data (name, surname, email)
 router.put("/update/data", ( req, res ) => {
 
@@ -97,5 +101,6 @@ router.put("/update/data", ( req, res ) => {
         res.send( { results: result } )
     });
 });
+
 
 module.exports = router;

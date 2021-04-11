@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-// API routes
+// Import routes
 const humans = require("./routes/humans");
 const locations = require("./routes/locations");
 const current_user = require("./routes/current_user");
@@ -33,7 +33,6 @@ MongoClient.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO
 app.use(express.static("public"));
 app.use(express.json());
 
-
 // External routes
 app.use("/api/humans/", humans);
 app.use("/api/locations/", locations);
@@ -48,7 +47,7 @@ const expressSession = require("express-session")({
 });
 app.use(expressSession);
 
-// passport
+// Passport
 const passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());
@@ -97,6 +96,7 @@ passport.deserializeUser(function (email, done) {
     });
 });
 
+// Route to check if user is logged
 app.get("/api/check", (req, res) => {
   if ( req.session.passport ) {
     console.log("Logged: ", req.session.passport)
@@ -143,8 +143,7 @@ app.post("/api/signin", function (req, res) {
     });
 });
 
-app.post(
-    "/api/login",
+app.post("/api/login",
     passport.authenticate("local", {
       successRedirect: "/success",
       failureRedirect: "/fail",
