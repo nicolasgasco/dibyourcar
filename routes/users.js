@@ -92,8 +92,9 @@ router.put("/update/data", ( req, res ) => {
     const email = req.body.email;
     const name = req.body.name;
     const surname = req.body.surname;
+    const dataModified = new Date();
 
-    db.collection("users").updateOne( {"email": oldmail}, { $set: { email, name, surname } }, (err, result ) => {
+    db.collection("users").updateOne( {"email": oldmail}, { $set: { email, name, surname, data_modified : dataModified } }, (err, result ) => {
         if ( err !== null ) {
             res.send(err);
         }
