@@ -124,7 +124,7 @@ app.post("/api/signin", function (req, res) {
             surname,
             email,
             password,
-            date_creation
+            date_creation: dateCreation
           },
           (err, respuesta) => {
 
