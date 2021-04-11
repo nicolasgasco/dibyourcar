@@ -1025,11 +1025,12 @@ async function saveEdits(event) {
             .then( res => {
                 switchDisplayShowEditData(event, id)
 
-                setTimeout( function() {
-                    window.alert("Story modified!");
-                }, 300)
 
+                location.reload()
+                window.alert("Story modified!");
                 window.location.hash = `single-result-${id}`;
+
+                
 
             })
             .catch( (error) => {
