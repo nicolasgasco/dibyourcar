@@ -420,6 +420,7 @@ ul {
     border: 0;
     background-color: rgb(243, 243, 243);
     border-bottom: 3px black solid;
+    color: black;
 }
 
 .formatted-form textarea {
