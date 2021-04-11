@@ -135,6 +135,8 @@ router.post("/", ( req, res ) => {
 
     const newStory = req.body;
 
+    newStory["submission_date"] = new Date();
+
     db.collection("humans").insertOne( newStory, (err, result ) => {
         if ( err !== null ) {
             res.send(err);
@@ -168,9 +170,29 @@ router.put("/:id", ( req, res ) => {
 
     const id = new ObjectID(req.params.id);
 
-    const newObject = req.body;
 
-    db.collection("humans").replaceOne( {"_id": id}, newObject, (err, result ) => {
+    const newObject = req.body;
+    newObject["approved"] = false;
+    newObject["data_modified"] = new Date();
+
+    db.collection("humans").updateOne( {"_id": id},
+        { $set: { 
+            "name": newObject.name,
+            "surname": newObject.surname,
+            "age": newObject.age,
+            "gender": newObject.gender,
+            "where_to_find": newObject.where_to_find,
+            "img": newObject.img,
+            "from": newObject.from,
+            "currently_in": newObject.currently_in,
+            "interview": newObject.interview,
+            "contact:": newObject.contact,
+            "approved": newObject.approved,
+            "data_modified" : newObject.data_modified
+            }
+        },
+        
+        (err, result ) => {
         if ( err !== null ) {
             res.send(err);
         }
