@@ -431,6 +431,11 @@ ul {
     color: white; */
 }
 
+.red-text-recursive * {
+    color: red;
+    font-weight: bold;
+}
+
 select {
     color: black;
     background-color: rgb(241, 241, 241);
