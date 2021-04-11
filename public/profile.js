@@ -712,7 +712,7 @@ function showSubmittedPosts() {
                                     <p><b>From:</b></p>
                                     <label for="new-story-city-from">City:</label>
                                     <input type="text" name="city-from" id="new-story-city-from" autocomplete="address-level2" value="${element.from.city}">
-                                    
+                                    <br>
                         
                                     <label for="new-story-country-from">Country (required):</label>
                                     <input type="text" name="country-from" id="new-story-country-from" required autocomplete="country-name" value="${element.from.country}">
@@ -921,7 +921,13 @@ async function saveEdits(event) {
                         validatedData = inputField.value.toLowerCase();
 
                     } else if ( inputField.name === "img" ) {
-                        validatedData = inputField.value.toLowerCase();
+
+                        // If only whitespaces are inserted
+                        if ( inputField.value == false ) {
+                            validatedData = null;
+                        } else {
+                            validatedData = inputField.value.toLowerCase();
+                        }
 
                     } else if ( inputField.name === "spot" || inputField.type === "textarea" ) {
                         validatedData = capitalizeFirstCharLeaveRestSame(inputField.value);
@@ -930,8 +936,12 @@ async function saveEdits(event) {
                         validatedData =  capitalizeFirstLetterEveryWord(inputField.value); 
                     }
 
-                    // Either good as it is or needs some manipulation
-                    let value = validatedData || inputField.value;
+                    // If no image is given, I want null to be used as value
+                    if ( validatedData === undefined ) {
+                        value = inputField.value;
+                    } else {
+                        value = validatedData;
+                    }
 
                     // Creating object with manipulated data
                     switch ( inputField.name ) {
