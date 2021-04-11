@@ -409,7 +409,7 @@ ul {
     border-bottom: 7px white solid;
 }
 
-#picture-header input[type="text"], #picture-header input[type="password"], #picture-header input[type="email"] {
+#picture-header input[type="text"], #picture-header input[type="password"], #picture-header input[type="email"], .all-except-footer input[type="text"], .all-except-footer input[type="password"], .all-except-footer input[type="email"] {
     background-color: black;
     color: white;
     border: 0;
