@@ -589,7 +589,6 @@ function logoutUser() {
     })
     .then( res => res.json() )
     .then( result => {
-        console.log(result)
 
         if ( result.loggedOut ) {
 
