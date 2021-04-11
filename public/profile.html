@@ -17,64 +17,10 @@
 <body>
     <div class="all-except-footer">
         <header class="black-bg white-text flex-right-centered upmost-header">
-            <a href="./index.html" id="home-link"><button type="button" id="#home-icon-button" class="white-text accented-link"></button></a>
+            <a href="./index.html" id="home-link"><button type="button" id="home-icon-button" class="white-text accented-link"></button></a>
 
-            <button type="button" id="user-icon-button" class="hidden accented-link"></button>
-            <button type="button" id="login-link" class="accented-link white-text">Login</button>
+            <button type="button" id="user-icon-button" class="accented-link"></button>
         </header>
-
-        <!-- This div is not shown, but somehow necessary for the script -->
-        <div id="log-in-container" class="black-bg-transparent white-text hidden-container hidden">
-            <h2 class="xl-text">Log in to your account</h2>
-            <form id="log-in-form">
-                <label for="email-login" class="s-text inline-block margin-bottom-1">E-mail: <input type="email" name="email" id="email-login" class="s-text" autocomplete="email" placeholder="Your email" required></label>
-
-                <label for="password-login" class="s-text inline-block margin-bottom-1">Password: <input type="password" name="password" id="password-login" class="s-text" autocomplete="current-password" placeholder="Your password" required></label>
-
-                <button type="submit" id="login-button" class="white-text s-text log-button bold margin-bottom-1">Enter</button>
-            </form>
-            <p id="wrong-email-password-text" class="hidden" style="color: red; font-weight: bold;">Wrong e-mail or password!</p>
-            
-            <div>
-                <p>Are you new? <a href="#" id="signup-link" class="underlined">Sign up</a> instead.</p>
-            </div>
-        </div>
-
-        <!-- User shouldn't be able to signin from Profile page since they can't see it if they're not logged -->
-        <!-- <div id="sign-up-container" class="black-bg-transparent white-text hidden-container hidden">
-            <h2 class="no-margin xl-text">Create a new account</h2>
-            <form id="sign-up-form">
-                <label for="name" class="s-text inline-block">Name: <input type="text" name="name" id="name" class="s-text" autocomplete="given-name" required></label>
-
-                <label for="surname" class="s-text inline-block">Surname: <input type="text" name="surname" id="surname" class="s-text" autocomplete="family-name"></label>
-                <br>
-                <br>
-                <label for="email" class="s-text inline-block">E-mail: <input type="text" name="email" id="email" class="s-text" autocomplete="email" required></label>
-                <br>
-                <br>
-                <label for="password" class="s-text inline-block">Password: <input type="password" name="password" id="password" class="s-text" autocomplete="current-password" required></label>
-
-                <label for="confirm-password" class="s-text inline-block">Confirm password: <input type="password" name="confirm-password" id="confirm-password" class="s-text" required></label>
-                <p id="password-no-match-text" class="hidden" style="color: red; font-weight: bold;">The two passwords don't match!</p>
-                <div id="password-no-criteria" class="hidden" style="color: red; font-weight: bold;">
-                    <p>
-                        Password must respect following criteria:
-                        <ul>
-                            <li id="alphanumeric" class="block decorated-points">Must be alphanumeric</li>
-                            <li id="length" class="block decorated-points">Must be at least 8 characters long</li>
-                            <li id="capital" class="block decorated-points">Must contain at least 1 capital letter</li>
-                            <li id="special" class="block decorated-points">Must contain at least 1 special character (@, $, !, &, etc)</li>
-                        </ul>
-                    </p>
-                </div>
-                <br>
-                <br>
-                <label for="confirm-agreement" class="s-text"><input type="checkbox" name="confirm-agreement" id="confirm-agreement" value="agreement" required> By accepting this, you acknowledge our <a href="#" class="underlined s-text">Service Agreement</a>.</label>
-                <br>
-                <p id="user-already-exists-text" class="hidden" style="color: red; font-weight: bold;">There is already an account for this e-mail!</p>
-                <button type="submit" id="signup-button" class="s-text log-button black-text bold">Sign up</button>
-            </form>
-        </div> -->
 
         <div id="user-container" class="black-bg-transparent white-text hidden-container hidden">
             <h2 class="xl-text">User name</h2>
@@ -138,15 +84,15 @@
                     <label for="confirm-new-password" class="s-text inline-block black-text"><b>Confirm new password: </b><input type="password" id="confirm-new-password" name="confirm-new-password" class="s-text black-text" autocomplete="new-password" required></label>
                     <p id="password-not-same" class="hidden" style="color: red; font-weight: bold;">The two passwords don't match!</p>
                     <div id="password-no-criteria" class="hidden" style="color: red; font-weight: bold;">
-                        <p>
-                            Password must respect following criteria:
+                        <div>
+                            <p>Password must respect following criteria:</p>
                             <ul>
                                 <li id="alphanumeric" class="block decorated-points">Must be alphanumeric</li>
                                 <li id="length" class="block decorated-points">Must be at least 8 characters long</li>
                                 <li id="capital" class="block decorated-points">Must contain at least 1 capital letter</li>
                                 <li id="special" class="block decorated-points">Must contain at least 1 special character (@, $, !, &, etc)</li>
                             </ul>
-                        </p>
+                        </div>
                     </div>
                     <br>
                     <br>
