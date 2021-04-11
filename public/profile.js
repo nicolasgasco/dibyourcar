@@ -155,15 +155,15 @@ function editDataInProfile(event) {
 
             switch ( singleInput.name ) {
                 case "name":
-                    singleInput.style.color = "black";
+                    // singleInput.style.color = "black";
                     singleInput.value = user.results.name;
                     break;
                 case "surname":
-                    singleInput.style.color = "black";
+                    // singleInput.style.color = "black";
                     singleInput.value = user.results.surname;
                     break;
                 case "email":
-                    singleInput.style.color = "black";
+                    // singleInput.style.color = "black";
                     singleInput.value = user.results.email;
                     break;
             }
@@ -605,8 +605,49 @@ function showSubmittedPosts() {
 
                 const postArray = res.results;
 
+
+
                 finalResult = ``;
                 for ( let element of postArray ) {
+
+                    let genderField;
+                    switch ( element.gender ) {
+                        case "male":
+                            genderField = 
+                            `
+                            <label for="gender-select">Gender:</label>
+                            <select name="gender" id="gender-select" autocomplete="sex">
+                                <option value="female">Female</option>
+                                <option value="male" selected>Male</option>
+                                <option value="other">Other</option>
+                            </select>
+                            `
+                            break;
+
+                        case "female":
+                            genderField = 
+                            `
+                            <label for="gender-select">Gender:</label>
+                            <select name="gender" id="gender-select" autocomplete="sex">
+                                <option value="female" selected>Female</option>
+                                <option value="male">Male</option>
+                                <option value="other">Other</option>
+                            </select>
+                            `
+                            break;
+                        case "other":
+                            genderField = 
+                            `
+                            <label for="gender-select">Gender:</label>
+                            <select name="gender" id="gender-select" autocomplete="sex">
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                                <option value="other" selected>Other</option>
+                            </select>
+                            `
+                            break;
+                    }
+
 
                     let portraitImage;
 
@@ -654,12 +695,7 @@ function showSubmittedPosts() {
                                     <label for="new-story-age">Age:</label>
                                     <input type="number" name="age" id="new-story-age" min="10" max="100" value="${element.age}">
                                     
-                                    <label for="gender-select">Gender:</label>
-                                    <select name="gender" id="gender-select" autocomplete="sex">
-                                        <option value="female">Female</option>
-                                        <option value="male">Male</option>
-                                        <option value="other">Other</option>
-                                    </select>
+                                    ${genderField}
                         
                                     <br>
                                     
@@ -786,7 +822,7 @@ function deleteStory(event) {
                 window.alert("Story deleted!");
             }, 300);
 
-            location.reload();
+            // location.reload();
             
         })
         .catch( (error) => {
