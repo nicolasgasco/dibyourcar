@@ -682,10 +682,10 @@ function showSubmittedPosts() {
                             <div id="single-result-edit-data-${element._id}" class="hidden">
                                 <form id="edit-story-form-${element._id}" class="formatted-form">
                                     <p><b>Personal data:</b></p>
-                                    <label for="new-story-name">Name (required):</label>
+                                    <label for="new-story-name">Name:</label>
                                     <input type="text" name="name" id="new-story-name" autocomplete="given-name" value="${element.name}" required>
                                     <br>
-                                    <label for="new-story-surname">Surname (required):</label>
+                                    <label for="new-story-surname">Surname:</label>
                                     <input type="text" name="surname" id="new-story-surname" autocomplete="family-name" value="${element.surname}" required>
                         
                                     <br>
@@ -713,17 +713,17 @@ function showSubmittedPosts() {
                                     <input type="text" name="city-from" id="new-story-city-from" autocomplete="address-level2" value="${element.from.city}">
                                     <br>
                         
-                                    <label for="new-story-country-from">Country (required):</label>
+                                    <label for="new-story-country-from">Country:</label>
                                     <input type="text" name="country-from" id="new-story-country-from" required autocomplete="country-name" value="${element.from.country}">
                                     
                         
                                     <p><b>Living in:</b></p>
-                                    <label for="new-story-country">City (required):</label>
+                                    <label for="new-story-country">City:</label>
                                     <input type="text" name="city" id="new-story-country" autocomplete="address-level2" required value="${element.currently_in.city}">
                                     
                                     <br>
                         
-                                    <label for="new-story-country">Country (required):</label>
+                                    <label for="new-story-country">Country:</label>
                                     <input type="text" name="country" id="new-story-country" autocomplete="country-name" required value="${element.currently_in.country}">
                                     
                                     <br>
@@ -736,19 +736,19 @@ function showSubmittedPosts() {
                                     <br>
                         
                                     <p><b>Interview:</b></p>
-                                    <label for="new-story-body">Story (required):</label>
+                                    <label for="new-story-body">Story:</label>
                                     <br>
                                     <textarea name="story" id="new-story-body" rows="4" required>${element.interview.story}</textarea>
                                     
                                     <br>
                         
-                                    <label for="new-story-advice">Advice (required):</label>
+                                    <label for="new-story-advice">Advice:</label>
                                     <br>
                                     <textarea name="advice" id="new-story-advice" rows="2" required>${element.interview.advice}</textarea>
                         
                                     <br>
                         
-                                    <label for="new-story-dream">Dream (required):</label>
+                                    <label for="new-story-dream">Dream:</label>
                                     <br>
                                     <textarea name="dream" id="new-story-dream" rows="2" required>${element.interview.dream}</textarea>
                         
