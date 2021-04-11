@@ -652,6 +652,9 @@ function showSubmittedPosts() {
 
                     if ( !element.img ) {
                         portraitImage = `<img src="./img/no_image.jpg" alt="No image available" id="image-${element._id}" class="result-image">`
+                        
+                        // Without this, undefined or null are shown in the form
+                        element.img = ``;
                     } else {
                         portraitImage = `<img src="${element.img}" alt="Picture of ${element.name} ${element.surname}" id="image-${element._id}" class="result-image">`
                     }
