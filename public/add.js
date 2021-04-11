@@ -155,7 +155,15 @@ async function sendNewStoryToDB(event) {
 
         getIdCurrentUser.then( userId => {
             newStory["submittedBy"] = userId;
+
+            // If it's admin
+            if ( userId === "6072bcb378457d56a8a4631d" ) {
+                newStory["approved"] = true;
+            } else {
+                newStory["approved"] = false;
+            }
             console.log(newStory.submittedBy)
+            console.log(newStory.approved)
             
             fetch("api/humans", {
             method: 'POST',

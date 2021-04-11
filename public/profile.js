@@ -592,6 +592,7 @@ function showSubmittedPosts() {
         if ( res.userFound ) {
 
             const id = res.results._id;
+
             fetch(`api/humans/user/${id}`)
             .then( res => res.json() )
             .then( res => {

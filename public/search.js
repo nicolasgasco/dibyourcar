@@ -152,6 +152,11 @@ function showFilteredResults(event) {
 
         for ( let element of allHumans.results ) {
             
+            // Skip if not approved
+            if ( !element.approved ) {
+                continue;
+            }
+            
             let portraitImage;
             if ( !element.img ) {
                 portraitImage = `<img src="./img/no_image.jpg" alt="No image available" class="result-image">`
