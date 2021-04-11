@@ -66,7 +66,15 @@ async function sendNewStoryToDB(event) {
                         validatedData = inputField.value.toLowerCase();
 
                     } else if ( inputField.name === "img" ) {
-                        validatedData = inputField.value.toLowerCase();
+
+                        // If only whitespaces are inserted
+                        if ( inputField.value == false ) {
+                            validatedData = null;
+                        } else {
+                            validatedData = inputField.value.toLowerCase();
+                        }
+                        
+
 
                     } else if ( inputField.name === "spot" || inputField.type === "textarea" ) {
                         validatedData = capitalizeFirstCharLeaveRestSame(inputField.value);
@@ -75,7 +83,13 @@ async function sendNewStoryToDB(event) {
                         validatedData =  capitalizeFirstLetterEveryWord(inputField.value); 
                     }
 
-                    let value = validatedData || inputField.value;
+
+                    // If no image is given, I want null to be used as value
+                    if ( validatedData === undefined ) {
+                        value = inputField.value;
+                    } else {
+                        value = validatedData;
+                    }
 
 
 
@@ -159,8 +173,6 @@ async function sendNewStoryToDB(event) {
             } else {
                 newStory["approved"] = false;
             }
-            console.log(newStory.submittedBy)
-            console.log(newStory.approved)
             
             fetch("api/humans", {
             method: 'POST',
@@ -588,7 +600,6 @@ function logoutUser() {
     })
     .then( res => res.json() )
     .then( result => {
-        console.log(result)
 
         if ( result.loggedOut ) {
 
@@ -611,12 +622,12 @@ function checkUserAlreadyLoggedIn() {
     fetch("/api/check/")
     .then( res => res.json() )
     .then( userData => {
-        console.log("isLogged", userData.isLogged)
 
         if ( userData.isLogged ) {
             loginSuccessful();
         } else {
             localStorage.clear();
+            window.location = "/";   
         }
     })
     .catch((error) => {
