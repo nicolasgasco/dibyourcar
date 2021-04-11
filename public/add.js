@@ -135,9 +135,6 @@ async function sendNewStoryToDB(event) {
         const shareConsent = document.querySelector(`input[name="share-consent"]:checked`).value;
         contact.push( `"share_contact": ${Boolean(shareConsent)}` );
 
-
-        newStory["submitDate"] = new Date();
-
         if ( fromArr.length > 0 ) {
             newStory["from"] = createObjectFromString(fromArr);
         } 
@@ -183,7 +180,7 @@ async function sendNewStoryToDB(event) {
                 `
                 <p>Your story was successfully submitted. It will be reviewed by an admin before publication.</p>
                 <div class="add-button-container">
-                    <a href="./index.html"><button class="home-paragraph-button black-bg white-text bold">Back to home</button></a>
+                    <a href="./profile.html"><button class="home-paragraph-button black-bg white-text bold">Back to profile</button></a>
                     <a href="./add.html"><button class="home-paragraph-button black-bg white-text bold">New story</button></a>
                 </div>
                 `
