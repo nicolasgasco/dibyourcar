@@ -4,7 +4,6 @@ const app = express();
 // Import routes
 const humans = require("./routes/humans");
 const locations = require("./routes/locations");
-const current_user = require("./routes/current_user");
 const users = require("./routes/users");
 
 // For environment variables
@@ -36,7 +35,6 @@ app.use(express.json());
 // External routes
 app.use("/api/humans/", humans);
 app.use("/api/locations/", locations);
-app.use("/api/currentuser/", current_user);
 app.use("/api/users/", users);
 
 // Express session
