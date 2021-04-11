@@ -84,7 +84,6 @@ function createCountryCitySelector() {
         countrySelector.innerHTML = elementList;
 
         // Then populate city selection
-
         // First option is actually "All cities"
         let firstCountryInList = capitalizeFirstLetterEveryWord(countrySelector.children[1].value);
 
@@ -95,12 +94,14 @@ function createCountryCitySelector() {
 
             let elementList = `<option value="null" class="s-text">All cities</option>`;
 
-            for ( let element of data.results.sort() ) {
-                elementList +=
-                `
-                <option value=${element.toLowerCase()} class="s-text">${capitalizeFirstLetterEveryWord(element)}</option>
-                `
-            };
+            if (countrySelector.value !== "all" ) {
+                for ( let element of data.results.sort() ) {
+                    elementList +=
+                    `
+                    <option value=${element.toLowerCase()} class="s-text">${capitalizeFirstLetterEveryWord(element)}</option>
+                    `
+                };
+            }
 
             citySelector.innerHTML = elementList;
 
