@@ -278,7 +278,6 @@ function exitEditPassword(event) {
 }
 
 function firstPasswordIsWrongEdit() {
-    console.log("first password is wrong")
 
     // Show message and add outline
     firstPasswordWrongMessage.classList.toggle("hidden");

@@ -57,7 +57,7 @@ function tryToLogin(event) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data.user)
+
             if ( data.user ) {
                 window.alert("Welcome back!")
 
@@ -109,7 +109,6 @@ function loginSuccessful(event) {
     }
 
     if ( !userContainer.classList.contains("hidden") ) {
-        console.log("ciao")
         userContainer.classList.toggle("hidden");
     }
 
@@ -163,7 +162,20 @@ function showHideSignupContainer() {
         loginContainer.classList.toggle("hidden");
     }
     
-    signupContainer.classList.toggle("hidden");
+    signupContainer.classList.remove("hidden");
+
+    
+}
+
+
+// Hid signup container when clicking outside of it
+function removeWhenClickedOutsideSignup(e) {
+    e.stopPropagation();
+
+    if ( !signupContainer.contains(e.target) ) {
+        signupContainer.classList.add("hidden");
+    }
+
 }
 
 function showPasswordDontMatchMessage() {
@@ -417,7 +429,6 @@ function logoutUser() {
     })
     .then( res => res.json() )
     .then( result => {
-        console.log(result)
 
         if ( result.loggedOut ) {
 
@@ -484,6 +495,9 @@ signupButton.addEventListener("click", tryToSignup)
 // First call to action
 const firstStartHelpLink = document.querySelector("#start-help-link");
 firstStartHelpLink.addEventListener("click", startHelpAction);
+// General event for hiding div when clicking outside of it
+window.addEventListener("mouseup", removeWhenClickedOutsideSignup);
+
 
 function startHelpAction(event) {
     if ( localStorage.getItem("user") ) {
