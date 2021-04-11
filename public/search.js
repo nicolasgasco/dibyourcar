@@ -454,8 +454,8 @@ function showPasswordNotValid() {
 
         passwordNoCriteriaMessage.classList.add("hidden");
 
-        passwordInput.value = ``;
-        confirmPassword.value = ``;
+        // passwordInput.value = ``;
+        // confirmPassword.value = ``;
 
         document.getElementById("length").classList.remove("ticked-element");
         document.getElementById("alphanumeric").classList.remove("ticked-element");
