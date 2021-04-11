@@ -36,7 +36,7 @@ router.get("/id/:id", ( req, res ) => {
 });
 
 
-// Get user with given email
+// Get user with given email, this is POST because mail is needed
 router.post("/email/", ( req, res ) => {
 
     let db = req.app.locals.db;
