@@ -223,7 +223,7 @@ ul {
 
 #log-in-container, #sign-up-container, #user-container {
     max-width: 100%;
-    min-width: 50%;
+    min-width: 75%;
     right: 0%;
     position: absolute;
     z-index: 999;
@@ -738,6 +738,14 @@ nav.shift ul li a:hover:after {
 
     footer * {
         font-size: medium;
+    }
+
+    #log-in-container, #sign-up-container, #user-container {
+        max-width: 100%;
+        min-width: 30%;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
     }
 
     #login-link {
