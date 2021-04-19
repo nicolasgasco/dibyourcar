@@ -1,3 +1,4 @@
+// Utility function used later in the code
 function capitalizeFirstLetterEveryWord(myString) {
     myString = myString.split(" ").map( el => el.charAt(0).toUpperCase() + el.substring(1).toLowerCase()).join(" ");
     myString= myString.split("-").map( el => el.charAt(0).toUpperCase() + el.substring(1)).join("-")
@@ -12,7 +13,7 @@ function capitalizeFirstCharLeaveRestSame(myString) {
     return result;
 }
 
-
+// Convert formatted string into object
 function createObjectFromString(arrayToParse) {
     let stringToParse = `{${arrayToParse.join(", ")}}`;
     let result = JSON.parse(stringToParse);
@@ -20,6 +21,7 @@ function createObjectFromString(arrayToParse) {
 }
 
 
+// Get id current user sending email to API
 let getIdCurrentUser = new Promise((resolve, reject) => {
     const email = localStorage.getItem("user");
 
@@ -40,7 +42,9 @@ let getIdCurrentUser = new Promise((resolve, reject) => {
 });
 
 
+// Send story to DB and show confirmation message
 async function sendNewStoryToDB(event) {
+    // Prevent form from submitting request
     event.preventDefault();
 
     newStoryForm.checkValidity();
@@ -55,13 +59,13 @@ async function sendNewStoryToDB(event) {
         let contact = [];
 
         for ( let inputField of newStoryForm.children ) {
+            // Only these are the relevant fields
             if ( inputField.tagName !== "LABEL" && inputField.tagName !== "P" ) {
 
                 // Data validation
                 let validatedData;
                 if ( inputField.value ) {
                     
-
                     if ( inputField.name === "gender" ) {
                         validatedData = inputField.value.toLowerCase();
 
@@ -75,7 +79,6 @@ async function sendNewStoryToDB(event) {
                         }
                         
 
-
                     } else if ( inputField.name === "spot" || inputField.type === "textarea" ) {
                         validatedData = capitalizeFirstCharLeaveRestSame(inputField.value);
 
@@ -84,7 +87,7 @@ async function sendNewStoryToDB(event) {
                     }
 
 
-                    // If no image is given, I want null to be used as value
+                    // If no image is provided, I want null to be used as value
                     if ( validatedData === undefined ) {
                         value = inputField.value;
                     } else {
@@ -92,7 +95,7 @@ async function sendNewStoryToDB(event) {
                     }
 
 
-
+                    // Create formatted strings to be parsed, passing through arrays
                     switch ( inputField.name ) {
                         case "city-from":
                             fromArr.push( `"city": "${value}"` );
@@ -120,7 +123,7 @@ async function sendNewStoryToDB(event) {
                         
                         
                         case "dream":
-                                interview.push( `"dream": "${value}"` );
+                            interview.push( `"dream": "${value}"` );
                             break;
         
                         case "spot":
@@ -149,6 +152,7 @@ async function sendNewStoryToDB(event) {
         const shareConsent = document.querySelector(`input[name="share-consent"]:checked`).value;
         contact.push( `"share_contact": ${Boolean(shareConsent)}` );
 
+        // Parse strings and write to object
         if ( fromArr.length > 0 ) {
             newStory["from"] = createObjectFromString(fromArr);
         } 
@@ -161,19 +165,21 @@ async function sendNewStoryToDB(event) {
             newStory["interview"] = createObjectFromString(interview);
         } 
 
-
         newStory["contact"] = createObjectFromString(contact);
 
+        // Get ID and submit story
         getIdCurrentUser.then( userId => {
+
             newStory["submittedBy"] = userId;
 
-            // If it's admin
+            // If it's admin, approve story for pubblication
             if ( userId === "6072bcb378457d56a8a4631d" ) {
                 newStory["approved"] = true;
             } else {
                 newStory["approved"] = false;
             }
             
+            // Post story to DB
             fetch("api/humans", {
             method: 'POST',
             headers: {
@@ -184,6 +190,7 @@ async function sendNewStoryToDB(event) {
             .then(response => response.json())
             .then( info => {
 
+                // Show confirmation message
                 const intervieweeInfoTitle = document.querySelector("#interviewee-info-title");
                 const newStoryFormContainer = document.querySelector("#new-story-form-container");
                 intervieweeInfoTitle.innerText = `New story submitted`;
@@ -208,12 +215,14 @@ async function sendNewStoryToDB(event) {
 }
 
 
+// Selectors for later
 const newStoryForm = document.querySelector("#new-story-form");
 const submitStoryButton = document.querySelector("#submit-new-story");
 submitStoryButton.addEventListener("click", sendNewStoryToDB);
 
 
 // From here on, it's all login logic
+
 // Toggle on or off the hidden container for logging in
 function showHideLoginContainer() {
     if ( !signupContainer.classList.contains("hidden") ) {
@@ -366,16 +375,19 @@ function showHideSignupContainer() {
     signupContainer.classList.toggle("hidden");
 }
 
+// Show message when password don't match
 function showPasswordDontMatchMessage() {
     const passwordDontMatchMessage = document.querySelector("#password-no-match-text");
     passwordDontMatchMessage.classList.toggle("hidden");
 
+    // Red outline is used to highlight wrong fields
     const passwordInput = document.querySelector("#password");
     passwordInput.classList.toggle("red-outline");
 
     const confirmPassword = document.querySelector("#confirm-password");
     confirmPassword.classList.toggle("red-outline");
 
+    // Remove after a while
     setTimeout( function() {
         confirmPassword.classList.toggle("red-outline");
         passwordInput.classList.toggle("red-outline");
@@ -439,7 +451,7 @@ function isPasswordValid(password) {
         document.getElementById("special").classList.add("ticked-element");
     }
 
-
+    // If all condition are met, password is valid
     if ( length && alphanumeric && capitalLetter && specialCharacter ) {
         return true;
     }
@@ -472,10 +484,11 @@ function showPasswordNotValid() {
         document.getElementById("capital").classList.remove("ticked-element");
         document.getElementById("special").classList.remove("ticked-element");
         
-        // Remove event, otherwise form gets deleted everything user blurs
+        // Remove event, otherwise form gets deleted everytime user blurs
         passwordInput.removeEventListener("focus", removePasswordNoCriteriaMessage);
     }
 
+    // Remove criteria when user clicks on form
     passwordInput.addEventListener("focus", removePasswordNoCriteriaMessage);
 }
 
