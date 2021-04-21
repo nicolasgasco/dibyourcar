@@ -172,21 +172,6 @@ ul {
     gap: 1rem;
 }
 
-.add-button-container > * {
-    --fgp-gap-parent: 1rem !important;
-    --fgp-gap-item: 1rem !important;
-    --fgp-gap: var(--fgp-gap-item) !important;
-    margin-top: var(--fgp-gap);
-    margin-right: var(--fgp-gap);
-}
-
-.add-button-container {
-    --fgp-gap-container: calc(var(--fgp-gap-parent, 0rem) - 1rem) !important;
-    --fgp-gap: var(--fgp-gap-container);
-    margin-top: var(--fgp-gap);
-    margin-right: var(--fgp-gap);
-}
-
 .add-button-container button {
     min-width: 8rem
 }
@@ -318,21 +303,6 @@ ul {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     gap: 4%
-}
-
-.grid-results > * {
-    --fgp-gap-parent: 4% !important;
-    --fgp-gap-item: 4% !important;
-    --fgp-gap: var(--fgp-gap-item) !important;
-    margin-top: var(--fgp-gap);
-    margin-right: var(--fgp-gap);
-}
-
-.grid-results {
-    --fgp-gap-container: calc(var(--fgp-gap-parent, 0%) - 4%) !important;
-    --fgp-gap: var(--fgp-gap-container);
-    margin-top: var(--fgp-gap);
-    margin-right: var(--fgp-gap);
 }
 
 .width-92 {
