@@ -808,12 +808,3 @@ nav.shift ul li a:hover:after {
         font-size: small;
     }
 }
-
-@media not all and (min-resolution:.001dpcm) { 
-    @media {
-        #home-paragraph-container > * { 
-            outline: 2px red solid;
-            margin: 0.5rem 1rem;
-        }
-    }
-}
