@@ -121,7 +121,7 @@ function createCountryCitySelector() {
 };
 
 function showFilteredResults(event) {
-    searchResultsDiv.innerHTML = ``;
+    // searchResultsDiv.innerHTML = ``;
 
     let countryToSearch = countrySelector.value;
 
